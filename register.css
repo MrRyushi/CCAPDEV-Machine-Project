@@ -1,0 +1,14 @@
+div.container{
+    width: 30vw;
+    border: 1px solid black;
+}
+
+body {
+    background-image: url('register_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#emailinput::placeholder {
+    color:lightgray;
+}
