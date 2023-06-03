@@ -1,5 +1,5 @@
 body {
-    background-image: url('register_bg.jpg');
+    background-image: url('../images/register_bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -9,5 +9,5 @@ div.cards-row {
 }
 
 div.card-background {
-    background-color: rgba(77, 177, 162, 0.995);
+    background-color: rgba(84, 192, 176, 0.736);
 }
