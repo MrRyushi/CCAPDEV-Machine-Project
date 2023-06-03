@@ -1,0 +1,13 @@
+body {
+    background-image: url('register_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+div.cards-row {
+    width: 70vw;
+}
+
+div.card-background {
+    background-color: rgba(77, 177, 162, 0.995);
+}
