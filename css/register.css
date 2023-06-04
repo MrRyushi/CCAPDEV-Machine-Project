@@ -10,5 +10,5 @@ body {
 }
 
 #emailinput::placeholder {
-    color:lightgray;
+    color:rgb(160, 160, 160);
 }
