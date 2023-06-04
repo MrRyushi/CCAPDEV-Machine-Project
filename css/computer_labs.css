@@ -11,3 +11,7 @@ div.cards-row {
 div.card-background {
     background-color: rgba(40, 164, 226, 0.68);
 }
+
+.custom-font {
+    font-family: Montserrat;
+}

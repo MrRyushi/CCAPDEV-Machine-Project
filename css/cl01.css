@@ -7,3 +7,7 @@ body {
 div.container {
     width: 45vw;
 }
+
+.custom-font {
+    font-family: Montserrat;
+}

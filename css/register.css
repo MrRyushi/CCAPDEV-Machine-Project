@@ -12,3 +12,7 @@ body {
 #emailinput::placeholder {
     color:rgb(160, 160, 160);
 }
+
+.custom-font {
+    font-family: Montserrat;
+}
