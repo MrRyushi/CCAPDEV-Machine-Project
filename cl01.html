@@ -11,6 +11,7 @@
     >
     <link rel="stylesheet" href="css/cl01.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <script src="/scripts/index.js" defer></script>
 </head>
 <body>
     <!--Bootstrap JS Link-->
@@ -30,170 +31,180 @@
                 <div class="navbar-nav">
                     <a class="text-white nav-link active fs-5 custom-font" aria-current="computer_labs.html" href="computer_labs.html">View Rooms</a>
                     <a class="text-white nav-link fs-5 custom-font" href="#">My Reservations</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="profile.html">View Profile</a>
                     <a class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="login.html">Log out</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
-        <div class="text-center mb-4">
-            <h1 class="text-white fs-1 fw-bold custom-font">CyberLab C101</h1>
-        </div>
+    <div class="text-center title-container">
+        <h1 class="text-white fw-bold custom-font">CyberLab Room CL01</h1>
+    </div>
 
-        <div class="container text-center">
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">01</button>
-                        <button class="btn btn-info my-1 btn-lg">02</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">03</button>
-                        <button class="btn btn-info my-1 btn-lg">04</button>
-                    </div>
+    <div class="dateForm-container container row mx-auto mt-3">
+        <input class="form-control col mx-2" id="date" name="date" type="date">
+        <input class="form-control col mx-2" name="time" type="time">
+        <button class="btn btn-outline-info btn-small" id="btnCheckDate">Check Date</button>
+    </div>
+
+    <div class="container text-center seat-container">
+        <div class="btn-group-vertical mx-4">
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">01</button>
+                    <button class="btn btn-info my-1 btn-lg">02</button>
                 </div>
             
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">05</button>
-                        <button class="btn btn-info my-1 btn-lg">06</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">07</button>
-                        <button class="btn btn-info my-1 btn-lg">08</button>
-                    </div>
-                </div>
-        
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">09</button>
-                        <button class="btn btn-info my-1 btn-lg">10</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">11</button>
-                        <button class="btn btn-info my-1 btn-lg">12</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">13</button>
-                        <button class="btn btn-info my-1 btn-lg">14</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">15</button>
-                        <button class="btn btn-info my-1 btn-lg">16</button>
-                    </div>
-                </div>
-            
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">17</button>
-                        <button class="btn btn-info my-1 btn-lg">18</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">19</button>
-                        <button class="btn btn-info my-1 btn-lg">20</button>
-                    </div>
-                </div>
-                
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">21</button>
-                        <button class="btn btn-info my-1 btn-lg">22</button>
-                    </div>
-        
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">23</button>
-                        <button class="btn btn-info my-1 btn-lg">24</button>
-                    </div>
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">03</button>
+                    <button class="btn btn-info my-1 btn-lg">04</button>
                 </div>
             </div>
         
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">25</button>
-                        <button class="btn btn-info my-1 btn-lg">26</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">27</button>
-                        <button class="btn btn-info my-1 btn-lg">28</button>
-                    </div>
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">05</button>
+                    <button class="btn btn-info my-1 btn-lg">06</button>
                 </div>
             
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">29</button>
-                        <button class="btn btn-info my-1 btn-lg">30</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">31</button>
-                        <button class="btn btn-info my-1 btn-lg">32</button>
-                    </div>
-                </div>
-        
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">33</button>
-                        <button class="btn btn-info my-1 btn-lg">34</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">35</button>
-                        <button class="btn btn-info my-1 btn-lg">36</button>
-                    </div>
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">07</button>
+                    <button class="btn btn-info my-1 btn-lg">08</button>
                 </div>
             </div>
-        
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">37</button>
-                        <button class="btn btn-info my-1 btn-lg">38</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">39</button>
-                        <button class="btn btn-info my-1 btn-lg">40</button>
-                    </div>
+    
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">09</button>
+                    <button class="btn btn-info my-1 btn-lg">10</button>
                 </div>
             
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">41</button>
-                        <button class="btn btn-info my-1 btn-lg">42</button>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">43</button>
-                        <button class="btn btn-info my-1 btn-lg">44</button>
-                    </div>
-                </div>
-                
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">45</button>
-                        <button class="btn btn-info my-1 btn-lg">46</button>
-                    </div>
-        
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <button class="btn btn-info my-1 btn-lg">47</button>
-                        <button class="btn btn-info my-1 btn-lg">48</button>
-                    </div>
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">11</button>
+                    <button class="btn btn-info my-1 btn-lg">12</button>
                 </div>
             </div>
         </div>
+        
+        <div class="btn-group-vertical mx-4">
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">13</button>
+                    <button class="btn btn-info my-1 btn-lg">14</button>
+                </div>
+            
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">15</button>
+                    <button class="btn btn-info my-1 btn-lg">16</button>
+                </div>
+            </div>
+        
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">17</button>
+                    <button class="btn btn-info my-1 btn-lg">18</button>
+                </div>
+            
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">19</button>
+                    <button class="btn btn-info my-1 btn-lg">20</button>
+                </div>
+            </div>
+            
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">21</button>
+                    <button class="btn btn-info my-1 btn-lg">22</button>
+                </div>
+    
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">23</button>
+                    <button class="btn btn-info my-1 btn-lg">24</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="btn-group-vertical mx-4">
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">25</button>
+                    <button class="btn btn-info my-1 btn-lg">26</button>
+                </div>
+            
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">27</button>
+                    <button class="btn btn-info my-1 btn-lg">28</button>
+                </div>
+            </div>
+        
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">29</button>
+                    <button class="btn btn-info my-1 btn-lg">30</button>
+                </div>
+            
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">31</button>
+                    <button class="btn btn-info my-1 btn-lg">32</button>
+                </div>
+            </div>
+    
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">33</button>
+                    <button class="btn btn-info my-1 btn-lg">34</button>
+                </div>
+            
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">35</button>
+                    <button class="btn btn-info my-1 btn-lg">36</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="btn-group-vertical mx-4">
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">37</button>
+                    <button class="btn btn-info my-1 btn-lg">38</button>
+                </div>
+            
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">39</button>
+                    <button class="btn btn-info my-1 btn-lg">40</button>
+                </div>
+            </div>
+        
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">41</button>
+                    <button class="btn btn-info my-1 btn-lg">42</button>
+                </div>
+            
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">43</button>
+                    <button class="btn btn-info my-1 btn-lg">44</button>
+                </div>
+            </div>
+            
+            <div class="btn-group my-4">
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">45</button>
+                    <button class="btn btn-info my-1 btn-lg">46</button>
+                </div>
+    
+                <div class="btn-group-vertical mx-1" role="group">
+                    <button class="btn btn-info my-1 btn-lg">47</button>
+                    <button class="btn btn-info my-1 btn-lg">48</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <button class="btn btn-outline-info btn-lg" onclick="backToIndex()" >Back</button>
     </div>
 
     

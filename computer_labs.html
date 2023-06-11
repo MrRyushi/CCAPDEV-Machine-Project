@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/computer_labs.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
-<body>
+<body class="bg-img">
     <!--Bootstrap JS Link-->
     <script 
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
@@ -22,56 +22,61 @@
 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand text-white custom-font fs-3" href="computer_labs.html">CyberLab</a>
+            <a class="navbar-brand text-info custom-font fs-3" href="computer_labs.html">CyberLab</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
                     <a class="text-white nav-link active fs-5 custom-font" aria-current="computer_labs.html" href="computer_labs.html">View Rooms</a>
-                    <a class="text-white nav-link fs-5 custom-font" href="#">My Reservations</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="my_reservations.html">My Reservations</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="profile.html">View Profile</a>
                     <a class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="login.html">Log out</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
-        <div class="row cards-row mx-auto">
-            <div class="col">
-                <div class="card mx-auto card-background" style="width: 22rem;">
-                    <img src="Images/cl01.jpg" class="card-img-top">
-                    <div class="card-body">
-                      <h5 class=" card-title">Computer Laboratory CL01</h5>
-                      <p class=" card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="cl01.html" class="btn btn-light">Reserve a Seat</a>
-                    </div>
+    <div class="wc-message container mx-auto">
+        <p class="text-white">Welcome to CyberLab!</p>
+    </div>
+
+
+    <div class="row cards-row mx-auto my-5">
+        <div class="col my-2">
+            <div class="card mx-auto card-background" style="width: 22rem;">
+                <img src="Images/cl01.jpg" class="card-img-top">
+                <div class="card-body">
+                    <h5 class=" card-title">Computer Laboratory CL01</h5>
+                    <p class=" card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="cl01.html" class="btn btn-light">View Room</a>
                 </div>
             </div>
+        </div>
     
-            <div class="col ">
+        <div class="col my-2">
                 <div class="card mx-auto card-background" style="width: 22rem;">
                     <img src="Images/cl02.jpg" class="card-img-top">
                     <div class="card-body">
-                      <h5 class=" card-title">Computer Laboratory CL02</h5>
-                      <p class="  card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="cl02.html" class="btn btn-light">Reserve a Seat</a>
+                        <h5 class=" card-title">Computer Laboratory CL02</h5>
+                        <p class="  card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="cl02.html" class="btn btn-light">View Room</a>
                     </div>
                 </div>
             </div>
-    
-            <div class="col ">
-                <div class="card mx-auto card-background" style="width: 22rem;">
-                    <img src="Images/cl03.jpg" class="card-img-top">
-                    <div class="card-body">
-                      <h5 class=" card-title">Computer Laboratory CL03</h5>
-                      <p class=" card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="cl03.html" class="btn btn-light">Reserve a Seat</a>
-                    </div>
+
+        <div class="col my-2">
+            <div class="card mx-auto card-background" style="width: 22rem;">
+                <img src="Images/cl03.jpg" class="card-img-top">
+                <div class="card-body">
+                    <h5 class=" card-title">Computer Laboratory CL03</h5>
+                    <p class=" card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="cl03.html" class="btn btn-light">View Room</a>
                 </div>
             </div>
-        </div>    
-    </div>
+        </div>
+    </div>    
 
     
 </body>
