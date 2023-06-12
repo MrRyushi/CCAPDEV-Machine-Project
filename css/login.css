@@ -12,3 +12,7 @@ body {
 .custom-font {
     font-family: Montserrat;
 }
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}

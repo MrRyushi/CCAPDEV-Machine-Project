@@ -26,3 +26,7 @@ div.wc-message {
     width: 60vw;
     margin: 5% 0 0;
 }
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}
