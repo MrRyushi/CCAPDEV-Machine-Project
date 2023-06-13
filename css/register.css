@@ -16,3 +16,7 @@ body {
 .custom-font {
     font-family: Montserrat;
 }
+
+div.container-register {
+    margin-top: 12%;
+}

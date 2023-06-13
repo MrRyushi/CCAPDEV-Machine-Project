@@ -12,3 +12,7 @@ body {
 .custom-font {
     font-family: Montserrat;
 }
+
+div.container-login {
+    margin-top: 12rem;
+}
