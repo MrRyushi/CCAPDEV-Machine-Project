@@ -1,31 +1,40 @@
+// This function is for the back button in lab rooms
 function backToIndex(){
     window.location.href = "computer_labs.html";
 }
 
-var reserve;
-
-const seatBtn = document.querySelectorAll(".seatBtn");
-for (let i = 0; i < seatBtn.length; i++) {
-  seatBtn[i].addEventListener("click", confirmReserve.bind(null, seatBtn[i]));
-}
-
-function confirmReserve(button) {
-  var date = document.querySelector("#date").value;
-  var time = document.querySelector("#time").value;
-
-  if (date !== "" && time !== "") {
-    reserve = confirm(`Reserve this seat on ${date} at ${time}?`);
-  } else {
-    alert('Please enter a date and time!');
-  }
-
-  if (reserve === true) {
-    // Change the color of the button
-    button.classList.replace("btn-info", "btn-danger");
-  }
-}
-
-
+// This code is to generate the current date
 document.getElementById('date').valueAsDate = new Date();
 
+// The next lines of code is for reserving seats
+const form = document.querySelector('.reserve-form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault(); // Prevent form submission
+
+  const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
+  const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);
+  var date = document.querySelector("#date").value;
+  var time = document.querySelector("#time").value;
+  let seats;
+
+  // this for loop is to uncheck the boxes after selecting them
+  for(let i = 0; i < checkedCheckboxes.length; i++){
+    checkedCheckboxes[i].checked = false;
+  }
+
+  
+  if (date !== "" && time !== "" && checkedCheckboxes != "") {
+    reserve = confirm(`Reserve the selected seats on ${date} from ${time}?`);
+    seats = null;
+    for(let i = 0; i < checkedId.length; i++){
+      let btn = document.querySelector(`#${checkedId[i]}`);
+      let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
+      labelElement.classList.replace("btn-outline-info", "btn-danger");
+      btn.disabled=true;
+    }
+  } else {
+    alert('Please select a date and a time and the seats you want to reserve!');
+  }
+});
 
