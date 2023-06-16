@@ -28,3 +28,7 @@ div.dateForm-container {
 #btnCheckDate {
     width: 7rem;
 }
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}

@@ -28,3 +28,11 @@ div.dateForm-container {
 #btnCheckDate {
     width: 7rem;
 }
+
+.btn-group-vertical label {
+    background-color: light;
+}
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}

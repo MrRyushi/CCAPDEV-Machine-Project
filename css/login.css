@@ -16,3 +16,7 @@ body {
 div.container-login {
     margin-top: 12rem;
 }
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}

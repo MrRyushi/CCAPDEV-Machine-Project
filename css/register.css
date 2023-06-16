@@ -20,3 +20,8 @@ body {
 div.container-register {
     margin-top: 12%;
 }
+
+.navbar-nav a:hover {
+    color: cyan;
+}
+

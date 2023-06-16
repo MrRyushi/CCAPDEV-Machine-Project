@@ -1,0 +1,48 @@
+body {
+    background-image: url('../images/main_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.custom-font {
+    font-family: Montserrat;
+}
+
+div.container-profile {
+    margin-top: 12%;
+}
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}
+
+
+hr.hr-title{
+    width: 90vw;
+}
+
+.custom-font-header {
+    font-family: Montserrat;
+    font-size: 50px;
+    letter-spacing: 5px;
+}
+
+
+.main {
+    max-width: 75%;
+}
+.picture-container {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.picture-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+ 

@@ -25,3 +25,7 @@ hr.hr-title{
 hr.hr-reservations {
     width: 80vw;
 }
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}
