@@ -32,3 +32,8 @@ div.dateForm-container {
 .navbar-nav a:hover {
     color: cyan !important;
 }
+
+.btn-group-vertical .btn-outline-info:hover {
+    background-color: #17a2b8;
+    color: #fff;
+}
