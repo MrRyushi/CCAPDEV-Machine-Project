@@ -17,6 +17,6 @@ body {
     font-family: Montserrat;
 }
 
-.navbar-nav a:hover {
-    color: cyan !important;
+div.container-register {
+    margin-top: 12%;
 }

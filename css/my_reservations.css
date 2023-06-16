@@ -1,0 +1,27 @@
+.custom-font-header {
+    font-family: Montserrat;
+    font-size: 50px;
+    letter-spacing: 5px;
+}
+
+.custom-font {
+    font-family: Montserrat;
+}
+
+.custom-font-content {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-image: url('/images/main_bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+hr.hr-title{
+    width: 90vw;
+}
+
+hr.hr-reservations {
+    width: 80vw;
+}
