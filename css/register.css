@@ -4,9 +4,8 @@ div.container{
 }
 
 body {
-    background-image: url('../images/main_bg.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(42,135,157,1) 100%, rgba(0,212,255,1) 100%);
 }
 
 #emailinput::placeholder {
@@ -22,6 +21,6 @@ div.container-register {
 }
 
 .navbar-nav a:hover {
-    color: cyan;
+    color: cyan !important;
 }
 
