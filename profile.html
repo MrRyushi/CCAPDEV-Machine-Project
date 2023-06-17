@@ -11,12 +11,12 @@
     >
     <link rel="stylesheet" href="css/profile.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <script src="scripts/index.js"></script>
     <script
         src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
         crossorigin="anonymous">
     </script>
+    <script src="scripts/profile.js" defer></script>
 </head>
 <body>
     <nav class="navbar navbar-expand">
@@ -47,7 +47,7 @@
                 <div class="search-bar align-self-center">
                     <form class="d-inline-flex">
                         <input class="form-control form-control-m me-2" type="search" placeholder="Search a profile" aria-label="Search">
-                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                        <button class="btn btn-outline-primary searchBtn" type="submit">Search</button>
                     </form>
                 </div>
             </div>
@@ -55,7 +55,7 @@
     </div>
 
     <hr class="border hr-title mx-auto">
-    
+
     <div class="main container text-white border border-white rounded">
         <div class="container-fluid mx-auto">
             <div class="row justify-content-center mx-auto mt-3">
@@ -64,33 +64,50 @@
                         <img src="./images/profile.jpg" alt="Profile Picture" class="img-fluid">
                     </div>
                 </div>
-    
+
                 <div class="col-lg-8 d-flex justify-content-center">
-                    <div class="info-container p-3 border border-white rounded bg-dark m-3">
+                    <div class="info-container container-fluid p-3 border border-white rounded bg-dark m-3">
                         <h2 class="mb-3">Kibutsuji Muzan</h2>
-                        <p class="">Demon Master</p>
-    
-                        <div class="info-container p-3 border border-white rounded m-3">
-                            <p> In this world, there is only one demon whose blood flowing in its veins has the power to turn humans into demons.</p>
+                        <p>Description</p>
+
+                        <textarea id="profileDescription" class="form-control form-control-m d-none"></textarea>
+
+                        <div class="description info-container p-3 border border-white rounded m-3" id="description">
+                            <p> I am a perfect creature that is infinitely close to perfection. </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    
+
         <div class="container-fluid">
             <div class="row justify-content-center my-3">
-                <div class="col-lg-4 d-flex justify-content-center align-self-center">
-                    <p class="text-white">Reservations</p>
+                <div class="col-lg-3 d-flex justify-content-center">
+                    <input class="d-none" id="uploadPictureInput" type="file">
                 </div>
                 <div class="col-lg-8 d-flex justify-content-end">
-                    <button class="btn btn-primary mx-2">Edit Profile</button>
-                    <button class="btn btn-danger ml-auto">Delete User</button>
+                    <input class="d-none" id="uploadPictureInput" type="file">
+                    <button class="btn btn-primary mx-1" id="editProfileBtn">Edit Profile</button>
+                    <button class="btn btn-primary d-none mx-1" id="editDescBtn">Edit Description</button>
+                    <button class="btn btn-primary d-none mx-1" id="editPictureBtn">Edit Profile Picture</button>
+                    <button class="btn btn-success save-btn d-none mx-1" id="saveBtn">Save Changes</button>
+                    <button class="btn btn-danger mx-1" id="deleteUserBtn">Delete User</button>
+                    <button class="btn btn-success save-btn d-none mx-1" id="saveDescBtn">Save Description</button>
+                    <button class="btn btn-success save-btn d-none mx-1" id="savePictureBtn">Save Picture</button>
                 </div>
             </div>
         </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center my-3">
+                <div class="col-auto d-flex align-self-center">
+                    <p class="text-white">Reservations</p>
+                </div>
+            </div>
+       </div>
+
     </div>
-    
+
 </div>
 </body>
 </html>
