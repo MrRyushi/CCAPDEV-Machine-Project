@@ -16,6 +16,7 @@ body {
     background: rgb(2,0,36);
     background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(42,135,157,1) 100%, rgba(0,212,255,1) 100%);
 }
+
 hr.hr-title{
     width: 90vw;
 }
@@ -26,8 +27,4 @@ hr.hr-reservations {
 
 .navbar-nav a:hover {
     color: cyan !important;
-}
-
-.edit-btn{
-    float:right;
 }
