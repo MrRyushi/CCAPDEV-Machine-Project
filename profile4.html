@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CyberLab | Profile</title>
+    <!--Bootstrap CSS Link-->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+        crossorigin="anonymous"
+    >
+    <link rel="stylesheet" href="css/profile.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <script
+        src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous">
+    </script>
+    <script src="scripts/profile.js" defer></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand">
+        <div class="container-fluid">
+            <a class="navbar-brand text-info custom-font fs-3" href="computer_labs.html">CyberLab</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav">
+                    <a class="text-white nav-link active fs-5 custom-font" aria-current="computer_labs.html" href="computer_labs.html">View Rooms</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="my_reservations.html">My Reservations</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="profile.html">View Profile</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="login.html">Log out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <p class="text-white custom-font-header">My Profile</p>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-end">
+                <div class="search-bar align-self-center">
+                    <form class="d-inline-flex">
+                        <input class="form-control form-control-m me-2" type="search" placeholder="Search a profile" aria-label="Search">
+                        <button class="btn btn-outline-light searchBtn" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="border hr-title mx-auto">
+
+    <div class="main container text-white border border-white rounded">
+        <div class="container-fluid mx-auto">
+            <div class="row justify-content-center mx-auto mt-3">
+                <div class="col-lg-3 d-flex justify-content-center align-self-center">
+                    <div class="picture-container m-3">
+                        <img src="./images/akaza.png" alt="Profile Picture" class="img-fluid">
+                    </div>
+                </div>
+
+                <div class="col-lg-8 d-flex justify-content-center">
+                    <div class="info-container container-fluid p-3 border border-white rounded bg-dark m-3">
+                        <h2 class="mb-3">Akaza</h2>
+                        <p>Description</p>
+
+                        <textarea id="profileDescription" class="form-control form-control-m d-none"></textarea>
+
+                        <div class="description info-container p-3 border border-white rounded m-3" id="description">
+                            <p> I hate Douma! One day, I'll get my chance. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center my-3">
+                <div class="col-lg-3 d-flex justify-content-center">
+                    <input class="d-none" id="uploadPictureInput" type="file">
+                </div>
+                <div class="col-lg-8 d-flex justify-content-end">
+                    <input class="d-none" id="uploadPictureInput" type="file">
+                    <button class="btn btn-primary mx-1" id="editProfileBtn">Edit Profile</button>
+                    <button class="btn btn-primary d-none mx-1" id="editDescBtn">Edit Description</button>
+                    <button class="btn btn-primary d-none mx-1" id="editPictureBtn">Edit Profile Picture</button>
+                    <button class="btn btn-success save-btn d-none mx-1" id="saveBtn">Save Changes</button>
+                    <button class="btn btn-danger mx-1" id="deleteUserBtn">Delete User</button>
+                    <button class="btn btn-success save-btn d-none mx-1" id="saveDescBtn">Save Description</button>
+                    <button class="btn btn-success save-btn d-none mx-1" id="savePictureBtn">Save Picture</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center my-3">
+                <div class="col-auto d-flex align-self-center">
+                    <p class="text-white">Reservations</p>
+                </div>
+            </div>
+       </div>
+
+    </div>
+
+</div>
+</body>
+</html>

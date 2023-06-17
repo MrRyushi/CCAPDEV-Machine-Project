@@ -1,0 +1,42 @@
+body {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(42,135,157,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+div.seat-container {
+    width: 45vw;
+    border: 2px groove white;
+}
+
+.custom-font {
+    font-family: Montserrat;
+}
+
+div.seat-container {
+    margin-top: 2rem;
+}
+
+div.title-container {
+    margin-top: 4%;
+}
+
+div.dateForm-container {
+    width: 29vw;
+}
+
+#btnCheckDate {
+    width: 7rem;
+}
+
+.btn-group-vertical label {
+    background-color: light;
+}
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}
+
+.btn-group-vertical .btn-outline-info:hover {
+    background-color: #17a2b8;
+    color: #fff;
+}
