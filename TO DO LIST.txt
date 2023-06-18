@@ -1,9 +1,9 @@
 TO DO: 
 - Profile Page
 - CL02 Room (Different Seating Arrangement)
-- Edit Reservations
-- Delete Reservations
-- Edit Profile
+- Edit Reservations // DONE
+- Delete Reservations // DONE
+- Edit Profile // DONE
 - Clicking on an "occupied seat" should show the user who reserved
 - Clicking on a username should link to that users profile
 - Change the time to interval of 30 minutes, possibly make it from 9am to 5pm (drop down list). -- DONE 06/14/2023
