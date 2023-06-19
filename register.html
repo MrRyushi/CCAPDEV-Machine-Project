@@ -20,15 +20,14 @@
 <body>
     <nav class="navbar navbar-expand">
         <div class="container-fluid">
-            <a class="navbar-brand text-info custom-font fs-3" href="computer_labs.html">CyberLab</a>
+            <a class="navbar-brand text-info custom-font fs-3" href="index.html">CyberLab</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
-                    <a class="text-white nav-link active fs-5 custom-font" aria-current="computer_labs.html" href="computer_labs.html">View Rooms</a>
+                    <a class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="index.html">View Rooms</a>
                     <a class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
-                    <a class="text-white nav-link fs-5 custom-font" href="my_reservations.html">My Reservations</a>
                     <a class="text-white nav-link fs-5 custom-font" href="profile.html">View Profile</a>
                     <a class="text-white nav-link fs-5 custom-font" href="login.html">Log out</a>
                 </div>
@@ -36,53 +35,55 @@
         </div>
     </nav>
 
-    <div class="container-register">
-        <div class="text-center">
-            <h1 class="text-white">Register</h1>
-        </div>
-    
-        <div class="container text-white border border-white rounded">
-            <form class="ms-3 me-3">
-                <div class="row mt-3">
-                    <div class="col">
-                        <label for="emailinput" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="emailinput" placeholder="juan_delacruz@dlsu.edu.ph">
-                    </div>
-                </div>
-    
-                <div class="row mt-3">
-                    <div class="col">
-                        <label for="passwordinput"  class="form-label">Password</label>
-                        <input type="password" class="form-control" id="passwordinput">
-                    </div>
-                </div>
-    
-                <div class="row mt-3 text-center">
-                    <div class="input-group">
-                        <div class="col">
-                            <label for="student-radio" class="form-label">Student</label>
-                            <input type="radio" id="student-radio" class="form-check-input mt-0" name="account-type">
-                        </div>
+    <form action="login.html">
+        <div class="container-register">
+            <div class="text-center">
+                <h1 class="text-white">Register</h1>
+            </div>
         
+            <div class="container text-white border border-white rounded p-4">
+                <form class="ms-3 me-3">
+                    <div class="row">
                         <div class="col">
-                            <label for="technician-radio" class="form-label">Lab Technician</label>
-                            <input type="radio" id="student-radio" class="form-check-input mt-0" name="account-type">
+                            <label for="emailinput" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="emailinput" placeholder="juan_delacruz@dlsu.edu.ph">
                         </div>
                     </div>
-                </div>
-    
-                <div class="row mt-3 text-center">
-                    <div class="col">
-                        <button class=" text-white btn btn-outline-secondary" type="submit">Register</button>
+        
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label for="passwordinput"  class="form-label">Password</label>
+                            <input type="password" class="form-control" id="passwordinput">
+                        </div>
                     </div>
+        
+                    <div class="row mt-3 text-center">
+                        <div class="input-group">
+                            <div class="col">
+                                <label for="student-radio" class="form-label">Student</label>
+                                <input type="radio" id="student-radio" class="form-check-input mt-0" name="account-type">
+                            </div>
+            
+                            <div class="col">
+                                <label for="technician-radio" class="form-label">Lab Technician</label>
+                                <input type="radio" id="student-radio" class="form-check-input mt-0" name="account-type">
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="row mt-3 text-center">
+                        <div class="col">
+                            <button class=" text-white btn btn-outline-secondary" type="submit">Register</button>
+                        </div>
+                    </div>
+                </form>
+        
+                <div class="row mt-3 text-center">
+                    <a class="link text-white" href="login.html">Already have an account?</a>
                 </div>
-            </form>
-    
-            <div class="row mt-3 mb-3 text-center">
-                <a class="link text-white" href="login.html">Already have an account?</a>
             </div>
         </div>
-    </div>
+    </form>
     
     
 </body>

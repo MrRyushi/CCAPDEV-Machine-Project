@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".btn-back").click(function(){
-        window.location.href = "computer_labs.html";
+        window.location.href = "index.html";
       });
     
     $(".edit-btn").click(function(){
@@ -50,7 +50,7 @@ $(document).ready(function(){
         seatnum.html("");
         seatnum_form = $("<input>");
         seatnum_form.addClass("room-form form-control");
-        seatnum_form.attr("type", "number");
+        seatnum_form.attr("type", "text");
         seatnum_form.attr("placeholder", `${currSeatnum}`);
         seatnum_form.attr("value", `${currSeatnum}`);
         seatnum.append(seatnum_form);

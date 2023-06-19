@@ -26,21 +26,38 @@ hr.hr-title{
     letter-spacing: 5px;
 }
 
-
-.main {
-    max-width: 75%;
-}
-.picture-container {
-    width: 200px;
-    height: 200px;
-    position: relative;
+img.profile-pic {
+    height: 29vh;
 }
 
-.picture-container img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/*my reservations css*/
+.custom-font-header {
+    font-family: Montserrat;
+    font-size: 50px;
+    letter-spacing: 5px;
+}
+
+.custom-font {
+    font-family: Montserrat;
+}
+
+.custom-font-content {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(42,135,157,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+hr.hr-title{
+    width: 90vw;
+}
+
+hr.hr-reservations {
+    width: 80vw;
+}
+
+.navbar-nav a:hover {
+    color: cyan !important;
 }
