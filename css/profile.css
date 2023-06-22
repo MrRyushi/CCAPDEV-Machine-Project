@@ -28,6 +28,7 @@ hr.hr-title{
 
 img.profile-pic {
     height: 29vh;
+    min-width: 15vw;
 }
 
 /*my reservations css*/
@@ -60,4 +61,12 @@ hr.hr-reservations {
 
 .navbar-nav a:hover {
     color: cyan !important;
+}
+
+tr td {
+    font-family: 'Roboto', sans-serif;
+}
+
+.light-bold {
+    letter-spacing: 1px;
 }

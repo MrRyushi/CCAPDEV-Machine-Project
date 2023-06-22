@@ -6,14 +6,11 @@ body {
 div.seat-container {
     width: 45vw;
     border: 2px groove white;
+    margin-top: 2rem;
 }
 
 .custom-font {
     font-family: Montserrat;
-}
-
-div.seat-container {
-    margin-top: 2rem;
 }
 
 div.title-container {

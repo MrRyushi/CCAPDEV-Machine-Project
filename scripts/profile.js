@@ -100,4 +100,5 @@ $(document).ready(function() {
     $("#deleteUserBtn").removeClass("d-none");
     $("#saveBtn").addClass("d-none");
   });
+
 });
