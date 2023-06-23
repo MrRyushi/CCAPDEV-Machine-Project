@@ -1,6 +1,0 @@
-TO DO: 
-- Edit the profile Page
-- Add a prompt when reserving (To resereve anonymously or not)
-- Add a prompt after logging in to be remembered by the website
-- Delete User Account feature
-- Lab technicians view

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CyberLab | Seat Reservation - CL03</title>
+    <title>CyberLab | Seat Reservation - CL01</title>
     <!--Bootstrap CSS Link-->
     <link 
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
@@ -10,8 +10,8 @@
         crossorigin="anonymous"
     >
 
-    <!--CL03 CSS Link-->
-    <link rel="stylesheet" href="css/cl03.css">
+    <!--CL01 CSS Link-->
+    <link rel="stylesheet" href="../css/cl01.css">
 
     <!--Font Import-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -22,31 +22,39 @@
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
         crossorigin="anonymous">
     </script>
-    
+
     <!--JavaScripts-->
-    <script src="scripts/rooms.js" defer></script>
-    <script src="scripts/index.js" defer></script>
+    <script src="index.js" defer></script>
+    <script src="rooms.js" defer></script>
 </head>
 <body>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+        crossorigin="anonymous">
+    </script>
     <nav class="navbar navbar-expand">
         <div class="container-fluid">
-            <a class="navbar-brand text-info custom-font fs-3" href="index.html">CyberLab</a>
+            <a class="navbar-brand text-info custom-font fs-3" href="[student]-index.html">CyberLab</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
-                    <a class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="index.html">View Rooms</a>
-                    <a class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
-                    <p class="text-white custom-font fs-5 mt-1">|</p>
-                    <a class="text-white nav-link fs-5 custom-font" href="[student-view]/[student]-index.html">Students' View</a>
+                    <a class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="[student]-index.html">View Rooms</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="[student]-profile.html">View Profile</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="../login.html">Log out</a>
+                    <p class="text-white fs-5 custom-font mt-1"> | </p>
+                    <a class="text-white nav-link fs-5 custom-font" href="../[lab-tech-view]/[tech]-index.html">Technician's View</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="../index.html">Visitor's View</a>
+
                 </div>
             </div>
         </div>
     </nav>
 
     <div class="text-center title-container">
-        <h1 class="text-white fw-bold custom-font">CyberLab Room CL03</h1>
+        <h1 class="text-white fw-bold custom-font">CyberLab Room CL01</h1>
     </div>
 
     <div class="dateForm-container container row mx-auto mt-3">
@@ -285,10 +293,8 @@
             <button type="submit" class="btn btn-info btn-lg mt-3" id="reserveBtn">Reserve</button>
         </div>
     </form> 
-
     <div class="container mt-3">
-        <button class="btn btn-outline-info btn-lg btn-back" >Back</button>
+        <button class="btn btn-outline-info btn-lg btn-back">Back</button>
     </div>
-    
 </body>
 </html>
