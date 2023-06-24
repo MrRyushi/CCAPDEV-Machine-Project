@@ -6,7 +6,7 @@ $(document).ready(function(){
     const form = document.querySelector('.reserve-form');
   
     form.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent form submission
+      // Prevent form submission
       
       alert('Please sign in to reserve a seat.');
     });

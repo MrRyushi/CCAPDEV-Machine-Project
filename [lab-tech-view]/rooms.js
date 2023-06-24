@@ -23,15 +23,19 @@ $(document).ready(function(){
         email = prompt(`Enter email of student:`);
         seats = null;
   
-        if(email !== ""){
+        if(email === ""){
+          alert('Please enter the email of the student!');
+        }
+        else if(email == null){
+          //do nothing
+        }
+        else{
           for(let i = 0; i < checkedId.length; i++){
             let btn = document.querySelector(`#${checkedId[i]}`);
             let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
             labelElement.classList.replace("btn-outline-info", "btn-danger");
             btn.disabled=true;
           }  
-        } else {
-          alert('Please enter the email of the student!');
         }
       } else {
         alert('Please select a date and a time and the seats you want to reserve!');
