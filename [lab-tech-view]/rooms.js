@@ -13,13 +13,18 @@ $(document).ready(function(){
       var date = document.querySelector("#date").value;
       var time = document.querySelector("#time").value;
   
-      var anonymous;
 
       // this for loop is to uncheck the boxes after selecting them
       for(let i = 0; i < checkedCheckboxes.length; i++){
         checkedCheckboxes[i].checked = false;
       }
   
+      var anonymous;
+      const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
+      var seatNumbers = [];
+      var name = "Anonymous";
+      var profileLink = "";
+
       if (date !== "" && time !== "" && checkedCheckboxes != "") {
         anonymous = confirm('Do you want to reserve anonymously?');
         if(anonymous == true){
@@ -30,9 +35,20 @@ $(document).ready(function(){
             let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
             labelElement.classList.replace("btn-outline-info", "btn-danger");
             btn.disabled=true;
+            seatNumbers.push(labelElement.textContent);
+          }
+
+          for(s of seatNumbers){
+            let parag = $("<p>");
+            parag.addClass("text-white custom-font text-center");
+            parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
+            console.log(parag[0]); 
+            reservedSeatsContainer.append(parag[0]);
           }
         } else {
           email = prompt(`Enter email of student:`);
+          name = "Muzan Kibutsuji";
+          profileLink = "[tech]-profile.html";
 
           if(email === ""){
             alert('Please enter the email of the student!');
@@ -46,10 +62,20 @@ $(document).ready(function(){
               let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
               labelElement.classList.replace("btn-outline-info", "btn-danger");
               btn.disabled=true;
-            }  
+              seatNumbers.push(labelElement.textContent);
+            }
+            
+              // create a paragraph element
+
+            for(s of seatNumbers){
+              let parag = $("<p>");
+              parag.addClass("text-white custom-font text-center");
+              parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
+              console.log(parag[0]); 
+              reservedSeatsContainer.append(parag[0]);
+            }
           }
         }
-        
       } else {
         alert('Please select a date and a time and the seats you want to reserve!');
       }  
