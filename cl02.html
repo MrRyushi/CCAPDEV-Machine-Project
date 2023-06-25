@@ -36,8 +36,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
-                    <a class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="index.html">View Rooms</a>
-                    <a class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
+                    <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="index.html">View Rooms</a>
+                    <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
+                    <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="profile.html">View Profile</a>
+                    <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login.html">Log out</a>
                 </div>
             </div>
         </div>
@@ -269,11 +271,12 @@
             <div class="title">
                 <p class="text-white fs-2 text-center custom-font">Reserved Seats</p>
             </div>
-            <div class="seats">
+            <div class="resSeatsContainer">
                 <p class="text-white custom-font text-center">[Sample Data]</p>
                 <p class="text-white custom-font text-center">Seat #28: <a class="link-offset-3 link-offset-2-hover text-white" href="profile.html">Muzan Kibutsuji</a></p>
                 <p class="text-white custom-font text-center">Seat #42: <a class="link-offset-3 link-offset-2-hover text-white" href="profile.html">Muzan Kibutsuji</a></p>
                 <p class="text-white custom-font text-center">Seat #45: Anonymous</p>
+            </div>
         </div>
     </div>
 

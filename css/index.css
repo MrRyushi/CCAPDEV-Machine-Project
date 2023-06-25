@@ -30,3 +30,7 @@ div.wc-message {
 .navbar-nav a:hover {
     color: cyan !important;
 }
+
+.view-link:hover{
+    color: cyan !important;
+}

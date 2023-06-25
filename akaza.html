@@ -10,7 +10,7 @@
         crossorigin="anonymous"
     >
     <!--Profile CSS Link-->
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="css/profile.css">
 
     <!--Font Import-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -26,21 +26,22 @@
     </script>
 
     <!--JavaScripts-->
-    <script src="profile.js" defer></script>
-    <script src="index.js" defer></script>
+    <script src="scripts/profile.js" defer></script>
+
 </head>
 <body>
     <nav class="navbar navbar-expand">
         <div class="container-fluid">
-            <a class="navbar-brand text-info custom-font fs-3" href="[student]-index.html">CyberLab</a>
+            <a class="navbar-brand text-info custom-font fs-3" href="index.html">CyberLab</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
-                    <a class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="[student]-index.html">View Rooms</a>
-                    <a class="text-white nav-link fs-5 custom-font" href="[student]-profile.html">View Profile</a>
-                    <a class="text-white nav-link fs-5 custom-font" href="../login.html">Log out</a>
+                    <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="index.html">View Rooms</a>
+                    <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="login.html">Sign in</a>
+                    <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="profile.html">View Profile</a>
+                    <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login.html">Log out</a>
                 </div>
             </div>
         </div>
@@ -68,21 +69,19 @@
     <div class="profile-container container text-black border border-white rounded bg-info-subtle">
         <div class="row justify-content-center mx-auto">
             <div class="picture-container text-center col-lg-3 my-4">
-                    <img src="../images/zenitsu.png" alt="Profile Picture" class="profile-pic img-fluid border border-white rounded">
+                    <img src="images/akaza.png" alt="Profile Picture" class="profile-pic img-fluid border border-white rounded">
             </div>
 
             <div class="col-lg-9 mx-0">
                 <div class="container-fluid p-3 rounded">
-                    <h2 class="mt-1 fs-1">Zenitsu</h2>
+                    <h2 class="mt-1 fs-1">Akaza</h2>
                     <p class="fs-4">Biography</p>
 
                     <textarea id="profileDescription" class="form-control form-control-m d-none"></textarea>
 
                     <div class="description p-3 rounded border border-black bg-success-subtle" id="description">
-                        <p class="fs-5"> If Nezuko-chan has a million fans, then I am one of them. If Nezuko-chan has ten fans, 
-                            then I am one of them. If Nezuko-chan has only one fan then that is me. If Nezuko-chan has no fans, 
-                            then that means I am no longer on earth. If the world is against Nezuko-chan, then I am against the 
-                            world.</p>
+                        <p class="fs-5"> He is a demon affiliated with the Twelve Kizuki, holding the third highest position, Upper Rank Three
+                                         I hate Douma! One day, I'll get my chance!</p>
                     </div>
                 </div>
             </div>
@@ -112,7 +111,6 @@
     </div>
 
     <hr class="border hr-title mx-auto">
-
 </div>
 </body>
 </html>

@@ -1,4 +1,13 @@
 $(document).ready(function() {
+  //back button
+  $(".btn-back").click(function(){
+    window.location.href = "index.html";
+  });
+
+  $(".btn-sample-back").click(function() {
+    window.location.href = "profile.html";
+  })
+
   // Edit Profile Button Click Event
   $("#editProfileBtn").click(function() {
     $("#deleteUserBtn").addClass("d-none");
@@ -101,4 +110,58 @@ $(document).ready(function() {
     $("#saveBtn").addClass("d-none");
   });
 
+  // navbar links
+  const viewRoomsLink = $("#viewRoomsLink");
+  const signInLink = $("#signInLink");
+  const viewProfileLink = $("#viewProfileLink");
+  const logoutBtn = $("#logoutBtn");
+
+  // NAV BAR
+  const view = sessionStorage.getItem("view");
+
+  // PROFILE
+  const deleteUserBtn = $("#deleteUserBtn");
+  const editProfileBtn = $("#editProfileBtn");
+  const saveBtn = $("#saveBtn");
+  const editPictureBtn = $("#editPictureBtn");
+  const editDescBtn = $("#editDescBtn");
+  const saveDescBtn = $("#saveDescBtn");
+  const savePictureBtn = $("savePictureBtn");
+
+  // reservations
+  const editBtns = $(".edit-btn");
+
+  if(view == "student"){
+    signInLink.addClass("d-none");
+    viewProfileLink.removeClass("d-none");
+    logoutBtn.removeClass("d-none");
+  } else if(view == "tech") {
+    signInLink.addClass("d-none");
+    viewProfileLink.addClass("d-none");
+    logoutBtn.removeClass("d-none");
+
+    deleteUserBtn.addClass("d-none");
+    editProfileBtn.addClass("d-none");
+    saveBtn.addClass("d-none");
+    editPictureBtn.addClass("d-none");
+    editDescBtn.addClass("d-none");
+    saveDescBtn.addClass("d-none");
+    savePictureBtn.addClass("d-none");
+  } else if(view == "visitor"){
+    signInLink.removeClass("d-none");
+    viewProfileLink.addClass("d-none");
+    logoutBtn.addClass("d-none");
+
+    deleteUserBtn.addClass("d-none");
+    editProfileBtn.addClass("d-none");
+    saveBtn.addClass("d-none");
+    editPictureBtn.addClass("d-none");
+    editDescBtn.addClass("d-none");
+    saveDescBtn.addClass("d-none");
+    savePictureBtn.addClass("d-none");
+
+    for(e of editBtns){
+      e.classList.add("d-none");
+    }
+  }
 });
