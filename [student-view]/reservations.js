@@ -54,7 +54,7 @@ $(document).ready(function(){
         // date request
         datereq.html("");
         datereq_form = $("<input>");
-        datereq_form.attr("type", "date")
+        datereq_form.attr("type", "datetime-local")
         datereq_form.addClass("room-form form-control");
         datereq_form.val(currDateReq);
         datereq.append(datereq_form);

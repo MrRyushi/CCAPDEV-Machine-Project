@@ -43,246 +43,263 @@
         </div>
     </nav>
 
-    <div class="text-center title-container">
-        <h1 class="text-white fw-bold custom-font">CyberLab Room CL01</h1>
-    </div>
+    <div class="container main-container row mx-auto">
+        <div class="container room-container col-md-9">
+            <div class="text-center title-container">
+                <h1 class="text-white fw-bold custom-font">CyberLab Room CL01</h1>
+            </div>
+        
+            <div class="dateForm-container container row mx-auto mt-3">
+                <div class="col-xxl-4 col-xs-12 mx-2 my-1 mx-auto">
+                    <input class="form-control" id="date" name="date" type="date">
+                </div>
+                <div class="mx-auto col-xxl-4 col-xs-12 mx-2 my-1">
+                    <select class="form-select" id="time" name="time" aria-label="Default select example">
+                        <option value="09:00 to 09:30">09:00 to 09:30</option>
+                        <option value="09:30 to 10:00">09:30 to 10:00</option>
+                        <option value="10:00 to 10:30">10:00 to 10:30</option>
+                        <option value="10:30 to 11:00">10:30 to 11:00</option>
+                        <option value="11:00 to 11:30">11:00 to 11:30</option>
+                        <option value="11:30 to 12:00">11:30 to 12:00</option>
+                        <option value="12:00 to 12:30">12:00 to 12:30</option>
+                        <option value="12:30 to 13:00">12:30 to 13:00</option>
+                        <option value="13:00 to 13:30">13:00 to 13:30</option>
+                        <option value="13:30 to 14:00">13:30 to 14:00</option>
+                        <option value="14:00 to 14:30">14:00 to 14:30</option>
+                        <option value="14:30 to 15:00">14:30 to 15:00</option>
+                        <option value="15:00 to 15:30">15:00 to 15:30</option>
+                        <option value="15:30 to 16:00">15:30 to 16:00</option>
+                        <option value="16:00 to 16:30">16:00 to 16:30</option>
+                        <option value="16:30 to 17:00">16:30 to 17:00</option>
+                      </select>
+                </div>
+                <div class="mx-auto my-1 col-xxl-3 col-xs-12">
+                    <button class="btn btn-outline-info btn-small d-block mx-auto" id="btnCheckDate">Check Date</button>
+                </div>
+            </div>
+        
+            <form class="reserve-form">
+                <div class="container text-center seat-container">
+                    <div class="btn-group-vertical mx-4">
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-01" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-01">01</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-02" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-02">02</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-03" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-03">03</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-04" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-04">04</label>
+                            </div>
+                        </div>
+                    
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-05" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-05">05</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-06" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-06">06</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-07" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-07">07</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-08" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-08">08</label>
+                            </div>
+                        </div>
+                
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-09" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-09">09</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-10" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-10">10</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-11" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-11">11</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-12" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-12">12</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group-vertical mx-4">
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-13" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-13">13</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-14" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-14">14</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-15" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-15">15</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-16" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-16">16</label>
+                            </div>
+                        </div>
+                    
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-17" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-17">17</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-18" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-18">18</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-19" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-19">19</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-20" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-20">20</label>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-21" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-21">21</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-22" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-22">22</label>
+                            </div>
+                
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-23" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-23">23</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-24" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-24">24</label>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="btn-group-vertical mx-4">
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-25" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-25">25</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-26" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-26">26</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-27" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-27">27</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-28" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-28">28</label>
+                            </div>
+                        </div>
+                    
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-29" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-29">29</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-30" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-30">30</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-31" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-31">31</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-32" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-32">32</label>
+                            </div>
+                        </div>
+                
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-33" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-33">33</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-34" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-34">34</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-35" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-35">35</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-36" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-36">36</label>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="btn-group-vertical mx-4">
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-37" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-37">37</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-38" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-38">38</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-39" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-39">39</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-40" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-40">40</label>
+                            </div>
+                        </div>
+                    
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-41" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-41">41</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-42" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-42">42</label>
+                            </div>
+                        
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-43" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-43">43</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-44" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-44">44</label>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group my-4">
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-45" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-45">45</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-46" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-46">46</label>
+                            </div>
+                
+                            <div class="btn-group-vertical mx-1" role="group">
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-47" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-47">47</label>
+                                <input type="checkbox" class="btn-check seatBtn" id="btn-48" autocomplete="off">
+                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-48">48</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="container text-center">
+                    <button type="submit" class="btn btn-info btn-lg mt-3" id="reserveBtn">Reserve</button>
+                </div>
+            </form> 
+        </div>
 
-    <div class="dateForm-container container row mx-auto mt-3">
-        <div class="col-xxl-4 col-xs-12 mx-2 my-1 mx-auto">
-            <input class="form-control" id="date" name="date" type="date">
-        </div>
-        <div class="mx-auto col-xxl-4 col-xs-12 mx-2 my-1">
-            <select class="form-select" id="time" name="time" aria-label="Default select example">
-                <option value="09:00 to 09:30">09:00 to 09:30</option>
-                <option value="09:30 to 10:00">09:30 to 10:00</option>
-                <option value="10:00 to 10:30">10:00 to 10:30</option>
-                <option value="10:30 to 11:00">10:30 to 11:00</option>
-                <option value="11:00 to 11:30">11:00 to 11:30</option>
-                <option value="11:30 to 12:00">11:30 to 12:00</option>
-                <option value="12:00 to 12:30">12:00 to 12:30</option>
-                <option value="12:30 to 13:00">12:30 to 13:00</option>
-                <option value="13:00 to 13:30">13:00 to 13:30</option>
-                <option value="13:30 to 14:00">13:30 to 14:00</option>
-                <option value="14:00 to 14:30">14:00 to 14:30</option>
-                <option value="14:30 to 15:00">14:30 to 15:00</option>
-                <option value="15:00 to 15:30">15:00 to 15:30</option>
-                <option value="15:30 to 16:00">15:30 to 16:00</option>
-                <option value="16:00 to 16:30">16:00 to 16:30</option>
-                <option value="16:30 to 17:00">16:30 to 17:00</option>
-              </select>
-        </div>
-        <div class="mx-auto my-1 col-xxl-3 col-xs-12">
-            <button class="btn btn-outline-info btn-small d-block mx-auto" id="btnCheckDate">Check Date</button>
+        <div class="container border border-white col-md-3 w-25">
+            <div class="title">
+                <p class="text-white fs-2 text-center custom-font">Reserved Seats</p>
+            </div>
+            <div class="seats">
+                <p class="text-white custom-font">Seat #15: Anonymous</p>
+                <p class="text-white custom-font">Seat #7: <a class="link-offset-3 link-offset-2-hover text-white" href="profile.html">Muzan Kibutsuji</a></p>
+                <p class="text-white custom-font">Seat #12: <a class="link-offset-3 link-offset-2-hover text-white" href="profile.html">Muzan Kibutsuji</a></p>
+            </div>
         </div>
     </div>
-
-    <form class="reserve-form">
-        <div class="container text-center seat-container">
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-01" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-01">01</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-02" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-02">02</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-03" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-03">03</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-04" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-04">04</label>
-                    </div>
-                </div>
-            
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-05" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-05">05</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-06" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-06">06</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-07" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-07">07</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-08" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-08">08</label>
-                    </div>
-                </div>
-        
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-09" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-09">09</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-10" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-10">10</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-11" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-11">11</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-12" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-12">12</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-13" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-13">13</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-14" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-14">14</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-15" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-15">15</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-16" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-16">16</label>
-                    </div>
-                </div>
-            
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-17" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-17">17</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-18" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-18">18</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-19" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-19">19</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-20" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-20">20</label>
-                    </div>
-                </div>
-                
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-21" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-21">21</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-22" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-22">22</label>
-                    </div>
-        
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-23" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-23">23</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-24" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-24">24</label>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-25" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-25">25</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-26" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-26">26</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-27" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-27">27</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-28" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-28">28</label>
-                    </div>
-                </div>
-            
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-29" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-29">29</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-30" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-30">30</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-31" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-31">31</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-32" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-32">32</label>
-                    </div>
-                </div>
-        
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-33" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-33">33</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-34" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-34">34</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-35" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-35">35</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-36" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-36">36</label>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="btn-group-vertical mx-4">
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-37" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-37">37</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-38" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-38">38</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-39" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-39">39</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-40" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-40">40</label>
-                    </div>
-                </div>
-            
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-41" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-41">41</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-42" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-42">42</label>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-43" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-43">43</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-44" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-44">44</label>
-                    </div>
-                </div>
-                
-                <div class="btn-group my-4">
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-45" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-45">45</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-46" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-46">46</label>
-                    </div>
-        
-                    <div class="btn-group-vertical mx-1" role="group">
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-47" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-47">47</label>
-                        <input type="checkbox" class="btn-check seatBtn" id="btn-48" autocomplete="off">
-                        <label class="btn btn-outline-info my-1 btn-lg" for="btn-48">48</label>
-                    </div>
-                </div>
-            </div>
-        </div>
     
-        <div class="container text-center">
-            <button type="submit" class="btn btn-info btn-lg mt-3" id="reserveBtn">Reserve</button>
-        </div>
-    </form> 
+
     <div class="container mt-3">
         <button class="btn btn-outline-info btn-lg btn-back">Back</button>
     </div>
