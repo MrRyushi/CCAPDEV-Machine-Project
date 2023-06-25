@@ -1,0 +1,5 @@
+- prompt for the student to reserve anonymously
+- clicking on a reserved seat should show who reserved it
+- remember prompt when logging in
+- remove reservation (lab technician view)
+- lab technicians are able to edit any reservation
