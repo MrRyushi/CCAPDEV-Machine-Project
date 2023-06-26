@@ -4,9 +4,9 @@ $(document).ready(function() {
     window.location.href = "index.html";
   });
 
-  $(".btn-sample-back").click(function() {
+  $(".btn-back-profile").click(function(){
     window.location.href = "profile.html";
-  })
+  });
 
   // Edit Profile Button Click Event
   $("#editProfileBtn").click(function() {

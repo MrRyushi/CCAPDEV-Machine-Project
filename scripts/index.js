@@ -4,6 +4,7 @@ $(document).ready(function(){
     window.location.href = "index.html";
   });
 
+
   //set default value
   if(sessionStorage.getItem("view") == null){
     sessionStorage.setItem("view", "visitor");
