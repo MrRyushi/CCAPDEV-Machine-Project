@@ -73,29 +73,48 @@ $(document).ready(function(){
           anonymous = confirm(`Do you want to reserve anonymously [ok for YES | cancel for NO]?`);
           if(anonymous == true){
             // code to store the email in database as anonymous
+
+            for(let i = 0; i < checkedId.length; i++){
+              let btn = document.querySelector(`#${checkedId[i]}`);
+              let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
+              labelElement.classList.replace("btn-outline-info", "btn-danger");
+              btn.disabled = true;
+              seatNumbers.push(labelElement.textContent);
+            }  
+            dateRequested = new Date()
+            alert(`Seats reserved on ${dateRequested.getMonth()+1} / ${dateRequested.getDate()} / ${dateRequested.getFullYear()} Time: ${dateRequested.getHours()} : ${dateRequested.getMinutes()} : ${dateRequested.getSeconds()} `);
+            
+            // create a paragraph element
+  
+            for(s of seatNumbers){
+              let parag = $("<p>");
+              parag.addClass("text-white custom-font text-center");
+              parag.html(`Seat #${s}: ${name}`);
+              reservedSeatsContainer.append(parag[0]);
+            }
           } else {
             // code to store the logged in email in database
             name = "Muzan Kibutsuji";
-            profileLink = "[student]-profile.html"
-          }
-          for(let i = 0; i < checkedId.length; i++){
-            let btn = document.querySelector(`#${checkedId[i]}`);
-            let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
-            labelElement.classList.replace("btn-outline-info", "btn-danger");
-            btn.disabled = true;
-            seatNumbers.push(labelElement.textContent);
-          }  
-          dateRequested = new Date()
-          alert(`Seats reserved on ${dateRequested.getMonth()+1} / ${dateRequested.getDate()} / ${dateRequested.getFullYear()} Time: ${dateRequested.getHours()} : ${dateRequested.getMinutes()} : ${dateRequested.getSeconds()} `);
-          
-          // create a paragraph element
+            profileLink = "profile.html"
 
-          for(s of seatNumbers){
-            let parag = $("<p>");
-            parag.addClass("text-white custom-font text-center");
-            parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
-            console.log(parag[0]); 
-            reservedSeatsContainer.append(parag[0]);
+            for(let i = 0; i < checkedId.length; i++){
+              let btn = document.querySelector(`#${checkedId[i]}`);
+              let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
+              labelElement.classList.replace("btn-outline-info", "btn-danger");
+              btn.disabled = true;
+              seatNumbers.push(labelElement.textContent);
+            }  
+            dateRequested = new Date()
+            alert(`Seats reserved on ${dateRequested.getMonth()+1} / ${dateRequested.getDate()} / ${dateRequested.getFullYear()} Time: ${dateRequested.getHours()} : ${dateRequested.getMinutes()} : ${dateRequested.getSeconds()} `);
+            
+            // create a paragraph element
+  
+            for(s of seatNumbers){
+              let parag = $("<p>");
+              parag.addClass("text-white custom-font text-center");
+              parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
+              reservedSeatsContainer.append(parag[0]);
+            }
           }
         }
       } else {
@@ -141,8 +160,7 @@ $(document).ready(function(){
           for(s of seatNumbers){
             let parag = $("<p>");
             parag.addClass("text-white custom-font text-center");
-            parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
-            console.log(parag[0]); 
+            parag.html(`Seat #${s}: ${name}`);
             reservedSeatsContainer.append(parag[0]);
           }
         } else {
@@ -171,7 +189,6 @@ $(document).ready(function(){
               let parag = $("<p>");
               parag.addClass("text-white custom-font text-center");
               parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
-              console.log(parag[0]); 
               reservedSeatsContainer.append(parag[0]);
             }
           }

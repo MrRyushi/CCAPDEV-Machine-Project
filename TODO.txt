@@ -1,6 +1,0 @@
-- prompt for the student to reserve anonymously // done
-- clicking on a reserved seat should show who reserved it // done
-- remember prompt when logging in
-- lab technicians are able to remove reservations (10 minutes after scheduled time)
-- lab technicians are able to edit any reservation // done
-- edit the reservations (time and date) // done
