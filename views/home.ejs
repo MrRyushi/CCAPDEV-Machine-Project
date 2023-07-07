@@ -24,7 +24,7 @@
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
         crossorigin="anonymous">
     </script>
-    
+
     <!--JavaScripts-->
     <script src="../scripts/index.js" defer></script>  
 </head>
@@ -40,7 +40,9 @@
                     <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="index.html">View Rooms</a>
                     <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="login">Sign in</a>
                     <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="profile.html">View Profile</a>
-                    <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login">Log out</a>
+                    <form action=/logout?_method=DELETE" method="POST">
+                        <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login">Log out</a>
+                    </form>
                     <p class="text-white custom-font fs-5 mt-1">|</p>
                     <button id="studentViewLink" class="text-white nav-link fs-5 custom-font view-link mb-1">Students' View</button>
                     <button id="technicianViewLink" class="text-white nav-link fs-5 custom-font view-link mb-1">Technician's View</button>
