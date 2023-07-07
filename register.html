@@ -16,6 +16,7 @@
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
         crossorigin="anonymous">
     </script>
+    <script src="scripts/register.js" defer></script>
 </head>
 <body>
     <nav class="navbar navbar-expand">
@@ -33,7 +34,7 @@
         </div>
     </nav>
 
-    <form action="login.html">
+    <form>
         <div class="container container-register">
             <div class="text-center">
                 <h1 class="text-white">Register</h1>
@@ -44,14 +45,14 @@
                     <div class="row">
                         <div class="col">
                             <label for="emailinput" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="emailinput" placeholder="juan_delacruz@dlsu.edu.ph">
+                            <input id="emailInput" type="email" class="form-control" id="emailinput" placeholder="juan_delacruz@dlsu.edu.ph">
                         </div>
                     </div>
         
                     <div class="row mt-3">
                         <div class="col">
                             <label for="passwordinput"  class="form-label">Password</label>
-                            <input type="password" class="form-control" id="passwordinput">
+                            <input id="passwordInput" type="password" class="form-control" id="passwordinput">
                         </div>
                     </div>
         
@@ -59,19 +60,19 @@
                         <div class="input-group">
                             <div class="col">
                                 <label for="student-radio" class="form-label">Student</label>
-                                <input type="radio" id="student-radio" class="form-check-input mt-0" name="account-type">
+                                <input type="radio" id="student-radio" class="form-check-input mt-0" name="account-type" value="Student">
                             </div>
             
                             <div class="col">
                                 <label for="technician-radio" class="form-label">Lab Technician</label>
-                                <input type="radio" id="technician-radio" class="form-check-input mt-0" name="account-type">
+                                <input type="radio" id="technician-radio" class="form-check-input mt-0" name="account-type" value="Technician">
                             </div>
                         </div>
                     </div>
         
                     <div class="row mt-3 text-center">
                         <div class="col">
-                            <button class=" text-white btn btn-outline-secondary" type="submit">Register</button>
+                            <button id="registerBtn" class=" text-white btn btn-outline-secondary" type="submit">Register</button>
                         </div>
                     </div>
                 </form>
