@@ -230,18 +230,65 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/cl01', (req, res) => {
-  res.render('cl01.ejs');
+app.get('/api/cl01', async (req, res) => {
+  try {
+    const cl01Data = await db.collection('cl01').find().toArray();
+    res.json(cl01Data);
+  } catch (error) {
+    console.log('Error retrieving data from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/cl01', async (req, res) => {
+  try {
+    const cl01Data = await db.collection('cl01').find().toArray();
+    res.render('cl01.ejs', { cl01Data });
+  } catch (error) {
+    console.log('Error retrieving data from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/cl02', async (req, res) => {
+  try {
+    const cl02Data = await db.collection('cl02').find().toArray();
+    res.json(cl02Data);
+  } catch (error) {
+    console.log('Error retrieving data from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/cl02', async (req, res) => {
+  try {
+    const cl02Data = await db.collection('cl02').find().toArray();
+    res.render('cl02.ejs', { cl02Data });
+  } catch (error) {
+    console.log('Error retrieving data from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
 })
 
-app.get('/cl02', (req, res) => {
-  res.render('cl02.ejs');
-})
+app.get('/api/cl03', async (req, res) => {
+  try {
+    const cl03Data = await db.collection('cl03').find().toArray();
+    res.json(cl03Data);
+  } catch (error) {
+    console.log('Error retrieving data from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
-app.get('/cl03', (req, res) => {
-  res.render('cl03.ejs');
+app.get('/cl03', async (req, res) => {
+  try {
+    const cl03Data = await db.collection('cl03').find().toArray();
+    res.render('cl03.ejs', { cl03Data });
+  } catch (error) {
+    console.log('Error retrieving data from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
 })
-
 app.post('/room', async (req, res) => {
   console.log(req.body);
   const room01 = await db.collection('cl01');
@@ -266,24 +313,6 @@ app.post('/room', async (req, res) => {
       seatSelected: req.body.seatSelected,
     });
     console.log(insertResult);
-    /*
-    labAccounts.findOne({email: email}).then(async val => {
-      console.log(val)
-      console.log("Finding successful")
-
-      if(val == null){
-          const insertResult = await labAccounts.insertOne({
-              email: email,
-              password: password,
-              accountType: userType
-          });
-          console.log(insertResult);
-      } else {
-          console.log("This email has already been registered");
-      }
-    }).catch(err => {
-        console.log(err)
-    }); */
   }
 })
 

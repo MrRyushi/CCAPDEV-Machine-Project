@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
   // This code is to generate the current date
   document.getElementById('date').valueAsDate = new Date();
 
@@ -10,9 +10,89 @@ $(document).ready(function(){
 
   // NAV BAR
   const view = sessionStorage.getItem("view");
-  
+
   // reservation seats
-  const resSeatsP = $(".resSeatsContainer p")
+  const resSeatsP = $(".resSeatsContainer p");
+  let roomName = document.querySelector('#roomName').innerHTML.substring(14);
+  let url;
+  if (roomName == 'CL01') {
+    url = '/api/cl01';
+  } else if (roomName == 'CL02') {
+    url = '/api/cl02';
+  } else {
+    url = '/api/cl03';
+  }
+  let allReservations = [];
+
+  $.ajax({
+    url: url,
+    method: 'GET',
+    success: function(response) {
+      // Handle the data received from the server
+      for (let key in response) {
+        allReservations.push(response[key]);
+      }
+      // Use the data to reflect it on your HTML page
+      updateReservedSeats(); // Call the function here, inside the success callback
+    },
+    error: function(error) {
+      // Handle the error response from the server
+      console.log('Error retrieving data:', error);
+    }
+  });
+
+  function updateReservedSeats (){
+    let dateSelected = document.querySelector('#date').value;
+    let timeSelected = document.querySelector('#time').value;
+    const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
+
+    reservedSeatsContainer.innerHTML = "";
+    for(let i = 1; i <= 48; i++){
+      if(i < 10){
+        let btn = document.querySelector(`#btn-0${i}`);
+        btn.disabled = false;
+        let labelElement = document.querySelector(`label[for="btn-0${i}"]`);
+        labelElement.classList.replace("btn-danger", "btn-outline-info"); 
+      } else {
+        let btn = document.querySelector(`#btn-${i}`);
+        btn.disabled = false;
+        let labelElement = document.querySelector(`label[for="btn-${i}"]`);
+        labelElement.classList.replace("btn-danger", "btn-outline-info");
+      }
+    }
+
+    for(reservation of allReservations){
+      if(reservation.date == dateSelected && reservation.time == timeSelected){
+          // display the reserved seats
+
+          if(!Array.isArray(reservation.seatSelected)){
+            reservation.seatSelected = [reservation.seatSelected];
+          }
+          
+          for(b of reservation.seatSelected){
+            let btn = document.querySelector(`#btn-${b}`);
+            btn.disabled = true;
+            let labelElement = document.querySelector(`label[for="btn-${b}"]`);
+            labelElement.classList.replace("btn-outline-info", "btn-danger");
+
+
+            let parag = $("<p>");
+            parag.addClass("text-white custom-font text-center");
+            parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white">${reservation.user}`);
+            reservedSeatsContainer.append(parag[0]);
+          
+          }
+      }
+    }
+  }
+  
+  document.addEventListener("DOMContentLoaded", updateReservedSeats);
+
+  // Add event listeners to the date and time inputs
+  document.querySelector('#date').addEventListener("change", updateReservedSeats);
+  document.querySelector('#time').addEventListener("change", updateReservedSeats);
+
+
 
   if(view == "student"){
     signInLink.addClass("d-none");
@@ -295,6 +375,7 @@ $(document).ready(function(){
         alert('Please select a date and a time and the seats you want to reserve!');
       }  
     }
+    window.location.reload();
   });
   })
   
