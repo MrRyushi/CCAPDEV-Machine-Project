@@ -41,25 +41,63 @@ $(document).ready(function(){
 
   $('.reserve-form').submit((event) => {
     // VISITOR
+    event.preventDefault();
+    let roomName = document.querySelector('#roomName').innerHTML.substring(14);
+    let roomNameObject = {name: "roomName", value: roomName};
+    let user = 'anonymous';
+
     if(view == "visitor"){
-      
       alert('Please sign in to reserve a seat.');
-    } 
-    // STUDENT
-    else if (view == "student") {
-      event.preventDefault(); // Prevent form submission
+
       var formData = $(event.target).serializeArray(); // Serialize the form data
-  
-      // Rest of the code...
-  
       // Log the selected seat values
       var selectedSeats = formData
         .filter(function (item) {
-          return item.name === 'btn-selected';
+          return item.name === 'seatSelected';
         })
         .map(function (item) {
           return item.value;
         });
+
+        let viewObject = {name: "view", value: 'visitor'};
+        formData.push(viewObject);
+        formData.push(roomNameObject);
+  
+      // Perform any additional client-side actions or submit the form via AJAX
+      $.ajax({
+        type: 'POST',
+        url: '/room',
+        data: formData,
+        success: function (response) {
+          // Handle the success response from the server
+        },
+        error: function (error) {
+          // Handle the error response from the server
+        }
+      });
+    } 
+    // STUDENT
+    else if (view == "student") {
+      // SEND DATA TO APP.JS
+      var formData = $(event.target).serializeArray(); // Serialize the form data
+      console.log(formData);
+      // Log the selected seat values
+      var selectedSeats = formData
+        .filter(function (item) {
+          return item.name === 'seatSelected';
+        })
+        .map(function (item) {
+          return item.value;
+        });
+
+        let viewObject = {name: "view", value: 'student'};
+        let userObject = {name: "user", value: user};
+        // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
+        // user = ...
+
+        formData.push(viewObject);
+        formData.push(roomNameObject);
+        formData.push(userObject);
   
       // Perform any additional client-side actions or submit the form via AJAX
       $.ajax({
@@ -144,6 +182,7 @@ $(document).ready(function(){
             }
           }
         }
+
       } else {
         alert('Please select a date and a time and the seats you want to reserve!');
       }  
@@ -152,19 +191,26 @@ $(document).ready(function(){
 
     // TECHNICIAN
     else if(view == "tech") {
-      event.preventDefault(); // Prevent form submission
+      // SEND DATA TO APP.JS
+
       var formData = $(event.target).serializeArray(); // Serialize the form data
-  
-      // Rest of the code...
-  
       // Log the selected seat values
       var selectedSeats = formData
         .filter(function (item) {
-          return item.name === 'btn-selected';
+          return item.name === 'seatSelected';
         })
         .map(function (item) {
           return item.value;
         });
+
+        let viewObject = {name: "view", value: 'student'};
+        let userObject = {name: "user", value: user};
+        // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
+        // user = ...
+
+        formData.push(viewObject);
+        formData.push(roomNameObject);
+        formData.push(userObject);
   
       // Perform any additional client-side actions or submit the form via AJAX
       $.ajax({
@@ -178,8 +224,6 @@ $(document).ready(function(){
           // Handle the error response from the server
         }
       });
-
-
 
       const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
       const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);

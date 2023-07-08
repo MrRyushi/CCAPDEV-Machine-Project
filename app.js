@@ -1,7 +1,8 @@
+// IMPORTS FOR CONNECTING TO DATABASE
 import 'dotenv/config';
 import { connectToMongo, getDb } from './db/conn.js';
 
-// CONNECT TO DATABASE
+// -- CONNECT TO DATABASE --
 var db;
 connectToMongo(async (err) => {
     if(err){
@@ -81,7 +82,7 @@ async function insertAccount(email, password, userType) {
 }
 
 
-// HANDLING REQUESTS
+// IMPORTS FOR HANDLING REQUESTS
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path'; 
@@ -89,10 +90,9 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
-
+// -- HANDLING REQUESTS --
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 const app = express();
 const port = 3000;
 
@@ -110,6 +110,7 @@ app.use(session({
   },
 }));
 
+// HOME, REGISTER, AND LOGIN
 app.get('/', (req, res) => {
     res.render('home.ejs') 
 })
@@ -224,19 +225,13 @@ app.post('/login', async (req, res) => {
 //     res.render('technicianview.ejs');
 //   });
   
-// ROOMS
+// ROOMS CL01 CL02 CL03
 app.set('view engine', 'ejs');
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get('/cl01', (req, res) => {
   res.render('cl01.ejs');
-})
-
-app.post('/room', (req, res) => {
-  console.log(req.body);
-  res.redirect('/cl01')
 })
 
 app.get('/cl02', (req, res) => {
@@ -247,7 +242,52 @@ app.get('/cl03', (req, res) => {
   res.render('cl03.ejs');
 })
 
+app.post('/room', async (req, res) => {
+  console.log(req.body);
+  const room01 = await db.collection('cl01');
+  const room02 = await db.collection('cl02');
+  const room03 = await db.collection('cl03');
+  console.log("Rooms retrieved / created");
 
+  if(req.body.view != 'visitor'){
+    let roomUsed;
+    if(req.body.roomName == 'CL01'){
+      roomUsed = room01;
+    } else if(req.body.roomName == 'CL02'){
+      roomUsed = room02;
+    } else {
+      roomUsed = room03;
+    }
+    console.log(roomUsed + ' = ' + req.body.roomName);
+    const insertResult = await roomUsed.insertOne({
+      user: req.body.user,
+      date: req.body.date,
+      time: req.body.time, 
+      seatSelected: req.body.seatSelected,
+    });
+    console.log(insertResult);
+    /*
+    labAccounts.findOne({email: email}).then(async val => {
+      console.log(val)
+      console.log("Finding successful")
+
+      if(val == null){
+          const insertResult = await labAccounts.insertOne({
+              email: email,
+              password: password,
+              accountType: userType
+          });
+          console.log(insertResult);
+      } else {
+          console.log("This email has already been registered");
+      }
+    }).catch(err => {
+        console.log(err)
+    }); */
+  }
+})
+
+// SERVER LISTEN
 app.listen(port, (e) => {
   if(e){
       console.log(e);
