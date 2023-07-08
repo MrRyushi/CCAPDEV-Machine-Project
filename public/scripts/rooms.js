@@ -38,15 +38,42 @@ $(document).ready(function(){
   }
 
   // The next lines of code is for reserving seats
-  const form = document.querySelector('.reserve-form');
-  form.addEventListener('submit', (event) => {
+
+  $('.reserve-form').submit((event) => {
     // VISITOR
     if(view == "visitor"){
+      
       alert('Please sign in to reserve a seat.');
     } 
     // STUDENT
-    else if(view == "student"){
+    else if (view == "student") {
       event.preventDefault(); // Prevent form submission
+      var formData = $(event.target).serializeArray(); // Serialize the form data
+  
+      // Rest of the code...
+  
+      // Log the selected seat values
+      var selectedSeats = formData
+        .filter(function (item) {
+          return item.name === 'btn-selected';
+        })
+        .map(function (item) {
+          return item.value;
+        });
+  
+      // Perform any additional client-side actions or submit the form via AJAX
+      $.ajax({
+        type: 'POST',
+        url: '/room',
+        data: formData,
+        success: function (response) {
+          // Handle the success response from the server
+        },
+        error: function (error) {
+          // Handle the error response from the server
+        }
+      });
+
       const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
       const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);
       var date = document.querySelector("#date").value;
@@ -126,7 +153,34 @@ $(document).ready(function(){
     // TECHNICIAN
     else if(view == "tech") {
       event.preventDefault(); // Prevent form submission
+      var formData = $(event.target).serializeArray(); // Serialize the form data
   
+      // Rest of the code...
+  
+      // Log the selected seat values
+      var selectedSeats = formData
+        .filter(function (item) {
+          return item.name === 'btn-selected';
+        })
+        .map(function (item) {
+          return item.value;
+        });
+  
+      // Perform any additional client-side actions or submit the form via AJAX
+      $.ajax({
+        type: 'POST',
+        url: '/room',
+        data: formData,
+        success: function (response) {
+          // Handle the success response from the server
+        },
+        error: function (error) {
+          // Handle the error response from the server
+        }
+      });
+
+
+
       const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
       const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);
       var date = document.querySelector("#date").value;

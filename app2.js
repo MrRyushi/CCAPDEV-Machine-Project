@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import bcrypt from 'bcrypt';
 import passport from 'passport';
-import { initializePassport } from './passport-config.js';
+import { initialize } from './passport-config.js';
 import flash from 'express-flash';
 import methodOverride from 'method-override';
 
@@ -18,10 +18,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = 3000;
+const port = process.env.SERVER_PORT;
 
 const users = [];
-initializePassport(
+initialize(
     passport, 
     email => users.find(user => user.email === email),
     id => users.find(user => user.id === id)
@@ -32,6 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(flash());
 app.use(methodOverride('_method'));
+
+app.set('view-engine', 'ejs');
 
 
 app.use(session({

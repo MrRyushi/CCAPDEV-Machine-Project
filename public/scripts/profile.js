@@ -1,7 +1,7 @@
 $(document).ready(function() {
   //back button
   $(".btn-back").click(function(){
-    window.location.href = "index.html";
+    window.location.href = "home";
   });
 
   $(".btn-back-profile").click(function(){

@@ -88,7 +88,6 @@ import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import bcrypt from 'bycrypt';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -98,7 +97,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
   secret: 'your-secret-key',
@@ -111,97 +110,91 @@ app.use(session({
   },
 }));
 
-app.listen(port, (e) => {
-    if(e){
-        console.log(e);
-    } else {
-        console.log(`Server is now listening on ${port}`);
-    }
-
-});
-
 app.get('/', (req, res) => {
     res.render('home.ejs') 
 })
 
-app.get('/login', (req, res) => {
-    res.render('login.ejs') 
+app.get('/home', (req, res) => {
+  res.render('home.ejs');
 })
 
-app.post('/login', async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    const rememberMe = req.body.rememberMe === 'true';
-  
-    // Log in logic
-    const allowedDomain = 'dlsu.edu.ph';
-    const domain = email.split('@')[1];
-  
-    if (allowedDomain !== domain) {
-      res.render('login.ejs');
-      console.log("Invalid email domain");
-      return;
-    } else {
-      try {
-        const doesMatch = await checkCredentials(email, password);
-  
-        if (doesMatch) {
-          console.log("Login successful");
-          const accountType = await checkAccountType(email, password);
-          console.log(accountType);
-
-        //   if (accountType === 'user') {
-        //     req.session.user = true; // Store user session variable
-        //     res.redirect('/user-view');
-        //   } else if (accountType === 'technician') {
-        //     req.session.technician = true; // Store technician session variable
-        //     res.redirect('/technician-view');
-        //   }
-  
-          if (rememberMe) {
-            // Set a persistent cookie with extended expiration
-            req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000; // 3 weeks
-          }
-          
-        } else {
-          console.log("Login unsuccessful");
-          res.redirect('/login');
-        }
-      } catch (err) {
-        console.log(err);
-        res.redirect('/login');
-      }
-    }
-  });
-  
-
 app.get('/register', (req, res) => {
-    res.render('register.ejs') 
+  res.render('register.ejs') 
 })
 
 app.post('/register', (req, res) => {
-    //console.log(req.body)
-    const email = req.body.email;
-    const password = req.body.password;
-    const accountType = req.body['account-type'];
+  //console.log(req.body)
+  const email = req.body.email;
+  const password = req.body.password;
+  const accountType = req.body['account-type'];
 
-    // Registration logic
-    const allowedDomain = 'dlsu.edu.ph';
-    const domain = email.split('@')[1];
+  // Registration logic
+  const allowedDomain = 'dlsu.edu.ph';
+  const domain = email.split('@')[1];
 
-    if (allowedDomain != domain) {
-        res.render('register.ejs');
-        console.log("Invalid email domain");
-        return;
-    }
+  if (allowedDomain != domain) {
+      res.render('register.ejs');
+      console.log("Invalid email domain");
+      return;
+  }
 
-    else {
-        console.log("Registration successful");
-        res.redirect('/login');
+  else {
+      console.log("Registration successful");
+      res.redirect('/login');
 
-    insertAccount(email, password, accountType);  
-    }
+  insertAccount(email, password, accountType);  
+  }
 })
+
+app.get('/login', (req, res) => {
+  res.render('login.ejs') 
+})
+
+app.post('/login', async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const rememberMe = req.body.rememberMe === 'true';
+
+  // Log in logic
+  const allowedDomain = 'dlsu.edu.ph';
+  const domain = email.split('@')[1];
+
+  if (allowedDomain !== domain) {
+    res.render('login.ejs');
+    console.log("Invalid email domain");
+    return;
+  } else {
+    try {
+      const doesMatch = await checkCredentials(email, password);
+
+      if (doesMatch) {
+        console.log("Login successful");
+        const accountType = await checkAccountType(email, password);
+        console.log(accountType);
+
+      //   if (accountType === 'user') {
+      //     req.session.user = true; // Store user session variable
+      //     res.redirect('/user-view');
+      //   } else if (accountType === 'technician') {
+      //     req.session.technician = true; // Store technician session variable
+      //     res.redirect('/technician-view');
+      //   }
+
+        if (rememberMe) {
+          // Set a persistent cookie with extended expiration
+          req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000; // 3 weeks
+        }
+        
+      } else {
+        console.log("Login unsuccessful");
+        res.redirect('/login');
+      }
+    } catch (err) {
+      console.log(err);
+      res.redirect('/login');
+    }
+  }
+});
 
 // // Middleware to check if the user session exists
 // const checkUserSession = (req, res, next) => {
@@ -231,3 +224,35 @@ app.post('/register', (req, res) => {
 //     res.render('technicianview.ejs');
 //   });
   
+// ROOMS
+app.set('view engine', 'ejs');
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.get('/cl01', (req, res) => {
+  res.render('cl01.ejs');
+})
+
+app.post('/room', (req, res) => {
+  console.log(req.body);
+  res.redirect('/cl01')
+})
+
+app.get('/cl02', (req, res) => {
+  res.render('cl02.ejs');
+})
+
+app.get('/cl03', (req, res) => {
+  res.render('cl03.ejs');
+})
+
+
+app.listen(port, (e) => {
+  if(e){
+      console.log(e);
+  } else {
+      console.log(`Server is now listening on ${port}`);
+  }
+
+});
