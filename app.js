@@ -201,7 +201,7 @@ app.get('/register', (req, res) => {
   res.render('register.ejs', { alert: '', name: '', email: '' }) ;
 })
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   //console.log(req.body)
   const fullName = req.body.fullname;
   const email = req.body.email;
@@ -212,10 +212,10 @@ app.post('/register', (req, res) => {
   const allowedDomain = 'dlsu.edu.ph';
   const domain = email.split('@')[1];
 
-  const isNameExisting = checkIfNameExists(fullName);
-  const isEmailExisting = checkIfEmailExists(email);
+  const isNameExisting = await checkIfNameExists(fullName);
+  const isEmailExisting = await checkIfEmailExists(email);
 
-  if (allowedDomain != domain) {
+  if (allowedDomain !== domain) {
       res.render('register.ejs', { alert: 'Please use DLSU email only', name: fullName, email: email}) 
       return;
   }
@@ -226,10 +226,10 @@ app.post('/register', (req, res) => {
       } else {
         console.log("Registration successful");
         res.redirect('/login');
+        insertAccount(fullName, email, password, accountType);  
+      }
       }
 
-  insertAccount(fullName, email, password, accountType);  
-  }
 })
 
 app.get('/student-view', (req, res) => {
