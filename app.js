@@ -14,7 +14,78 @@ connectToMongo(async (err) => {
       db = getDb();  
 })
 
-async function checkAccountType(email, password) {
+async function checkIfNameExists(name) {
+  const labAccounts = await db.collection("labAccounts");
+  
+  try {
+    const val = await labAccounts.findOne({ name });
+    
+    if (val) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+async function checkIfEmailExists(email) {
+  const labAccounts = await db.collection("labAccounts");
+  
+  try {
+    const val = await labAccounts.findOne({ email });
+    
+    if (val) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+async function findAccountName(email) {
+  const labAccounts = await db.collection("labAccounts");
+  
+  try {
+    const val = await labAccounts.findOne({ email });
+    
+    if (val) {
+      return val.name;
+    } else {
+      console.log("Account not found");
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
+
+async function findAccountDesc(email) {
+  const labAccounts = await db.collection("labAccounts");
+  
+  try {
+    const val = await labAccounts.findOne({ email });
+    
+    if (val) {
+      return val.description;
+    } else {
+      console.log("Account not found");
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
+
+
+async function checkAccountType(email) {
     const labAccounts = await db.collection("labAccounts");
   
     try {
@@ -58,7 +129,7 @@ async function checkCredentials(email, password) {
   }
   
 
-async function insertAccount(email, password, userType) {
+async function insertAccount(fullName, email, password, userType) {
     const labAccounts = await db.collection("labAccounts");
     console.log("Users has been created / retrieved");
 
@@ -68,6 +139,8 @@ async function insertAccount(email, password, userType) {
 
         if(val == null){
             const insertResult = await labAccounts.insertOne({
+                name: fullName,
+                description: "",
                 email: email,
                 password: password,
                 accountType: userType
@@ -89,6 +162,7 @@ import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import bodyParser from 'body-parser';
 
 // -- HANDLING REQUESTS --
 const __filename = fileURLToPath(import.meta.url);
@@ -96,6 +170,10 @@ const __dirname = dirname(__filename);
 const app = express();
 const port = 3000;
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -120,11 +198,12 @@ app.get('/home', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-  res.render('register.ejs') 
+  res.render('register.ejs', { alert: '', name: '', email: '' }) ;
 })
 
 app.post('/register', (req, res) => {
   //console.log(req.body)
+  const fullName = req.body.fullname;
   const email = req.body.email;
   const password = req.body.password;
   const accountType = req.body['account-type'];
@@ -133,22 +212,36 @@ app.post('/register', (req, res) => {
   const allowedDomain = 'dlsu.edu.ph';
   const domain = email.split('@')[1];
 
+  const isNameExisting = checkIfNameExists(fullName);
+  const isEmailExisting = checkIfEmailExists(email);
+
   if (allowedDomain != domain) {
-      res.render('register.ejs');
-      console.log("Invalid email domain");
+      res.render('register.ejs', { alert: 'Please use DLSU email only', name: fullName, email: email}) 
       return;
   }
 
   else {
-      console.log("Registration successful");
-      res.redirect('/login');
+      if(isNameExisting || isEmailExisting) {
+        res.render('register.ejs', { alert: 'Name or email already exists', name: fullName, email: email }) 
+      } else {
+        console.log("Registration successful");
+        res.redirect('/login');
+      }
 
-  insertAccount(email, password, accountType);  
+  insertAccount(fullName, email, password, accountType);  
   }
 })
 
+app.get('/student-view', (req, res) => {
+  res.render('student-view.ejs');
+});
+
+app.get('/technician-view', (req, res) => {
+  res.render('technician-view.ejs');
+});
+
 app.get('/login', (req, res) => {
-  res.render('login.ejs') 
+  res.render('login.ejs', { alert: '', email: '' });
 })
 
 app.post('/login', async (req, res) => {
@@ -156,77 +249,113 @@ app.post('/login', async (req, res) => {
   const password = req.body.password;
   const rememberMe = req.body.rememberMe === 'true';
 
+  req.session.email = email;
+  req.session.password = password;
   // Log in logic
   const allowedDomain = 'dlsu.edu.ph';
   const domain = email.split('@')[1];
 
+  const isEmailExisting = await checkIfEmailExists(email);
+
   if (allowedDomain !== domain) {
-    res.render('login.ejs');
     console.log("Invalid email domain");
+    res.render('login.ejs', { alert: 'Please use DLSU email only', email: '' });
     return;
-  } else {
-    try {
-      const doesMatch = await checkCredentials(email, password);
+  }
 
-      if (doesMatch) {
+  else {
+    if (isEmailExisting) {
+      try {
+        const doesMatch = await checkCredentials(email, password);
+    
+        if (!doesMatch) {
+          console.log("Login unsuccessful");
+          res.render('login.ejs', { alert: 'Incorrect password. Please try again.', email: email });
+          return;
+        }
+    
         console.log("Login successful");
-        const accountType = await checkAccountType(email, password);
+        const accountType = await checkAccountType(email);
         console.log(accountType);
-
-      //   if (accountType === 'user') {
-      //     req.session.user = true; // Store user session variable
-      //     res.redirect('/user-view');
-      //   } else if (accountType === 'technician') {
-      //     req.session.technician = true; // Store technician session variable
-      //     res.redirect('/technician-view');
-      //   }
-
+    
+        if (accountType === 'Student') {
+          res.redirect('/student-view');
+        } else if (accountType === 'Technician') {
+          res.redirect('/technician-view');
+        } else {
+          //redirect to a default view
+          res.redirect('/home');
+        }
+    
         if (rememberMe) {
           // Set a persistent cookie with extended expiration
           req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000; // 3 weeks
         }
-        
-      } else {
-        console.log("Login unsuccessful");
+      } catch (err) {
+        console.log(err);
         res.redirect('/login');
       }
-    } catch (err) {
-      console.log(err);
-      res.redirect('/login');
+    } else {
+      res.render('login.ejs', { alert: "Account doesn't exist. Please register first.", email: email });
+      return;
     }
+  
+  }
+
+});
+
+// My Profile Section
+app.get('/profile', async (req, res) => {
+  try {
+    const email = req.session.email;
+    const name = await findAccountName(email);
+    const description = await findAccountDesc(email);
+    const searchResults = [];
+    res.render('profile', { name , description, searchResults});
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
   }
 });
 
-// // Middleware to check if the user session exists
-// const checkUserSession = (req, res, next) => {
-//     if (req.session.user) {
-//       next(); // User session exists, proceed to the next middleware or route
-//     } else {
-//       res.redirect('/login'); // User session doesn't exist, redirect to login page
-//     }
-//   };
-  
-//   // Middleware to check if the technician session exists
-//   const checkTechnicianSession = (req, res, next) => {
-//     if (req.session.technician) {
-//       next(); // Technician session exists, proceed to the next middleware or route
-//     } else {
-//       res.redirect('/login'); // Technician session doesn't exist, redirect to login page
-//     }
-//   };
-  
-//   app.get('/user-view', checkUserSession, (req, res) => {
-//     // Render the user view (studentview.ejs)
-//     res.render('studentview.ejs');
-//   });
-  
-//   app.get('/technician-view', checkTechnicianSession, (req, res) => {
-//     // Render the technician view (technicianview.ejs)
-//     res.render('technicianview.ejs');
-//   });
+app.post('/search', async (req, res) => {
+  const searchQuery = req.body.query; // Extract the search query from the request body
+  console.log("searchQuery:", searchQuery);
+  const email = req.session.email;
+  const name = await findAccountName(email);
+  const description = await findAccountDesc(email);
+  try {
+    const labAccounts = await db.collection('labAccounts');
+    const searchResults = await labAccounts.find({ name: { $regex: `.*${searchQuery}.*`, $options: 'i' } }).toArray();
+    res.render('profile.ejs', { name, description, searchResults });
+  } catch (error) {
+    console.log('Error retrieving data from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+app.post('/profile/update-description', async (req, res) => {
+  try {
+    const email = req.session.email; // Assuming the user's email is stored in the session
+    const description = req.body.description; // Retrieve the modified description from the request body
+
+    // Update the profile description for the user in the database
+    const labAccounts = await db.collection("labAccounts");
+    await labAccounts.updateOne({ email }, { $set: { description } });
+
+    res.json({ success: true }); // Return a success response
+  } catch (error) {
+    console.log('Error updating profile description:', error);
+    res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+  }
+});
+
+
+
   
 // ROOMS CL01 CL02 CL03
-app.set('view engine', 'ejs');
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

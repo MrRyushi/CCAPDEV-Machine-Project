@@ -44,17 +44,35 @@
             <form action="/register" method="post" class="ms-3 me-3">
                 <div class="row">
                     <div class="col">
+                        <label for="fullname" class="form-label">Full Name</label>
+                        <input id="fullname" type="text" class="form-control" id="fullname" name="fullname" placeholder="Juan Dela Cruz" value="<%= name %>" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
                         <label for="emailinput" class="form-label">Email address</label>
-                        <input id="emailInput" type="email" class="form-control" id="emailinput" name="email" placeholder="juan_delacruz@dlsu.edu.ph">
+                        <input id="emailInput" type="email" class="form-control" id="emailinput" name="email" placeholder="juan_delacruz@dlsu.edu.ph" value="<%= email %>" required>
                     </div>
                 </div>
     
                 <div class="row mt-3">
                     <div class="col">
                         <label for="passwordinput"  class="form-label">Password</label>
-                        <input id="passwordInput" type="password" class="form-control" id="passwordinput" name="password">
+                        <input id="passwordInput" type="password" class="form-control" id="passwordinput" name="password" required>
                     </div>
                 </div>
+
+                <% if (alert) { %>
+                    <div class="row mt-3">
+                        <div class="col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <%= alert %>
+                            </div>
+                        </div>
+                    </div>  
+                    
+                  <% } %>
     
                 <div class="row mt-3 text-center">
                     <div class="input-group">
@@ -69,6 +87,7 @@
                         </div>
                     </div>
                 </div>
+
     
                 <div class="row mt-3 text-center">
                     <div class="col">

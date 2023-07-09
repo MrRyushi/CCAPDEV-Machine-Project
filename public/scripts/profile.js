@@ -8,6 +8,36 @@ $(document).ready(function() {
     window.location.href = "profile.html";
   });
 
+  // Search Profile
+  $('#search-bar').on('input', function() {
+    const searchQuery = $(this).val().trim();
+    console.log('input event triggered');
+    
+    $.ajax({
+      url: '/search',
+      method: 'POST',
+      data: { query: searchQuery },
+      dataType: 'json',
+      success: function(response) {
+        console.log('Search results:', response);
+        let html = '';
+        if (response.length > 0) {
+          response.forEach(result => {
+            html += '<li>' + result.name + '</li>';
+          });
+        } else {
+          html = '<li>No search results found.</li>';
+        }
+        
+        $('#searchSuggestions').html(html);
+      },
+      error: function(error) {
+        console.error('Failed to retrieve search results:', error);
+      }
+    });
+  });
+  
+
   // Edit Profile Button Click Event
   $("#editProfileBtn").click(function() {
     $("#deleteUserBtn").addClass("d-none");
@@ -60,16 +90,30 @@ $(document).ready(function() {
     }
   });
 
-  // Save Description Button Click Event
-  $("#saveDescBtn").click(function() {
-    // Get the new description from the textarea
-    let newDescription = $("#profileDescription").val();
+// Save Description Button Click Event
+$("#saveDescBtn").click(function() {
+  // Get the new description from the textarea
+  let newDescription = $("#profileDescription").val();
 
-    // Check if the new description is not empty
-    if (newDescription.trim() !== "") {
-      // Update the profile description
-      $(".description p").text(newDescription);
-    }
+  // Check if the new description is not empty
+  if (newDescription.trim() !== "") {
+    // Update the profile description
+    $(".description p").text(newDescription);
+
+    $.ajax({
+      url: "/profile/update-description",
+      method: "POST",
+      data: { description: newDescription },
+      success: function(response) {
+        // Handle the success response from the server
+        console.log("Profile description saved successfully!");
+      },
+      error: function(error) {
+        // Handle the error response from the server
+        console.error("Failed to save profile description:", error);
+      }
+    });
+  }
 
     // Toggle visibility of the elements
     $(".description").removeClass("d-none");
@@ -110,6 +154,8 @@ $(document).ready(function() {
     $("#saveBtn").addClass("d-none");
   });
 
+  
+
   // navbar links
   const viewRoomsLink = $("#viewRoomsLink");
   const signInLink = $("#signInLink");
@@ -126,42 +172,42 @@ $(document).ready(function() {
   const editPictureBtn = $("#editPictureBtn");
   const editDescBtn = $("#editDescBtn");
   const saveDescBtn = $("#saveDescBtn");
-  const savePictureBtn = $("savePictureBtn");
+  const savePictureBtn = $("#savePictureBtn");
 
   // reservations
   const editBtns = $(".edit-btn");
 
-  if(view == "student"){
-    signInLink.addClass("d-none");
-    viewProfileLink.removeClass("d-none");
-    logoutBtn.removeClass("d-none");
-  } else if(view == "tech") {
-    signInLink.addClass("d-none");
-    viewProfileLink.addClass("d-none");
-    logoutBtn.removeClass("d-none");
+  // if(view == "student"){
+  //   signInLink.addClass("d-none");
+  //   viewProfileLink.removeClass("d-none");
+  //   logoutBtn.removeClass("d-none");
+  // } else if(view == "tech") {
+  //   signInLink.addClass("d-none");
+  //   viewProfileLink.addClass("d-none");
+  //   logoutBtn.removeClass("d-none");
 
-    deleteUserBtn.addClass("d-none");
-    editProfileBtn.addClass("d-none");
-    saveBtn.addClass("d-none");
-    editPictureBtn.addClass("d-none");
-    editDescBtn.addClass("d-none");
-    saveDescBtn.addClass("d-none");
-    savePictureBtn.addClass("d-none");
-  } else if(view == "visitor"){
-    signInLink.removeClass("d-none");
-    viewProfileLink.addClass("d-none");
-    logoutBtn.addClass("d-none");
+  //   deleteUserBtn.addClass("d-none");
+  //   editProfileBtn.addClass("d-none");
+  //   saveBtn.addClass("d-none");
+  //   editPictureBtn.addClass("d-none");
+  //   editDescBtn.addClass("d-none");
+  //   saveDescBtn.addClass("d-none");
+  //   savePictureBtn.addClass("d-none");
+  // } else if(view == "visitor"){
+  //   signInLink.removeClass("d-none");
+  //   viewProfileLink.addClass("d-none");
+  //   logoutBtn.addClass("d-none");
 
-    deleteUserBtn.addClass("d-none");
-    editProfileBtn.addClass("d-none");
-    saveBtn.addClass("d-none");
-    editPictureBtn.addClass("d-none");
-    editDescBtn.addClass("d-none");
-    saveDescBtn.addClass("d-none");
-    savePictureBtn.addClass("d-none");
+  //   deleteUserBtn.addClass("d-none");
+  //   editProfileBtn.addClass("d-none");
+  //   saveBtn.addClass("d-none");
+  //   editPictureBtn.addClass("d-none");
+  //   editDescBtn.addClass("d-none");
+  //   saveDescBtn.addClass("d-none");
+  //   savePictureBtn.addClass("d-none");
 
-    for(e of editBtns){
-      e.classList.add("d-none");
-    }
-  }
+  //   for(e of editBtns){
+  //     e.classList.add("d-none");
+  //   }
+  // }
 });

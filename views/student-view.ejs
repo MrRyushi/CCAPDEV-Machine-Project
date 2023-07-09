@@ -1,3 +1,5 @@
+<!--index.html-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +13,7 @@
     >
 
     <!--Index CSS Link-->
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="../css/index.css">
 
     <!--Font Import-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -23,22 +25,24 @@
         crossorigin="anonymous">
     </script>
 
-    <!--JavaScripts-->
+    <!--JavaScripts <script src="../scripts/index.js" defer></script>  -->
+
 </head>
 <body>
     <nav class="navbar navbar-expand">
         <div class="container-fluid">
-            <a class="navbar-brand text-info custom-font fs-3" href="/home">CyberLab</a>
+            <a class="navbar-brand text-info custom-font fs-3" href="student-view">CyberLab</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
-                    <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="/home">View Rooms</a>
-                    <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="/login">Sign in</a>
-                    <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="/profile">View Profile</a>
-                    <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="/login">Log out</a>
+                    <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="home">View Rooms</a>
+                    <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font" href="profile">View Profile</a>
                     <p class="text-white custom-font fs-5 mt-1">|</p>
+                    <form action="/logout?_method=DELETE" method="POST">
+                        <a id="logoutBtn" class="text-white nav-link fs-5 custom-font" href="login">Log out</a>
+                    </form>
                 </div>
             </div>
         </div>
@@ -53,33 +57,33 @@
     <div class="row cards-row mx-auto my-5">
         <div class="col my-2">
             <div class="card mx-auto card-background border-light" style="width: 22rem;">
-                <img src="Images/cl01.jpg" class="card-img-top">
+                <img src="../images/cl01.jpg" class="card-img-top">
                 <div class="card-body">
                     <h5 class=" card-title">Computer Laboratory CL01</h5>
                     <p class=" card-text">This is Room CL01 of CyberLab. This room has a total of 48 seats. The seating arrangement is in squares, the left side and right side of a single 4-seat block are facing each other.</p>
-                    <a href="cl01.html" class="btn btn-light">View Room</a>
+                    <a href="/cl01" class="btn btn-light">View Room</a>
                 </div>
             </div>
         </div>
     
         <div class="col my-2">
                 <div class="card mx-auto card-background border-light" style="width: 22rem;">
-                    <img src="Images/cl02.jpg" class="card-img-top">
+                    <img src="../images/cl02.jpg" class="card-img-top">
                     <div class="card-body">
                         <h5 class=" card-title">Computer Laboratory CL02</h5>
                         <p class="  card-text">This is Room CL02 of CyberLab. It has a total of 48 seats. The seating arrangement in this laboratory has blocks of 6-seats where the upperside is facing the lowerside of the block.</p>
-                        <a href="cl02.html" class="btn btn-light">View Room</a>
+                        <a href="cl02" class="btn btn-light">View Room</a>
                     </div>
                 </div>
             </div>
 
         <div class="col my-2">
             <div class="card mx-auto card-background border-light" style="width: 22rem;">
-                <img src="Images/cl03.jpg" class="card-img-top">
+                <img src="../images/cl03.jpg" class="card-img-top">
                 <div class="card-body">
                     <h5 class=" card-title">Computer Laboratory CL03</h5>
                     <p class=" card-text">This is Room CL03 of CyberLab. This room has a total of 48 seats. The seating arrangement is similar to Room Cl01 in squares, the left side and right side of a single 4-seat block are facing each other.</p>
-                    <a href="cl03.html" class="btn btn-light">View Room</a>
+                    <a href="cl03" class="btn btn-light">View Room</a>
                 </div>
             </div>
         </div>

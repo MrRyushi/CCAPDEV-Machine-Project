@@ -36,7 +36,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
                     <a class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="/home">View Rooms</a>
-                    <a class="text-white nav-link fs-5 custom-font" href="/login">Sign in</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="/register">Register</a>
                 </div>
             </div>
         </div>
@@ -44,16 +44,14 @@
 
 
     <div class="container container-login">
-        <div class="text-center">
-            <h1 class="text-white">Log in</h1>
-        </div>
 
         <div class="col-md-8 col-sm-12 col-lg-4 mx-auto text-white border border-white rounded">
             <form action="/login" method="post" class="ms-3 me-3">
+                 
                 <div class="row mt-3">
                     <div class="col-xs-12">
                         <label for="emailinput" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="emailinput" name="email">
+                        <input type="email" class="form-control" id="emailinput" name="email" value="<%= email %>">
                     </div>
                 </div>
 
@@ -63,6 +61,17 @@
                         <input type="password" class="form-control" id="passwordinput" name="password">
                     </div>
                 </div>
+
+                <% if (alert) { %>
+                    <div class="row mt-3">
+                        <div class="col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <%= alert %>
+                            </div>
+                        </div>
+                    </div>  
+                    
+                  <% } %>
 
                 <div class="row mt-3 text-center">
                     <div class="col-xs-12">

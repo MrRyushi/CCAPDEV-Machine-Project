@@ -25,28 +25,21 @@
         crossorigin="anonymous">
     </script>
 
-    <!--JavaScripts-->
-    <script src="../scripts/index.js" defer></script>  
+    <!--<script src="../scripts/index.js" defer></script>  JavaScripts-->
+     
 </head>
 <body>
     <nav class="navbar navbar-expand">
         <div class="container-fluid">
-            <a class="navbar-brand text-info custom-font fs-3" href="home">CyberLab</a>
+            <a class="navbar-brand text-info custom-font fs-3" href="/home">CyberLab</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
                     <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="home">View Rooms</a>
-                    <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="login">Sign in</a>
-                    <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="profile.html">View Profile</a>
-                    <form action="/logout?_method=DELETE" method="POST">
-                        <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login">Log out</a>
-                    </form>
-                    <p class="text-white custom-font fs-5 mt-1">|</p>
-                    <button id="studentViewLink" class="text-white nav-link fs-5 custom-font view-link mb-1">Students' View</button>
-                    <button id="technicianViewLink" class="text-white nav-link fs-5 custom-font view-link mb-1">Technician's View</button>
-                    <button id="visitorViewLink" class="text-white nav-link fs-5 custom-font d-none view-link mb-1">Visitor's View</button>
+                    <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="/login">Sign in</a>
+                    <a class="text-white nav-link fs-5 custom-font" href="/register">Register</a>
                 </div>
             </div>
         </div>
