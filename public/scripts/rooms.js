@@ -9,13 +9,14 @@ $(document).ready(function() {
 
   // NAV BAR
   let accountType;
+  let userName;
   $.ajax({
     url: '/api/student-view',
     method: 'GET',
     success: function(response) {
       // Handle the data received from the server
       accountType = response.accountType; // Access the accountType value
-      console.log('accountType: ' + accountType);
+      userName = response.userName;
       
         // reservation seats
       const resSeatsP = $(".resSeatsContainer p");
@@ -130,14 +131,13 @@ $(document).ready(function() {
         event.preventDefault();
         let roomName = document.querySelector('#roomName').innerHTML.substring(14);
         let roomNameObject = {name: "roomName", value: roomName};
-        let user = 'anonymous';
+        let user = userName;
 
         
         // STUDENT
         if (accountType == "Student") {
           // SEND DATA TO APP.JS
           var formData = $(event.target).serializeArray(); // Serialize the form data
-          console.log(formData);
           // Log the selected seat values
           var selectedSeats = formData
             .filter(function (item) {
@@ -147,27 +147,7 @@ $(document).ready(function() {
               return item.value;
             });
 
-            let viewObject = {name: "view", value: 'student'};
-            let userObject = {name: "user", value: user};
-            // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
-            // user = ...
-
-            formData.push(viewObject);
-            formData.push(roomNameObject);
-            formData.push(userObject);
-      
-          // Perform any additional client-side actions or submit the form via AJAX
-          $.ajax({
-            type: 'POST',
-            url: '/room',
-            data: formData,
-            success: function (response) {
-              // Handle the success response from the server
-            },
-            error: function (error) {
-              // Handle the error response from the server
-            }
-          });
+           
 
           const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
           const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);
@@ -194,7 +174,7 @@ $(document).ready(function() {
             if(reserve == true){
               anonymous = confirm(`Do you want to reserve anonymously [ok for YES | cancel for NO]?`);
               if(anonymous == true){
-                // code to store the email in database as anonymous
+                user = 'Anonymous'
 
                 for(let i = 0; i < checkedId.length; i++){
                   let btn = document.querySelector(`#${checkedId[i]}`);
@@ -211,14 +191,14 @@ $(document).ready(function() {
                 for(s of seatNumbers){
                   let parag = $("<p>");
                   parag.addClass("text-white custom-font text-center");
-                  parag.html(`Seat #${s}: ${name}`);
+                  parag.html(`Seat #${s}: ${user}`);
                   reservedSeatsContainer.append(parag[0]);
                 }
               } else {
                 // code to store the logged in email in database
-                name = "Muzan Kibutsuji";
+                name = user;
                 profileLink = "profile.html"
-
+                user = userName;
                 for(let i = 0; i < checkedId.length; i++){
                   let btn = document.querySelector(`#${checkedId[i]}`);
                   let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
@@ -234,10 +214,32 @@ $(document).ready(function() {
                 for(s of seatNumbers){
                   let parag = $("<p>");
                   parag.addClass("text-white custom-font text-center");
-                  parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
+                  parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${user}`);
                   reservedSeatsContainer.append(parag[0]);
                 }
               }
+
+              let viewObject = {name: "view", value: 'student'};
+              let userObject = {name: "user", value: user};
+              // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
+              // user = ...
+  
+              formData.push(viewObject);
+              formData.push(roomNameObject);
+              formData.push(userObject);
+        
+              // Perform any additional client-side actions or submit the form via AJAX
+              $.ajax({
+                type: 'POST',
+                url: '/room',
+                data: formData,
+                success: function (response) {
+                  // Handle the success response from the server
+                },
+                error: function (error) {
+                  // Handle the error response from the server
+                }
+              });
             }
 
           } else {
@@ -260,27 +262,6 @@ $(document).ready(function() {
               return item.value;
             });
 
-            let viewObject = {name: "view", value: 'student'};
-            let userObject = {name: "user", value: user};
-            // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
-            // user = ...
-
-            formData.push(viewObject);
-            formData.push(roomNameObject);
-            formData.push(userObject);
-      
-          // Perform any additional client-side actions or submit the form via AJAX
-          $.ajax({
-            type: 'POST',
-            url: '/room',
-            data: formData,
-            success: function (response) {
-              // Handle the success response from the server
-            },
-            error: function (error) {
-              // Handle the error response from the server
-            }
-          });
 
           const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
           const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);
@@ -303,7 +284,7 @@ $(document).ready(function() {
             anonymous = confirm('Does the student want to reserve anonymously [ok for YES | cancel for NO]?');
             if(anonymous == true){
               // code for storing anonymous instead of the email of student in database
-
+              user = 'Anonymous';
               for(let i = 0; i < checkedId.length; i++){
                 let btn = document.querySelector(`#${checkedId[i]}`);
                 let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
@@ -315,13 +296,36 @@ $(document).ready(function() {
               for(s of seatNumbers){
                 let parag = $("<p>");
                 parag.addClass("text-white custom-font text-center");
-                parag.html(`Seat #${s}: ${name}`);
+                parag.html(`Seat #${s}: ${user}`);
                 reservedSeatsContainer.append(parag[0]);
               }
+              
+              let viewObject = {name: "view", value: 'technician'};
+              let userObject = {name: "user", value: user};
+              // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
+              // user = ...
+
+              formData.push(viewObject);
+              formData.push(roomNameObject);
+              formData.push(userObject);
+        
+              // Perform any additional client-side actions or submit the form via AJAX
+              $.ajax({
+                type: 'POST',
+                url: '/room',
+                data: formData,
+                success: function (response) {
+                  // Handle the success response from the server
+                },
+                error: function (error) {
+                  // Handle the error response from the server
+                }
+              });
+
             } else {
               email = prompt(`Enter email of student:`);
-              name = "Muzan Kibutsuji";
-              profileLink = "[tech]-profile.html";
+              
+              name = user;
 
               if(email === ""){
                 alert('Please enter the email of the student!');
@@ -330,24 +334,66 @@ $(document).ready(function() {
                 //do nothing
               }
               else{
-                for(let i = 0; i < checkedId.length; i++){
-                  let btn = document.querySelector(`#${checkedId[i]}`);
-                  let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
-                  labelElement.classList.replace("btn-outline-info", "btn-danger");
-                  btn.disabled=true;
-                  seatNumbers.push(labelElement.textContent);
-                }
-                
-                  // create a paragraph element
+                // get account of user based on email
+                $.ajax({
+                  type: 'POST',
+                  url: '/getAccount',
+                  data: { email: email }, // Send the email data as an object
+                  success: function (response) {
+                    // Handle the success response from the server
+                    if (response === null) {
+                      alert('Email did not match anything in the database');
+                    } else {
+                      user = response.name;
+                      
+                      let viewObject = {name: "view", value: 'technician'};
+                      let userObject = {name: "user", value: user};
+                      // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
+                      // user = ...
 
-                for(s of seatNumbers){
-                  let parag = $("<p>");
-                  parag.addClass("text-white custom-font text-center");
-                  parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="${profileLink}">${name}`);
-                  reservedSeatsContainer.append(parag[0]);
-                }
+                      formData.push(viewObject);
+                      formData.push(roomNameObject);
+                      formData.push(userObject);
+                
+                      // Perform any additional client-side actions or submit the form via AJAX
+                      $.ajax({
+                        type: 'POST',
+                        url: '/room',
+                        data: formData,
+                        success: function (response) {
+                          // Handle the success response from the server
+                        },
+                        error: function (error) {
+                          // Handle the error response from the server
+                        }
+                      });
+
+                      for(let i = 0; i < checkedId.length; i++){
+                        let btn = document.querySelector(`#${checkedId[i]}`);
+                        let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
+                        labelElement.classList.replace("btn-outline-info", "btn-danger");
+                        btn.disabled=true;
+                        seatNumbers.push(labelElement.textContent);
+                      }
+                      
+                        // create a paragraph element
+      
+                      for(s of seatNumbers){
+                        let parag = $("<p>");
+                        parag.addClass("text-white custom-font text-center");
+                        parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${user}`);
+                        reservedSeatsContainer.append(parag[0]);
+                      }
+                    }
+                  },
+                  error: function (error) {
+                    // Handle the error response from the server
+                    console.log('Error:', error);
+                  }
+                });
               }
             }
+
           } else {
             alert('Please select a date and a time and the seats you want to reserve!');
           }  
@@ -383,7 +429,7 @@ $(document).ready(function() {
             });
           } 
         }
-        window.location.reload();
+        //window.location.reload();
       });
 
 

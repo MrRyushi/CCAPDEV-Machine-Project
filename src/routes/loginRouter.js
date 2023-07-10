@@ -119,6 +119,7 @@ loginRouter.post('/login', async (req, res) => {
             
                 console.log('Login successful');
                 req.session.accountType = await checkAccountType(email);
+                req.session.email = email;
                 console.log("account type: " + req.session.accountType);
                 accountType = req.session.accountType;
             
@@ -149,8 +150,14 @@ loginRouter.post('/login', async (req, res) => {
 
 loginRouter.get('/api/student-view', async (req, res) => {
     try {
-      const accountType = req.session.accountType;
-      res.json({ accountType }); // Include accountType in the response
+        const accountType = req.session.accountType;
+        const email = req.session.email;
+        const labAccounts = await db.collection('labAccounts');
+        labAccounts.findOne({email: email}).then(async val => {
+            console.log("val: " + val);
+            let userName = val.name;
+            res.json({ accountType, userName });
+        });
     } catch (error) {
       console.log('Error retrieving data from MongoDB:', error);
       res.status(500).send('Internal Server Error');
@@ -160,7 +167,12 @@ loginRouter.get('/api/student-view', async (req, res) => {
 loginRouter.get('/student-view', async (req, res) => {
     try {
         const accountType = req.session.accountType;
-        res.render('student-view.ejs', { accountType });
+        const email = req.session.email;
+        const labAccounts = await db.collection('labAccounts');
+        labAccounts.findOne({email: email}).then(async val => {
+            let userName = val.name;
+            res.render('student-view.ejs', { accountType, userName });
+        });
       } catch (error) {
         console.log('Error retrieving data from MongoDB:', error);
         res.status(500).send('Internal Server Error');

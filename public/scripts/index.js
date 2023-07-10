@@ -6,13 +6,11 @@ $(document).ready(function(){
     success: function(response) {
       // Handle the data received from the server
       let accountType = response.accountType; // Access the accountType value
-      //console.log('accountType: ' + accountType);
 
       const signInLink = $("#signInLink");
       const viewProfileLink = $("#viewProfileLink");
       const logoutBtn = $("#logoutBtn");
       const viewRoomsLink = $('#viewRoomLink');
-      console.log(viewRoomsLink);
       let backHref = "home";
 
       if(accountType == "Student"){

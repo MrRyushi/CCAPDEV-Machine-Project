@@ -94,4 +94,17 @@ roomsRouter.post('/room', async (req, res) => {
   }
 })
 
+roomsRouter.post('/getAccount', async (req, res) => {
+  try {
+    const email = req.body.email; // Get the email from the request body
+    const labAccount = await db.collection('labAccounts').findOne({ email: email });
+    console.log("Account retrieved:", labAccount);
+    res.json(labAccount); // Send the labAccount data as a response
+    
+  } catch (error) {
+    console.log('Error retrieving account from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 export default roomsRouter;
