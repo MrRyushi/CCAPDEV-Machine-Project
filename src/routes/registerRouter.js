@@ -1,0 +1,105 @@
+import { Router } from 'express';
+import { getDb } from '../db/conn.js';
+
+const registerRouter = Router();
+const db = getDb();
+
+// Insert Account Function
+async function insertAccount(fullName, email, password, userType) {
+    const labAccounts = await db.collection("labAccounts");
+    console.log("Users has been created / retrieved");
+
+    labAccounts.findOne({email: email}).then(async val => {
+        console.log(val)
+        console.log("Finding successful")
+
+        if(val == null){
+            const insertResult = await labAccounts.insertOne({
+                name: fullName,
+                description: "",
+                email: email,
+                password: password,
+                accountType: userType
+            });
+            console.log(insertResult);
+        } else {
+            console.log("This email has already been registered");
+        }
+    }).catch(err => {
+        console.log(err)
+    }); 
+}
+
+// Check If Name Exists Function
+async function checkIfNameExists(name) {
+    const labAccounts = await db.collection("labAccounts");
+    
+    try {
+      const val = await labAccounts.findOne({ name });
+      
+      if (val) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+}
+  
+// Check if Email Exists Function
+async function checkIfEmailExists(email) {
+    const labAccounts = await db.collection("labAccounts");
+
+    try {
+        const val = await labAccounts.findOne({ email });
+        
+        if (val) {
+        return true;
+        } else {
+        return false;
+        }
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+  
+// Routes
+registerRouter.get('/register', (req, res) => {
+    res.render('register.ejs', { alert: '', name: '', email: '' }) ;
+})
+  
+registerRouter.post('/register', async (req, res) => {
+    //console.log(req.body)
+    const fullName = req.body.fullname;
+    const email = req.body.email;
+    const password = req.body.password;
+    const accountType = req.body['account-type'];
+
+    // Registration logic
+    const allowedDomain = 'dlsu.edu.ph';
+    const domain = email.split('@')[1];
+
+    const isNameExisting = await checkIfNameExists(fullName);
+    const isEmailExisting = await checkIfEmailExists(email);
+
+    if (allowedDomain !== domain) {
+        res.render('register.ejs', { alert: 'Please use DLSU email only', name: fullName, email: email}) 
+        return;
+    }
+
+    else {
+        if(isNameExisting || isEmailExisting) {
+            res.render('register.ejs', { alert: 'Name or email already exists', name: fullName, email: email }) 
+        } else {
+            console.log("Registration successful");
+            res.redirect('/login');
+            insertAccount(fullName, email, password, accountType);  
+        }
+        }
+
+})
+
+export default registerRouter;

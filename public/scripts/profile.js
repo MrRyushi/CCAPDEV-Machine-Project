@@ -1,8 +1,8 @@
 $(document).ready(function() {
   //back button
-  $(".btn-back").click(function(){
+  /*$(".btn-back").click(function(){
     window.location.href = "home";
-  });
+  });*/
 
   $(".btn-back-profile").click(function(){
     window.location.href = "profile.html";
