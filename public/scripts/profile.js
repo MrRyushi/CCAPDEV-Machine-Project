@@ -8,11 +8,11 @@ $(document).ready(function() {
     window.location.href = "profile.html";
   });
 
-  // Search Profile
-  $('#search-bar').on('input', function() {
+  $("#search-bar").on('input', function() {
     const searchQuery = $(this).val().trim();
+    const searchResults = $('#searchResults');
     console.log('input event triggered');
-    
+  
     $.ajax({
       url: '/search',
       method: 'POST',
@@ -20,22 +20,28 @@ $(document).ready(function() {
       dataType: 'json',
       success: function(response) {
         console.log('Search results:', response);
-        let html = '';
-        if (response.length > 0) {
-          response.forEach(result => {
-            html += '<li>' + result.name + '</li>';
-          });
-        } else {
-          html = '<li>No search results found.</li>';
+        searchResults.empty(); // Clear previous search results
+  
+        if (searchQuery === '') {
+          return; // Exit early if search query is empty
         }
         
-        $('#searchSuggestions').html(html);
+        if (response.length < 1) {
+          searchResults.html('<p>No results found.</p>');
+          return;
+        }
+  
+        response.forEach((item, index) => {
+          if (index > 0) searchResults.append('<hr>');
+          searchResults.append(`<p>${item.name}</p>`);
+        });
       },
       error: function(error) {
         console.error('Failed to retrieve search results:', error);
       }
     });
   });
+  
   
 
   // Edit Profile Button Click Event

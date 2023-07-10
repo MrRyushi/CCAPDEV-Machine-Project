@@ -319,20 +319,35 @@ app.get('/profile', async (req, res) => {
 });
 
 app.post('/search', async (req, res) => {
-  const searchQuery = req.body.query; // Extract the search query from the request body
-  console.log("searchQuery:", searchQuery);
+  const searchQuery = req.body.query;
+  console.log('searchQuery:', searchQuery);
   const email = req.session.email;
   const name = await findAccountName(email);
   const description = await findAccountDesc(email);
+
   try {
     const labAccounts = await db.collection('labAccounts');
-    const searchResults = await labAccounts.find({ name: { $regex: `.*${searchQuery}.*`, $options: 'i' } }).toArray();
-    res.render('profile.ejs', { name, description, searchResults });
+    let searchResults = [];
+
+    if (searchQuery.trim() !== '') {
+      searchResults = await labAccounts
+        .find({ name: { $regex: new RegExp('^' + '.*' + searchQuery + '.*', 'i') } })
+        .toArray();
+
+      searchResults = searchResults.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    res.json(searchResults);
   } catch (error) {
     console.log('Error retrieving data from MongoDB:', error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+
 
 
 app.post('/profile/update-description', async (req, res) => {
