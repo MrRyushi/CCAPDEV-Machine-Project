@@ -152,12 +152,15 @@ loginRouter.get('/api/student-view', async (req, res) => {
     try {
         const accountType = req.session.accountType;
         const email = req.session.email;
-        const labAccounts = await db.collection('labAccounts');
-        labAccounts.findOne({email: email}).then(async val => {
-            console.log("val: " + val);
-            let userName = val.name;
-            res.json({ accountType, userName });
-        });
+        if(email != null){
+            const labAccounts = await db.collection('labAccounts');
+            labAccounts.findOne({email: email}).then(async val => {
+                console.log("val: " + val);
+                let userName = val.name;
+                let email = val.email;
+                res.json({ accountType, userName, email });
+            });
+        }
     } catch (error) {
       console.log('Error retrieving data from MongoDB:', error);
       res.status(500).send('Internal Server Error');
@@ -168,11 +171,14 @@ loginRouter.get('/student-view', async (req, res) => {
     try {
         const accountType = req.session.accountType;
         const email = req.session.email;
-        const labAccounts = await db.collection('labAccounts');
-        labAccounts.findOne({email: email}).then(async val => {
-            let userName = val.name;
-            res.render('student-view.ejs', { accountType, userName });
-        });
+        if(email != null){
+            const labAccounts = await db.collection('labAccounts');
+            labAccounts.findOne({email: email}).then(async val => {
+                let userName = val.name;
+                let email = val.email;
+                res.render('student-view.ejs', { accountType, userName, email });
+            });
+        }
       } catch (error) {
         console.log('Error retrieving data from MongoDB:', error);
         res.status(500).send('Internal Server Error');

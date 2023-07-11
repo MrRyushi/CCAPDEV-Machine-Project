@@ -145,5 +145,42 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
     }
   });
   
+  profileRouter.post('/getReservations', async (req, res) => {
+    try {
+      // get reservations
+      const cl01Data = await db.collection('cl01').find().toArray();
+      const cl02Data = await db.collection('cl02').find().toArray();
+      const cl03Data = await db.collection('cl03').find().toArray();
+  
+      let cl01Array = [];
+      let cl02Array = [];
+      let cl03Array = [];
+      let email = req.session.email;
+      console.log(email);
+      for (let data of cl01Data) {
+        if (data.email == email) {
+          cl01Array.push(data);
+        }
+      }
+  
+      for (let data of cl02Data) {
+        if (data.email == email) {
+          cl02Array.push(data);
+        }
+      }
+  
+      for (let data of cl03Data) {
+        if (data.email == email) {
+          cl03Array.push(data);
+        }
+      }
+  
+      res.json({ cl01Array, cl02Array, cl03Array }); // Send the arrays as an object
+    } catch (error) {
+      console.log('Error retrieving data from MongoDB:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
   
 export default profileRouter;

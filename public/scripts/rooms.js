@@ -10,6 +10,7 @@ $(document).ready(function() {
   // NAV BAR
   let accountType;
   let userName;
+  let email
   $.ajax({
     url: '/api/student-view',
     method: 'GET',
@@ -17,6 +18,7 @@ $(document).ready(function() {
       // Handle the data received from the server
       accountType = response.accountType; // Access the accountType value
       userName = response.userName;
+      email = response.email;
       
         // reservation seats
       const resSeatsP = $(".resSeatsContainer p");
@@ -219,15 +221,29 @@ $(document).ready(function() {
                 }
               }
 
+              let date = new Date();
+              let year = date.getFullYear();
+              let month = (date.getMonth() + 1).toString().padStart(2, '0');
+              let day = date.getDate().toString().padStart(2, '0');
+              let hours = date.getHours().toString().padStart(2, '0');
+              let minutes = date.getMinutes().toString().padStart(2, '0');
+
+              let dateReq = `${year}-${month}-${day}T${hours}:${minutes}`;
+              console.log(dateReq);
+              //dateReq = dateReq.toString().replace('T', 'Time: ');
               let viewObject = {name: "view", value: 'student'};
               let userObject = {name: "user", value: user};
+              let emailObject = {name: 'email', value: email};
+              let dateReqObject = {name: 'dateReq', value: dateReq};
               // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
               // user = ...
   
               formData.push(viewObject);
               formData.push(roomNameObject);
               formData.push(userObject);
-        
+              formData.push(emailObject);
+              formData.push(dateReqObject);
+
               // Perform any additional client-side actions or submit the form via AJAX
               $.ajax({
                 type: 'POST',
@@ -302,12 +318,14 @@ $(document).ready(function() {
               
               let viewObject = {name: "view", value: 'technician'};
               let userObject = {name: "user", value: user};
+              let emailObject = {name: 'email', value: email};
               // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
               // user = ...
 
               formData.push(viewObject);
               formData.push(roomNameObject);
               formData.push(userObject);
+              formData.push(emailObject);
         
               // Perform any additional client-side actions or submit the form via AJAX
               $.ajax({

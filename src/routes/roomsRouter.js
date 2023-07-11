@@ -86,9 +86,11 @@ roomsRouter.post('/room', async (req, res) => {
     console.log(roomUsed + ' = ' + req.body.roomName);
     const insertResult = await roomUsed.insertOne({
       user: req.body.user,
+      email: req.body.email,
       date: req.body.date,
       time: req.body.time, 
       seatSelected: req.body.seatSelected,
+      dateReq: req.body.dateReq
     });
     console.log(insertResult);
   }

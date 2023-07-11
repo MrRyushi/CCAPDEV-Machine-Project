@@ -1,6 +1,13 @@
 $(document).ready(function(){
-    $(".edit-btn").click(function(){
+
+    $('#reservationContainer').on('click', '.edit-btn', function() {
         // get the buttons
+
+        let editBtns = $('.edit-btn');
+
+        // Disable all other edit buttons
+        editBtns.not(this).prop('disabled', true);
+
         let table = $(this).closest("table");
         let cancelBtn = table.find(".cancel-btn");
         let saveBtn = table.find(".save-btn");
@@ -101,57 +108,94 @@ $(document).ready(function(){
         timeres.append(timeres_form);
     }) 
 
-    $(".cancel-btn").click(function(){
-        // get the buttons
-        let th = $(this).parent();
-        let editBtn = th.find(".edit-btn");
-        let saveBtn = th.find(".save-btn");
-        let deleteBtn = th.find(".delete-btn");
-
+    $('#reservationContainer').on('click', '.cancel-btn', function() {
+        // Find the closest table element
+        let table = $(this).closest('table');
+    
+        // Find the buttons within the table
+        let editBtn = table.find(".edit-btn");
+        let saveBtn = table.find(".save-btn");
+        let deleteBtn = table.find(".delete-btn");
+    
+        // Enable all other edit buttons
+        $('.edit-btn').not(editBtn).prop('disabled', false);
+      
+        // Perform the desired operations within the specific table
         $(this).addClass("d-none");
         editBtn.removeClass("d-none");
         saveBtn.addClass("d-none");
         deleteBtn.addClass("d-none")
-
+      
+        // get the value elements
+        let room = table.find(".room-value");
+        let seatnum = table.find(".seatnum-value");
+        let datereq = table.find(".datereq-value");
+        let timereq = table.find(".timereq-value");
+        let dateres = table.find(".dateres-value");
+        let timeres = table.find(".timeres-value");
+      
         room.html(`${currRoom}`);
         seatnum.html(`${currSeatnum}`);
         datereq.html(`${currDateReq}`);
         timereq.html(`${currTimeReq}`);
         dateres.html(`${currDateRes}`);
         timeres.html(`${currTimeRes}`);
+      });
 
-    })
 
-    $(".save-btn").click(function(){
-        // get the buttons
-        let th = $(this).parent();
-        let editBtn = th.find(".edit-btn");
-        let cancelBtn = th.find(".cancel-btn");
-        let deleteBtn = th.find(".delete-btn");
+    $('#reservationContainer').on('click', '.save-btn', function() {
+        // Find the closest table element
+        let table = $(this).closest('table');
+      
+        // Find the buttons within the table
+        let editBtn = table.find(".edit-btn");
+        let cancelBtn = table.find(".cancel-btn");
+        let deleteBtn = table.find(".delete-btn");
 
+        // Enable all other edit buttons
+        $('.edit-btn').not(editBtn).prop('disabled', false);
+      
+        // Perform the desired operations within the specific table
         $(this).addClass("d-none");
         editBtn.removeClass("d-none");
         cancelBtn.addClass("d-none");
         deleteBtn.addClass("d-none");
-        
-        currRoom = room_form.val();
-        currSeatnum = seatnum_form.val();
-        currDateReq = datereq_form.val();
-        currTimeReq = timereq_form.val();
-        currDateRes = dateres_form.val();
-        currTimeRes = timeres_form.val();
-
+      
+        // Find the specific form elements within the table and update their content
+        let currRoom = room_form.val();
+        let currSeatnum = seatnum_form.val();
+        let currDateReq = datereq_form.val();
+        let currTimeReq = timereq_form.val();
+        let currDateRes = dateres_form.val();
+        let currTimeRes = timeres_form.val();
+      
+        // Find the specific elements within the table and update their content
+        let room = table.find(".room-value");
+        let seatnum = table.find(".seatnum-value");
+        let datereq = table.find(".datereq-value");
+        let timereq = table.find(".timereq-value");
+        let dateres = table.find(".dateres-value");
+        let timeres = table.find(".timeres-value");
+      
         room.html(`${currRoom}`);
         seatnum.html(`${currSeatnum}`);
         datereq.html(`${currDateReq}`);
         timereq.html(`${currTimeReq}`);
         dateres.html(`${currDateRes}`);
         timeres.html(`${currTimeRes}`);
+      });
 
-    })
-
-    $(".delete-btn").click(function() {
+      $('#reservationContainer').on('click', '.delete-btn', function() {
         let div = $(this).closest("div");
         div.remove();
-    })
+    
+        // Find the closest table element
+        let table = $(this).closest('table');
+    
+        // Find the edit button within the table
+        let editBtn = table.find('.edit-btn');
+    
+        // Enable the edit button
+        $('.edit-btn').not(editBtn).prop('disabled', false);
+    });
 })
