@@ -5,42 +5,61 @@ $(document).ready(function() {
   });*/
 
   $(".btn-back-profile").click(function(){
-    window.location.href = "profile.html";
+    window.location.href = "/profile";
   });
 
-  $("#search-bar").on('input', function() {
-    const searchQuery = $(this).val().trim();
+  $(document).ready(function() {
     const searchResults = $('#searchResults');
-    console.log('input event triggered');
   
-    $.ajax({
-      url: '/search',
-      method: 'POST',
-      data: { query: searchQuery },
-      dataType: 'json',
-      success: function(response) {
-        console.log('Search results:', response);
+    $("#search-bar").on('input', function() {
+      const searchQuery = $(this).val().trim();
+      console.log('input event triggered');
+    
+      if (searchQuery === '') {
+        searchResults.addClass("d-none");
         searchResults.empty(); // Clear previous search results
-  
-        if (searchQuery === '') {
-          return; // Exit early if search query is empty
-        }
-        
-        if (response.length < 1) {
-          searchResults.html('<p>No results found.</p>');
-          return;
-        }
-  
-        response.forEach((item, index) => {
-          if (index > 0) searchResults.append('<hr>');
-          searchResults.append(`<p>${item.name}</p>`);
-        });
-      },
-      error: function(error) {
-        console.error('Failed to retrieve search results:', error);
+        return; // Exit early if search query is empty
       }
+    
+      $.ajax({
+        url: '/search',
+        method: 'POST',
+        data: { query: searchQuery },
+        dataType: 'json',
+        success: function(response) {
+          console.log('Search results:', response);
+          searchResults.empty(); // Clear previous search results
+    
+          if (response.length < 1) {
+            searchResults.removeClass("d-none");
+            searchResults.html('<p>No results found.</p>');
+            return;
+          }
+    
+          response.forEach((item) => {
+            const profileLink = $('<a></a>')
+              .text(item.name)
+              .attr('href', '/profile/' + item._id); // Set the link URL to the profile-visit page with the ObjectId as a parameter
+    
+            const profileResult = $('<div></div>')
+              .append(profileLink)
+              .append('<hr>');
+    
+            searchResults.append(profileResult);
+          });
+    
+          searchResults.removeClass("d-none"); // Show the search results
+        },
+        error: function(error) {
+          console.error('Failed to retrieve search results:', error);
+        }
+      });
     });
+  
+    // Hide the search results initially
+    searchResults.addClass("d-none");
   });
+  
   
   
 

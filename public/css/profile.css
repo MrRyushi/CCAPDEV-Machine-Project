@@ -70,3 +70,32 @@ tr td {
 .light-bold {
     letter-spacing: 1px;
 }
+
+/* Search results styling */
+.search-results {
+    position: fixed;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .search-results li {
+    padding: 10px;
+  }
+  
+  .search-results a, .search-results p {
+    display: block;
+    font-family: Montserrat;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .search-results a:hover {
+    background-color: #f5f5f5;
+  }

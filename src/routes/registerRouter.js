@@ -16,7 +16,7 @@ async function insertAccount(fullName, email, password, userType) {
         if(val == null){
             const insertResult = await labAccounts.insertOne({
                 name: fullName,
-                description: "",
+                description: "No biography found.",
                 email: email,
                 password: password,
                 accountType: userType

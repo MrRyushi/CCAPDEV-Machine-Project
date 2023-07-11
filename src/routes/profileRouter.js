@@ -1,9 +1,28 @@
 import { Router } from 'express';
 import { getDb } from '../db/conn.js';
+import { ObjectId } from 'mongodb';
 
 const profileRouter = Router();
 const db = getDb();
 
+// Find Account ID Function
+async function findAccountId(email) {
+    const labAccounts = await db.collection("labAccounts");
+  
+    try {
+      const val = await labAccounts.findOne({ email });
+  
+      if (val) {
+        return val._id; // Return the ObjectId of the user
+      } else {
+        console.log("Account not found");
+        return null;
+      }
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 
 // Find Account Name Function
 async function findAccountName(email) {
@@ -67,8 +86,11 @@ profileRouter.post('/search', async (req, res) => {
         let searchResults = [];
 
         if (searchQuery.trim() !== '') {
-        searchResults = await labAccounts
-            .find({ name: { $regex: new RegExp('^' + '.*' + searchQuery + '.*', 'i') } })
+          searchResults = await labAccounts
+          .find({
+            name: { $regex: new RegExp('^' + '.*' + searchQuery + '.*', 'i') },
+            accountType: 'Student' // Filter by accountType: Student
+          })
             .toArray();
 
         searchResults = searchResults.filter((item) =>
@@ -99,4 +121,29 @@ profileRouter.post('/profile/update-description', async (req, res) => {
     }
 });
 
+profileRouter.get('/profile/:objectId', async (req, res) => {
+    try {
+      const objectId = req.params.objectId;
+      const email = req.session.email;
+      const loggedInUserId = await findAccountId(email);
+      const labAccounts = await db.collection('labAccounts');
+      const user = await labAccounts.findOne({ _id: new ObjectId(objectId) }); // Use 'new ObjectId(objectId)' to create a new instance of ObjectId
+      //const isStudent = await checkIfStudent(email);
+      //console.log(isStudent);
+      if (user) {
+        if (new ObjectId(objectId).equals(loggedInUserId)) {
+          res.redirect('/profile');
+        } else {
+          res.render('profile-visit', { name: user.name, description: user.description });
+        }
+      } else {
+        res.status(404).send('User not found');
+      }
+    } catch (error) {
+      console.log('Error retrieving user profile:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+  
 export default profileRouter;
