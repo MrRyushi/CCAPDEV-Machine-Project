@@ -6,14 +6,16 @@ body {
 div.seat-container {
     width: 45vw;
     border: 2px groove white;
+    margin-top: 2rem;
+}
+
+div.time-container {
+    border: 2px groove white;
+    margin-top: 2rem;
 }
 
 .custom-font {
     font-family: Montserrat;
-}
-
-div.seat-container {
-    margin-top: 2rem;
 }
 
 div.title-container {
@@ -28,6 +30,10 @@ div.dateForm-container {
     width: 7rem;
 }
 
+.btn-group-vertical label {
+    background-color: light;
+}
+
 .navbar-nav a:hover {
     color: cyan !important;
 }
@@ -35,4 +41,20 @@ div.dateForm-container {
 .btn-group-vertical .btn-outline-info:hover {
     background-color: #17a2b8;
     color: #fff;
+}
+
+.reserve-form {
+    width: 67vw;
+}
+
+div.main-container {
+    width: 90vw;
+}
+
+.room-container {
+    width: 50vw;
+}
+
+.form-check { 
+    width: 8vw;
 }

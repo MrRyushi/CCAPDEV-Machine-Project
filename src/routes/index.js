@@ -4,6 +4,7 @@ import registerRouter from './registerRouter.js';
 import loginRouter from './loginRouter.js';
 import roomsRouter from './roomsRouter.js';
 import profileRouter from './profileRouter.js';
+import viewsRouter from './viewsRouter.js';
 
 const router = Router();
 
@@ -23,6 +24,7 @@ router.use(registerRouter);
 router.use(loginRouter);
 router.use(roomsRouter);
 router.use(profileRouter);
+router.use(viewsRouter);
 
 router.use((req, res) => {
     res.render("error", {

@@ -38,20 +38,19 @@
                 <div class="navbar-nav">
                     <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="home">View Rooms</a>
                     <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="login">Sign in</a>
-                    <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="profile.html">View Profile</a>
+                    <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="profile">View Profile</a>
                     <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login">Log out</a>
                 </div>
             </div>
         </div>
     </nav>
+    <div class="mx-auto main-container mx-auto row">
+        <form action="/room" method="post" class="container reserve-form mx-auto row col-md-9">
+            <div class="room-container col">
+                <div class="text-center title-container">
+                    <h1 id="roomName" class="text-white fw-bold custom-font">CyberLab Room CL03</h1>
+                </div>
 
-    <div class="container main-container row mx-auto">
-        <div class="container room-container col-md-9">
-            <div class="text-center title-container">
-                <h1 id="roomName" class="text-white fw-bold custom-font">CyberLab Room CL03</h1>
-            </div>
-        
-            <form action="/room" method="post" class="reserve-form">
                 <div class="dateForm-container container row mx-auto mt-3">
                     <div class="col-xxl-6 col-xs-12 mx-2 my-1 mx-auto">
                         <input class="form-control" id="date" name="date" type="date">
@@ -76,217 +75,258 @@
                             <option value="16:30 to 17:00">16:30 to 17:00</option>
                           </select>
                     </div>
+                    
                 </div>
     
-                <div class="container text-center seat-container">
-                    <div class="btn-group-vertical mx-4">
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="01" id="btn-01" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-01">01</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="02" id="btn-02" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-02">02</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="03" id="btn-03" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-03">03</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="04" id="btn-04" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-04">04</label>
-                            </div>
+                <div class="container row">
+                    <div class="container time-container col-md-3 me-1 text-white mx-auto">
+                        <div class="title">
+                            <p class="text-white fs-2 text-center custom-font">Select Time</p>
                         </div>
-                    
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="05"  id="btn-05" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-05">05</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="06"  id="btn-06" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-06">06</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="07"  id="btn-07" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-07">07</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="08"  id="btn-08" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-08">08</label>
-                            </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="09:00 to 09:30" id="09:00">
+                            <label class="form-check-label" for="09:00">
+                                09:00 to 09:30
+                            </label>
                         </div>
-                
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="09"  id="btn-09" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-09">09</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="10"  id="btn-10" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-10">10</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="11"  id="btn-11" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-11">11</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="12"  id="btn-12" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-12">12</label>
-                            </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="09:30 to 10:00" id="09:30">
+                            <label class="form-check-label" for="09:30">
+                                09:30 to 10:00
+                            </label>
                         </div>
-                    </div>
-                    
-                    <div class="btn-group-vertical mx-4">
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="13"  id="btn-13" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-13">13</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="14"  id="btn-14" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-14">14</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="15"  id="btn-15" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-15">15</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="16"  id="btn-16" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-16">16</label>
-                            </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="10:00 to 10:30" id="10:00">
+                            <label class="form-check-label" for="10:00">
+                                10:00 to 10:30
+                            </label>
                         </div>
-                    
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="17"  id="btn-17" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-17">17</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="18"  id="btn-18" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-18">18</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="19"  id="btn-19" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-19">19</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="20"  id="btn-20" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-20">20</label>
-                            </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="10:30 to 11:00" id="10:30">
+                            <label class="form-check-label" for="10:30">
+                                10:30 to 11:00
+                            </label>
                         </div>
-                        
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="21"  id="btn-21" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-21">21</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="22"  id="btn-22" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-22">22</label>
-                            </div>
-                
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="23"  id="btn-23" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-23">23</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="24"  id="btn-24" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-24">24</label>
-                            </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="11:00 to 11:30" id="11:00">
+                            <label class="form-check-label" for="11:00">
+                                11:00 to 11:30
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value=" 11:30 to 12:00" id=" 11:30">
+                            <label class="form-check-label" for=" 11:30">
+                                11:30 to 12:00
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="12:00 to 12:30" id="12:00">
+                            <label class="form-check-label" for="12:00">
+                                12:00 to 12:30
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="12:30 to 13:30" id="12:30">
+                            <label class="form-check-label" for="12:30">
+                                12:30 to 13:00
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="13:00 to 13:30" id="13:00">
+                            <label class="form-check-label" for="13:00">
+                                13:00 to 13:30
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="13:30 to 14:00" id="13:30">
+                            <label class="form-check-label" for="13:30">
+                                13:30 to 14:00
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="14:00 to 14:30" id="14:00">
+                            <label class="form-check-label" for="14:00">
+                                14:00 to 14:30
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="14:30 to 15:00" id="14:30">
+                            <label class="form-check-label" for="14:30">
+                                14:30 to 15:00
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="15:00 to 15:30" id="15:00">
+                            <label class="form-check-label" for="15:00">
+                                15:00 to 15:30
+                            </label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="checkbox" value="15:30 to 16:00" id="15:30">
+                            <label class="form-check-label" for="15:30">
+                                15:30 to 16:00
+                            </label>
                         </div>
                     </div>
-                
-                    <div class="btn-group-vertical mx-4">
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="25"  id="btn-25" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-25">25</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="26"  id="btn-26" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-26">26</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="27"  id="btn-27" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-27">27</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="28"  id="btn-28" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-28">28</label>
-                            </div>
-                        </div>
-                    
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="29"  id="btn-29" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-29">29</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="30"  id="btn-30" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-30">30</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="31"  id="btn-31" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-31">31</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="32"  id="btn-32" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-32">32</label>
-                            </div>
-                        </div>
-                
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="33"  id="btn-33" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-33">33</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="34"  id="btn-34" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-34">34</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="35"  id="btn-35" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-35">35</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="36"  id="btn-36" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-36">36</label>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="btn-group-vertical mx-4">
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="37"  id="btn-37" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-37">37</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="38"  id="btn-38" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-38">38</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="39"  id="btn-39" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-39">39</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="40"  id="btn-40" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-40">40</label>
-                            </div>
-                        </div>
-                    
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="41"  id="btn-41" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-41">41</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="42"  id="btn-42" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-42">42</label>
-                            </div>
-                        
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="43"  id="btn-43" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-43">43</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="44"  id="btn-44" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-44">44</label>
-                            </div>
-                        </div>
-                        
-                        <div class="btn-group my-4">
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="45"  id="btn-45" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-45">45</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="46"  id="btn-46" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-46">46</label>
-                            </div>
-                
-                            <div class="btn-group-vertical mx-1" role="group">
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="47"  id="btn-47" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-47">47</label>
-                                <input type="checkbox" class="btn-check seatBtn" name="seatSelected" value="48"  id="btn-48" autocomplete="off">
-                                <label class="btn btn-outline-info my-1 btn-lg" for="btn-48">48</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="container text-center">
-                    <button type="submit" class="btn btn-info btn-lg mt-3" id="reserveBtn">Reserve</button>
-                </div>
-            </form>
-        </div>
 
-        <div class="container border border-white col-md-3 w-25">
+                    <div class="col-md-9 container text-center seat-container">
+                        <div class="btn-group-vertical mx-4">
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="01" id="btn-01" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="02" id="btn-02" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="03" id="btn-03" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="04" id="btn-04" autocomplete="off">
+                                </div>
+                            </div>
+                        
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="05"  id="btn-05" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="06"  id="btn-06" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="07"  id="btn-07" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="08"  id="btn-08" autocomplete="off">
+                                </div>
+                            </div>
+                    
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="09"  id="btn-09" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="10"  id="btn-10" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="11"  id="btn-11" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="12"  id="btn-12" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group-vertical mx-4">
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="13"  id="btn-13" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="14"  id="btn-14" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="15"  id="btn-15" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="16"  id="btn-16" autocomplete="off">
+                                </div>
+                            </div>
+                        
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="17"  id="btn-17" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="18"  id="btn-18" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="19"  id="btn-19" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="20"  id="btn-20" autocomplete="off">
+                                </div>
+                            </div>
+                            
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="21"  id="btn-21" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="22"  id="btn-22" autocomplete="off">
+                                </div>
+                    
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="23"  id="btn-23" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="24"  id="btn-24" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="btn-group-vertical mx-4">
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="25"  id="btn-25" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="26"  id="btn-26" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="27"  id="btn-27" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="28"  id="btn-28" autocomplete="off">
+                                </div>
+                            </div>
+                        
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="29"  id="btn-29" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="30"  id="btn-30" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="31"  id="btn-31" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="32"  id="btn-32" autocomplete="off">
+                                </div>
+                            </div>
+                    
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="33"  id="btn-33" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="34"  id="btn-34" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="35"  id="btn-35" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="36"  id="btn-36" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="btn-group-vertical mx-4">
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="37"  id="btn-37" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="38"  id="btn-38" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="39"  id="btn-39" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="40"  id="btn-40" autocomplete="off">
+                                </div>
+                            </div>
+                        
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="41"  id="btn-41" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="42"  id="btn-42" autocomplete="off">
+                                </div>
+                            
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="43"  id="btn-43" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="44"  id="btn-44" autocomplete="off">
+                                </div>
+                            </div>
+                            
+                            <div class="btn-group my-4">
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="45"  id="btn-45" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="46"  id="btn-46" autocomplete="off">
+                                </div>
+                    
+                                <div class="btn-group-vertical mx-1" role="group">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="47"  id="btn-47" autocomplete="off">
+                                    <input type="button" class="btn seatBtn btn-outline-info my-1 btn-lg" name="seatSelected" value="48"  id="btn-48" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="container border border-white mx-auto col-md-3">
             <div class="title">
                 <p class="text-white fs-2 text-center custom-font">Reserved Seats</p>
             </div>
@@ -295,12 +335,9 @@
             </div>
         </div>
     </div>
-    
 
-    <div class="container mt-3">
+    <div class="container mt-5 mb-3">
         <button class="btn btn-outline-info btn-lg btn-back">Back</button>
     </div>
-    
-    
 </body>
 </html>
