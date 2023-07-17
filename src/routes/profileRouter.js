@@ -1,6 +1,11 @@
 import { Router } from 'express';
 import { getDb } from '../db/conn.js';
 import { ObjectId } from 'mongodb';
+import path from 'path';
+import fs from 'fs';
+import multer from 'multer';
+
+
 
 const profileRouter = Router();
 const db = getDb();
@@ -42,6 +47,25 @@ async function findAccountName(email) {
     }
   }
   
+// Find Account Picture Function
+async function findAccountPicture(email) {
+  const labAccounts = await db.collection('labAccounts');
+
+  try {
+    const val = await labAccounts.findOne({ email });
+
+    if (val) {
+      return val.profilePicture; // Return the profile picture as a base64-encoded string
+    } else {
+      console.log('Account not found');
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
+  
 // Find Account Description Function
 async function findAccountDesc(email) {
     const labAccounts = await db.collection("labAccounts");
@@ -61,17 +85,37 @@ async function findAccountDesc(email) {
     }
 }
 
+// Multer configuration
+// Multer configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images/profile-pictures');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    const extension = path.extname(file.originalname);
+    cb(null, `${uniqueSuffix}${extension}`);
+  },
+});
+
+const upload = multer({ storage });
+
 profileRouter.get('/profile', async (req, res) => {
-    try {
-        const email = req.session.email;
-        const name = await findAccountName(email);
-        const description = await findAccountDesc(email);
-        const searchResults = [];
-        res.render('profile', { name , description, searchResults});
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-    }
+  try {
+    const email = req.session.email;
+    const name  = await findAccountName(email);
+    const description = await findAccountDesc(email);
+    const profilePicture = await findAccountPicture(email);
+    const searchResults = [];
+
+    // Convert the profile picture to a base64-encoded string
+    const profilePictureData = profilePicture ? profilePicture.toString('base64') : null;
+
+    res.render('profile', { name, description, profilePicture: profilePictureData, searchResults });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
 });
   
 profileRouter.post('/search', async (req, res) => {
@@ -104,46 +148,161 @@ profileRouter.post('/search', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  
-profileRouter.post('/profile/update-description', async (req, res) => {
-    try {
-      const email = req.session.email; // Assuming the user's email is stored in the session
-      const description = req.body.description; // Retrieve the modified description from the request body
-  
-      // Update the profile description for the user in the database
-      const labAccounts = await db.collection("labAccounts");
-      await labAccounts.updateOne({ email }, { $set: { description } });
-  
-      res.json({ success: true }); // Return a success response
-    } catch (error) {
-      console.log('Error updating profile description:', error);
-      res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+
+  // Update Profile Picture Route
+profileRouter.post('/profile/update-profile-picture', upload.single('profilePicture'), async (req, res) => {
+  try {
+    const email = req.session.email; // Assuming the user's email is stored in the session
+
+    // Get the uploaded file
+    const file = req.file;
+
+    if (!file) {
+      throw new Error('No profile picture file provided');
     }
+
+    // Generate a unique filename
+    const fileName = file.filename;
+
+    // Delete the previous profile picture if it exists
+    const profilePicture = await findAccountPicture(email);
+    
+    if (profilePicture) {
+      const previousPicturePath = '../public/profile-pictures/' + profilePicture;
+      if (fs.existsSync(previousPicturePath)) {
+        fs.unlinkSync(previousPicturePath);
+      }
+    }
+
+    // Update the user's profile picture in the database
+    const labAccounts = await db.collection('labAccounts');
+    await labAccounts.updateOne({ email }, { $set: { profilePicture: fileName } });
+
+    res.json({ success: true, profilePicture: `/profile-pictures/${fileName}` }); // Return the success response with the updated profile picture URL
+  } catch (error) {
+    console.error('Error updating profile picture:', error);
+    res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+  }
+});
+
+// profileRouter.post('/profile/update-description', async (req, res) => {
+//     try {
+//       const email = req.session.email; // Assuming the user's email is stored in the session
+//       const description = req.body.description; // Retrieve the modified description from the request body
+  
+//       // Update the profile description for the user in the database
+//       const labAccounts = await db.collection("labAccounts");
+//       await labAccounts.updateOne({ email }, { $set: { description } });
+  
+//       res.json({ success: true }); // Return a success response
+//     } catch (error) {
+//       console.log('Error updating profile description:', error);
+//       res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+//     }
+// });
+
+
+profileRouter.post('/profile/update-profile-picture', async (req, res) => {
+  try {
+    const email = req.session.email; // Assuming the user's email is stored in the session
+
+    // Retrieve the user's profile picture from the database
+    const profilePicture = await findAccountPicture(email);
+
+    if (!profilePicture) {
+      throw new Error('Profile picture not found');
+    }
+
+    // Get the uploaded file
+    const file = req.files.profilePicture;
+
+    // Generate a unique filename
+    const fileName = `${Date.now()}_${file.name}`;
+
+    // Define the file upload path
+    const uploadPath = path.join(__dirname, '..', 'public', 'profile-pictures', fileName);
+
+    // Move the file to the upload path
+    await file.mv(uploadPath);
+
+    // Delete the previous profile picture if it exists
+    const previousPicturePath = path.join(__dirname, '..', 'public', 'images', 'profile-pictures', profilePicture);
+    if (fs.existsSync(previousPicturePath)) {
+      fs.unlinkSync(previousPicturePath);
+    }
+
+    // Update the user's profile picture in the database
+    const labAccounts = await db.collection('labAccounts');
+    await labAccounts.updateOne({ email }, { $set: { profilePicture: fileName } });
+
+    res.json({ success: true, profilePicture: `/profile-pictures/${fileName}` }); // Return the success response with the updated profile picture URL
+  } catch (error) {
+    console.error('Error updating profile picture:', error);
+    res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+  }
+});
+
+profileRouter.post('/profile/delete-user', async (req, res) => {
+  try {
+    const email = req.session.email; // Assuming the user's email is stored in the session
+
+    // Delete the user from the MongoDB collection
+    const labAccounts = await db.collection('labAccounts');
+    await labAccounts.deleteOne({ email });
+
+    req.session.destroy(); // Destroy the session after deleting the account
+    res.redirect('/profile/logout'); // Redirect to the login page
+  } catch (error) {
+    console.log('Error deleting user:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+profileRouter.get('/profile/home', async (req, res) => {
+  try {
+    res.redirect('/student-view');
+  } catch (error) {
+    
+    res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+  }
+});
+
+profileRouter.get('/profile/logout', async (req, res) => {
+  try {
+    res.redirect('/login');
+  } catch (error) {
+    
+    res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+  }
 });
 
 profileRouter.get('/profile/:objectId', async (req, res) => {
-    try {
-      const objectId = req.params.objectId;
-      const email = req.session.email;
-      const loggedInUserId = await findAccountId(email);
-      const labAccounts = await db.collection('labAccounts');
-      const user = await labAccounts.findOne({ _id: new ObjectId(objectId) }); // Use 'new ObjectId(objectId)' to create a new instance of ObjectId
-      //const isStudent = await checkIfStudent(email);
-      //console.log(isStudent);
-      if (user) {
-        if (new ObjectId(objectId).equals(loggedInUserId)) {
-          res.redirect('/profile');
-        } else {
-          res.render('profile-visit', { name: user.name, description: user.description });
-        }
+  try {
+    const objectId = req.params.objectId;
+    const email = req.session.email;
+    const loggedInUserId = await findAccountId(email);
+    const labAccounts = await db.collection('labAccounts');
+    const user = await labAccounts.findOne({ _id: new ObjectId(objectId) });
+
+    if (user) {
+      if (new ObjectId(objectId).equals(loggedInUserId)) {
+        res.redirect('/profile');
       } else {
-        res.status(404).send('User not found');
+        const profilePicture = await findAccountPicture(user.email); // Fetch the profile picture using the user's email
+
+        // Convert the profile picture to a base64-encoded string
+        const profilePictureData = profilePicture ? profilePicture.toString('base64') : null;
+
+        res.render('profile-visit', { name: user.name, description: user.description, profilePicture: profilePictureData }); // Pass the profilePictureData variable to the view
       }
-    } catch (error) {
-      console.log('Error retrieving user profile:', error);
-      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(404).send('User not found');
     }
-  });
+  } catch (error) {
+    console.log('Error retrieving user profile:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
   
   profileRouter.post('/getReservations', async (req, res) => {
     try {

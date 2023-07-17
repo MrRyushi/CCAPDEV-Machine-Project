@@ -1,10 +1,3 @@
-$(document).ready(function() {
-  //back button
-  /*$(".btn-back").click(function(){
-    window.location.href = "home";
-  });*/
-
-
   $(document).ready(function() {
     $(".btn-back-profile").click(function(){
       window.location.href = "/profile";
@@ -58,7 +51,6 @@ $(document).ready(function() {
   
     // Hide the search results initially
     searchResults.addClass("d-none");
-
 
     $.ajax({
       url: '/getReservations',
@@ -373,11 +365,7 @@ $(document).ready(function() {
         console.log('Error retrieving data:', error);
       }
     });
-  });
-  
-  
-  
-
+ 
   // Edit Profile Button Click Event
   $("#editProfileBtn").click(function() {
     $("#deleteUserBtn").addClass("d-none");
@@ -386,6 +374,28 @@ $(document).ready(function() {
     $("#editDescBtn").removeClass("d-none");
     $("#editPictureBtn").removeClass("d-none");
   });
+
+  $("#deleteUserBtn").click(function() {
+    // Show a confirmation dialog to confirm the deletion
+    if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      // Send an AJAX request to the server to delete the user
+      $.ajax({
+        url: "/profile/delete-user",
+        method: "POST",
+        success: function(response) {
+          // Handle the success response
+          console.log("User deleted successfully");
+          window.location.href = "/profile/logout"; // Redirect the user to the logout page
+        },
+        error: function(error) {
+          // Handle the error response
+          console.error("Failed to delete user:", error);
+          // Optionally, you can display an error message to the user on the current page
+        }
+      });
+    }
+  });
+  
 
   $("#editDescBtn").click(function() {
     // Get the current description text
@@ -409,75 +419,91 @@ $(document).ready(function() {
     $("#editDescBtn").addClass("d-none");
     $("#editPictureBtn").addClass("d-none");
     $("#saveBtn").addClass("d-none");
-
+  
     $("#uploadPictureInput").click();
   });
-
-  // Handle file upload change event
+  
   $("#uploadPictureInput").change(function() {
-    // Get the selected file
-    let file = $(this).prop("files")[0];
-
-    // Check if a file was selected
-    if (file) {
-      // Read the file as a data URL
+    if (this.files && this.files[0]) {
       let reader = new FileReader();
+  
       reader.onload = function(e) {
-        // Update the profile picture
-        $(".picture-container img").attr("src", e.target.result);
+        $("#profilePicture").attr("src", e.target.result);
       };
-      reader.readAsDataURL(file);
+  
+      reader.readAsDataURL(this.files[0]);
     }
   });
+  
+// Save Profile Picture Button Click Event
+// Save Profile Picture Button Click Event
+$("#savePictureBtn").click(function() {
+  let file = $("#uploadPictureInput").prop("files")[0];
 
-// Save Description Button Click Event
-$("#saveDescBtn").click(function() {
-  // Get the new description from the textarea
-  let newDescription = $("#profileDescription").val();
-
-  // Check if the new description is not empty
-  if (newDescription.trim() !== "") {
-    // Update the profile description
-    $(".description p").text(newDescription);
+  if (file) {
+    let formData = new FormData();
+    formData.append("profilePicture", file);
 
     $.ajax({
-      url: "/profile/update-description",
+      url: "/profile/update-profile-picture",
       method: "POST",
-      data: { description: newDescription },
+      data: formData,
+      processData: false,
+      contentType: false,
       success: function(response) {
-        // Handle the success response from the server
-        console.log("Profile description saved successfully!");
+        console.log("Profile picture saved successfully!");
+
+        window.location.href = "/profile"; // reload page
       },
       error: function(error) {
-        // Handle the error response from the server
-        console.error("Failed to save profile description:", error);
+        console.error("Failed to save profile picture:", error);
       }
     });
   }
 
-    // Toggle visibility of the elements
-    $(".description").removeClass("d-none");
-    $("#profileDescription").addClass("d-none");
-    $("#saveDescBtn").addClass("d-none");
-    $("#editDescBtn").removeClass("d-none");
-    $("#editPictureBtn").removeClass("d-none");
-    $("#saveBtn").removeClass("d-none")
-    // Show a success message to the user
-    // alert("Description saved successfully!");
-  });
-
-  // Save Profile Picture Button Click Event
-  $("#savePictureBtn").click(function() {
-    // Save the profile picture changes
-
-    // Show a success message to the user
-    // alert("Profile picture saved successfully!");
-    $("#savePictureBtn").addClass("d-none");
+  $("#savePictureBtn").addClass("d-none");
     $("#editPictureBtn").removeClass("d-none");
     $("#editDescBtn").removeClass("d-none");
     $("#saveBtn").removeClass("d-none");
+});
 
-  });
+
+  // Save Description Button Click Event
+  $("#saveDescBtn").click(function() {
+    // Get the new description from the textarea
+    let newDescription = $("#profileDescription").val();
+
+    // Check if the new description is not empty
+    if (newDescription.trim() !== "") {
+      // Update the profile description
+      $(".description p").text(newDescription);
+
+      $.ajax({
+        url: "/profile/update-description",
+        method: "POST",
+        data: { description: newDescription },
+        success: function(response) {
+          // Handle the success response from the server
+          console.log("Profile description saved successfully!");
+        },
+        error: function(error) {
+          // Handle the error response from the server
+          console.error("Failed to save profile description:", error);
+        }
+      });
+    }
+
+      // Toggle visibility of the elements
+      $(".description").removeClass("d-none");
+      $("#profileDescription").addClass("d-none");
+      $("#saveDescBtn").addClass("d-none");
+      $("#editDescBtn").removeClass("d-none");
+      $("#editPictureBtn").removeClass("d-none");
+      $("#saveBtn").removeClass("d-none")
+      // Show a success message to the user
+      // alert("Description saved successfully!");
+    });
+
 
   // Main Save Button Click Event
   $("#saveBtn").click(function() {
@@ -516,38 +542,4 @@ $("#saveDescBtn").click(function() {
 
   // reservations
   const editBtns = $(".edit-btn");
-
-  // if(view == "student"){
-  //   signInLink.addClass("d-none");
-  //   viewProfileLink.removeClass("d-none");
-  //   logoutBtn.removeClass("d-none");
-  // } else if(view == "tech") {
-  //   signInLink.addClass("d-none");
-  //   viewProfileLink.addClass("d-none");
-  //   logoutBtn.removeClass("d-none");
-
-  //   deleteUserBtn.addClass("d-none");
-  //   editProfileBtn.addClass("d-none");
-  //   saveBtn.addClass("d-none");
-  //   editPictureBtn.addClass("d-none");
-  //   editDescBtn.addClass("d-none");
-  //   saveDescBtn.addClass("d-none");
-  //   savePictureBtn.addClass("d-none");
-  // } else if(view == "visitor"){
-  //   signInLink.removeClass("d-none");
-  //   viewProfileLink.addClass("d-none");
-  //   logoutBtn.addClass("d-none");
-
-  //   deleteUserBtn.addClass("d-none");
-  //   editProfileBtn.addClass("d-none");
-  //   saveBtn.addClass("d-none");
-  //   editPictureBtn.addClass("d-none");
-  //   editDescBtn.addClass("d-none");
-  //   saveDescBtn.addClass("d-none");
-  //   savePictureBtn.addClass("d-none");
-
-  //   for(e of editBtns){
-  //     e.classList.add("d-none");
-  //   }
-  // }
 });
