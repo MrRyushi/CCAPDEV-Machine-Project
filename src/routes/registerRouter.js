@@ -1,43 +1,55 @@
 import { Router } from 'express';
 import { getDb } from '../db/conn.js';
+import fs from 'fs';
 
 const registerRouter = Router();
 const db = getDb();
+
 
 // Insert Account Function
 async function insertAccount(fullName, email, password, userType) {
     const labAccounts = await db.collection("labAccounts");
     console.log("Users has been created / retrieved");
-
-    labAccounts.findOne({email: email}).then(async val => {
-        console.log(val)
-        console.log("Finding successful")
-
-        if(val == null){
-            const insertResult = await labAccounts.insertOne({
-                name: fullName,
-                description: "No biography found.",
-                email: email,
-                password: password,
-                accountType: userType
-            });
-            console.log(insertResult);
-        } else {
-            console.log("This email has already been registered");
-        }
-    }).catch(err => {
-        console.log(err)
-    }); 
-}
-
-// Check If Name Exists Function
-async function checkIfNameExists(name) {
-    const labAccounts = await db.collection("labAccounts");
-    
+  
     try {
-      const val = await labAccounts.findOne({ name });
-      
-      if (val) {
+      const val = await labAccounts.findOne({ email });
+  
+      if (val === null) {
+        // const defaultProfilePicturePath = "public/images/profile.jpg";
+       
+        // const insertResult = await labAccounts.insertOne({
+        //   name: fullName,
+        //   description: "No biography found.",
+        //   email: email,
+        //   password: password,
+        //   accountType: userType,
+        //   profilePicture: defaultProfilePicturePath,
+        // });
+       
+        const insertResult = await labAccounts.insertOne({
+          name: fullName,
+          description: "No biography found.",
+          email: email,
+          password: password,
+          accountType: userType,
+          profilePicture: "",
+        });
+        console.log(insertResult);
+      } else {
+        console.log("This email has already been registered");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
+  
+  async function checkIfNameExists(name) {
+    const labAccounts = await db.collection("labAccounts");
+  
+    try {
+      const val = await labAccounts.findOne({ name: name });
+      if (val !== null) {
         return true;
       } else {
         return false;
@@ -46,25 +58,24 @@ async function checkIfNameExists(name) {
       console.log(err);
       return false;
     }
-}
+  }
   
-// Check if Email Exists Function
-async function checkIfEmailExists(email) {
+  async function checkIfEmailExists(email) {
     const labAccounts = await db.collection("labAccounts");
-
+  
     try {
-        const val = await labAccounts.findOne({ email });
-        
-        if (val) {
+      const val = await labAccounts.findOne({ email: email });
+  
+      if (val !== null) {
         return true;
-        } else {
+      } else {
         return false;
-        }
+      }
     } catch (err) {
-        console.log(err);
-        return false;
+      console.log(err);
+      return false;
     }
-}
+  }
   
 // Routes
 registerRouter.get('/register', (req, res) => {

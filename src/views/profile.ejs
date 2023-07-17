@@ -42,7 +42,11 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="navbar-nav">
                         <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="home">View Rooms</a>
-                        <a id="logoutBtn" class="text-white nav-link fs-5 custom-font" href="/login">Log out</a>
+                    </div>
+                    <div class="navbar-nav ms-auto">
+                        <form action="/logout?_method=DELETE" method="POST">
+                            <a id="logoutBtn" class="text-white nav-link fs-5 custom-font" href="login">Log out</a>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -75,9 +79,12 @@
         <div class="profile-container row container text-black border border-white rounded bg-info-subtle mx-auto">
             <div class="row justify-content-center mx-auto">
                 <div class="picture-container col-lg-3 text-center my-4">
-                    <img src="images/muzan.jpg" alt="Profile Picture" class="profile-pic img-fluid border border-white rounded">
-                </div>
-    
+                    <% if (profilePicture) { %>
+                      <img src="/images/profile-pictures/<%= profilePicture %>" id="profilePicture" name="profilePicture" alt="Profile Picture" class="profile-pic img-fluid border border-white rounded">
+                    <% } else { %>
+                      <img src="/images/profile.jpg" alt="Default Profile Picture" class="profile-pic img-fluid border border-white rounded">
+                    <% } %>
+                  </div>
                 <div class="col-lg-9 mx-0">
                     <div class="container-fluid p-3 rounded">
                         <h2 class="mt-1 fs-1"><%= name %></h2>
