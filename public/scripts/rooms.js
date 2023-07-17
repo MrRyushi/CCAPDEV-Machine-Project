@@ -8,9 +8,92 @@ $(document).ready(function() {
   const logoutBtn = $("#logoutBtn");
 
   // NAV BAR
-  let accountType;
+  let accountType = 'visitor';
   let userName;
   let email
+
+  // get the reservations list depending on the room
+  const resSeatsP = $(".resSeatsContainer p");
+  let roomName = document.querySelector('#roomName').innerHTML.substring(14);
+  let url;
+  if (roomName == 'CL01') {
+    url = '/api/cl01';
+  } else if (roomName == 'CL02') {
+    url = '/api/cl02';
+  } else {
+    url = '/api/cl03';
+  }
+  let allReservations = [];
+
+  // ajax request to get the reservations in the selected room
+  $.ajax({
+    url: url,
+    method: 'GET',
+    success: function(response) {
+      // Handle the data received from the server
+      for (let key in response) {
+        allReservations.push(response[key]);
+      }
+      // Use the data to reflect it on your HTML page
+      updateReservedSeats(); // Call the function here, inside the success callback
+    },
+    error: function(error) {
+      // Handle the error response from the server
+      console.log('Error retrieving data:', error);
+    }
+  });
+
+  // function to update reserved seats from data in database
+  function updateReservedSeats (){
+    let dateSelected = document.querySelector('#date').value;
+    let timeSelected = document.querySelector('#time').value;
+    const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
+
+    reservedSeatsContainer.innerHTML = "";
+    // set first all buttons to blue and enable them
+    for(let i = 1; i <= 48; i++){
+      if(i < 10){
+        let btn = document.querySelector(`#btn-0${i}`);
+        btn.disabled = false;
+        btn.classList.replace("btn-danger", "btn-outline-info"); 
+      } else {
+        let btn = document.querySelector(`#btn-${i}`);
+        btn.disabled = false;
+        btn.classList.replace("btn-danger", "btn-outline-info");
+      }
+    }
+
+    // then set reserved seats to red and disable them
+    for(reservation of allReservations){
+      array = reservation.time.split(/,/);
+      for(time of array){
+        if(reservation.date == dateSelected && time == timeSelected){
+          // display the reserved seats
+          
+          b = reservation.seatSelected
+
+          let btn = document.querySelector(`#btn-${b}`);
+          btn.disabled = true;
+          btn.classList.replace("btn-outline-info", "btn-danger");
+
+          let parag = $("<p>");
+          parag.addClass("text-white custom-font text-center");
+          parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white">${reservation.user}`);
+
+          reservedSeatsContainer.append(parag[0]);
+        }
+      }
+    }
+  }
+
+  // this is for when the page is loaded, the reserved seats will appear immediately
+  document.addEventListener("DOMContentLoaded", updateReservedSeats);
+
+  // Add event listeners to the date and time inputs
+  document.querySelector('#date').addEventListener("change", updateReservedSeats);
+  document.querySelector('#time').addEventListener("change", updateReservedSeats);
+
+  // ajax request to get the account type of the user
   $.ajax({
     url: '/api/student-view',
     method: 'GET',
@@ -20,207 +103,171 @@ $(document).ready(function() {
       userName = response.userName;
       email = response.email;
       
-        // reservation seats
-      const resSeatsP = $(".resSeatsContainer p");
-      let roomName = document.querySelector('#roomName').innerHTML.substring(14);
-      let url;
-      if (roomName == 'CL01') {
-        url = '/api/cl01';
-      } else if (roomName == 'CL02') {
-        url = '/api/cl02';
-      } else {
-        url = '/api/cl03';
-      }
-      let allReservations = [];
-
-      $.ajax({
-        url: url,
-        method: 'GET',
-        success: function(response) {
-          // Handle the data received from the server
-          for (let key in response) {
-            allReservations.push(response[key]);
-          }
-          // Use the data to reflect it on your HTML page
-          updateReservedSeats(); // Call the function here, inside the success callback
-        },
-        error: function(error) {
-          // Handle the error response from the server
-          console.log('Error retrieving data:', error);
-        }
-      });
-
-      function updateReservedSeats (){
-        let dateSelected = document.querySelector('#date').value;
-        let timeSelected = document.querySelector('#time').value;
-        const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
-
-        reservedSeatsContainer.innerHTML = "";
-        for(let i = 1; i <= 48; i++){
-          if(i < 10){
-            let btn = document.querySelector(`#btn-0${i}`);
-            btn.disabled = false;
-            let labelElement = document.querySelector(`label[for="btn-0${i}"]`);
-            labelElement.classList.replace("btn-danger", "btn-outline-info"); 
-          } else {
-            let btn = document.querySelector(`#btn-${i}`);
-            btn.disabled = false;
-            let labelElement = document.querySelector(`label[for="btn-${i}"]`);
-            labelElement.classList.replace("btn-danger", "btn-outline-info");
-          }
-        }
-
-        for(reservation of allReservations){
-          if(reservation.date == dateSelected && reservation.time == timeSelected){
-              // display the reserved seats
-
-              if(!Array.isArray(reservation.seatSelected)){
-                reservation.seatSelected = [reservation.seatSelected];
-              }
-              
-              for(b of reservation.seatSelected){
-                let btn = document.querySelector(`#btn-${b}`);
-                btn.disabled = true;
-                let labelElement = document.querySelector(`label[for="btn-${b}"]`);
-                labelElement.classList.replace("btn-outline-info", "btn-danger");
-
-
-                let parag = $("<p>");
-                parag.addClass("text-white custom-font text-center");
-                parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white">${reservation.user}`);
-                reservedSeatsContainer.append(parag[0]);
-              
-              }
-          }
-        }
-      }
-      
-      document.addEventListener("DOMContentLoaded", updateReservedSeats);
-
-      // Add event listeners to the date and time inputs
-      document.querySelector('#date').addEventListener("change", updateReservedSeats);
-      document.querySelector('#time').addEventListener("change", updateReservedSeats);
-
-
-
+      // change the nav bar depending on the account type of the student
       if(accountType == "Student"){
+        // use dnone to remove certain links and add certain links
         signInLink.addClass("d-none");
         viewProfileLink.removeClass("d-none");
         logoutBtn.removeClass("d-none");
 
+        // remove the paragraph elements of reservation seats container using dnone
         for(p of resSeatsP){
           p.classList.add("d-none");
         }
 
       } else if(accountType == "Technician") {
+        // use dnone to remove certain links and add certain links
         signInLink.addClass("d-none");
         viewProfileLink.addClass("d-none");
         logoutBtn.removeClass("d-none");
 
+        // remove the paragraph elements of reservation seats container using dnone
         for(p of resSeatsP){
           p.classList.add("d-none");
         }
       } else {
+         // use dnone to remove certain links and add certain links
         signInLink.removeClass("d-none");
         viewProfileLink.addClass("d-none");
         logoutBtn.addClass("d-none");
       }
 
-      // The next lines of code is for reserving seats
-
-      $('.reserve-form').submit((event) => {
-        // VISITOR
+      // -- RESERVING A SEAT -- 
+      // when a seat button is clicked
+      $('.seatBtn').click(function(event) {
         event.preventDefault();
-        let roomName = document.querySelector('#roomName').innerHTML.substring(14);
-        let roomNameObject = {name: "roomName", value: roomName};
-        let user = userName;
-
-        
-        // STUDENT
-        if (accountType == "Student") {
-          // SEND DATA TO APP.JS
-          var formData = $(event.target).serializeArray(); // Serialize the form data
-          // Log the selected seat values
-          var selectedSeats = formData
-            .filter(function (item) {
-              return item.name === 'seatSelected';
-            })
-            .map(function (item) {
-              return item.value;
-            });
-
-           
-
-          const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
-          const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);
-          var date = document.querySelector("#date").value;
-          var time = document.querySelector("#time").value;
-
-          var reserve;
-          var anonymous;
-          var dateRequested;
-          const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
-          var seatNumbers = [];
-          var name = "Anonymous";
-          var profileLink = "";
-
-
-          // this for loop is to uncheck the boxes after selecting them
-          for(let i = 0; i < checkedCheckboxes.length; i++){
-            checkedCheckboxes[i].checked = false;
-          }
+        let thisBtn = $(this);
       
-          if (date !== "" && time !== "" && checkedCheckboxes != "") {
-            reserve = confirm(`Reserve the selected seats on ${date} from ${time}?`);
-      
-            if(reserve == true){
-              anonymous = confirm(`Do you want to reserve anonymously [ok for YES | cancel for NO]?`);
-              if(anonymous == true){
-                user = 'Anonymous'
+        /// get the time slots selected
+        var checkedTimeSlots = [];
+        $('.form-check-input:checked').each(function() {
+          var timeSlot = $(this).val();
+          checkedTimeSlots.push(timeSlot);
+        });
 
-                for(let i = 0; i < checkedId.length; i++){
-                  let btn = document.querySelector(`#${checkedId[i]}`);
-                  let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
-                  labelElement.classList.replace("btn-outline-info", "btn-danger");
-                  btn.disabled = true;
-                  seatNumbers.push(labelElement.textContent);
-                }  
-                dateRequested = new Date()
-                alert(`Seats reserved on ${dateRequested.getMonth()+1} / ${dateRequested.getDate()} / ${dateRequested.getFullYear()} Time: ${dateRequested.getHours()} : ${dateRequested.getMinutes()} : ${dateRequested.getSeconds()} `);
-                
-                // create a paragraph element
-      
-                for(s of seatNumbers){
-                  let parag = $("<p>");
-                  parag.addClass("text-white custom-font text-center");
-                  parag.html(`Seat #${s}: ${user}`);
-                  reservedSeatsContainer.append(parag[0]);
-                }
-              } else {
-                // code to store the logged in email in database
-                name = user;
-                profileLink = "profile.html"
-                user = userName;
-                for(let i = 0; i < checkedId.length; i++){
-                  let btn = document.querySelector(`#${checkedId[i]}`);
-                  let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
-                  labelElement.classList.replace("btn-outline-info", "btn-danger");
-                  btn.disabled = true;
-                  seatNumbers.push(labelElement.textContent);
-                }  
-                dateRequested = new Date()
-                alert(`Seats reserved on ${dateRequested.getMonth()+1} / ${dateRequested.getDate()} / ${dateRequested.getFullYear()} Time: ${dateRequested.getHours()} : ${dateRequested.getMinutes()} : ${dateRequested.getSeconds()} `);
-                
-                // create a paragraph element
-      
-                for(s of seatNumbers){
-                  let parag = $("<p>");
-                  parag.addClass("text-white custom-font text-center");
-                  parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${user}`);
-                  reservedSeatsContainer.append(parag[0]);
-                }
+
+
+        if(checkedTimeSlots.length == 0){
+          alert('Please select the time slot you want to reserve');
+          return
+        } else {
+          // STUDENT
+
+          // create formData of objects
+          var formData = []
+          if (accountType == "Student") {
+            console.log(thisBtn);
+
+            // variables when reserving
+            var anonymous; // boolean for anonymous or not
+            var dateRequested; // variable for the date requested
+            var profileLink = ""; // variable for the profile link of user
+
+            // get the container for reserved seats display
+            const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
+          
+            // ask the user if they want to be anonymous
+            anonymous = confirm(`Do you want to reserve anonymously?`);
+            if(anonymous == true){
+              // set username to anonymous
+              userName = 'Anonymous'
+            } else {
+              // profileLink = "profile.html" FIX THIS
+            }
+
+            // set the seat button to disabled
+            thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
+            thisBtn.attr("disabled", "disabled");
+    
+            // alert the user that the seat was successfully reserved
+            dateRequested = new Date()
+            alert(`Reservation Successful`);
+            
+            // create a paragraph element and display it
+            let parag = $("<p>");
+            parag.addClass("text-white custom-font text-center");
+            parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
+            reservedSeatsContainer.append(parag[0]);
+
+            // get the current date
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = (date.getMonth() + 1).toString().padStart(2, '0');
+            let day = date.getDate().toString().padStart(2, '0');
+            let hours = date.getHours().toString().padStart(2, '0');
+            let minutes = date.getMinutes().toString().padStart(2, '0');
+
+            // form the date requested
+            let dateReq = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+            // get room name and create room object
+            let roomName = document.querySelector('#roomName').innerHTML.substring(14);
+
+            // get date selected
+            let dateSelected = document.querySelector('#date').value;
+                      
+            console.log(checkedTimeSlots);
+            // create objects that will be stored in the database
+            let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
+            let timeObject = {name: 'time', value: checkedTimeSlots};
+            let dateObject = {name: 'date', value: dateSelected};
+            let viewObject = {name: "view", value: 'student'};
+            let roomNameObject = {name: "roomName", value: roomName};
+            let userObject = {name: "user", value: userName};
+            let emailObject = {name: 'email', value: email};
+            let dateReqObject = {name: 'dateReq', value: dateReq};
+            
+            // push the objects in the array
+            formData.push(seatSelectedObject);
+            formData.push(timeObject);
+            formData.push(dateObject);
+            formData.push(viewObject);
+            formData.push(roomNameObject);
+            formData.push(userObject);
+            formData.push(emailObject);
+            formData.push(dateReqObject);
+
+            // send data to roomsRouter.js
+            $.ajax({
+              type: 'POST',
+              url: '/room',
+              data: formData,
+              success: function (response) {
+                // Handle the success response from the server
+              },
+              error: function (error) {
+                // Handle the error response from the server
               }
+            });
+          }
 
+          // TECHNICIAN
+          else if(accountType == "Technician") {
+            // variables when reserving
+            var anonymous; // boolean for anonymous or not
+            var profileLink = ""; // variable for the profile link of user
+
+            // get the container for reserved seats display
+            const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
+          
+            // ask the user if they want to be anonymous
+            anonymous = confirm('Does the student want to reserve anonymously?');
+            if(anonymous == true){
+              userName = 'Anonymous'
+              // set the seat button to disabled
+              thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
+              thisBtn.attr("disabled", "disabled");
+      
+              // alert the user that the seat was successfully reserved
+              alert(`Reservation Successful`);
+              
+              // create a paragraph element and display it
+              let parag = $("<p>");
+              parag.addClass("text-white custom-font text-center");
+              parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
+              reservedSeatsContainer.append(parag[0]);
+                
+              // get the current date
               let date = new Date();
               let year = date.getFullYear();
               let month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -228,16 +275,29 @@ $(document).ready(function() {
               let hours = date.getHours().toString().padStart(2, '0');
               let minutes = date.getMinutes().toString().padStart(2, '0');
 
+              // form the date requested
               let dateReq = `${year}-${month}-${day}T${hours}:${minutes}`;
-              console.log(dateReq);
-              //dateReq = dateReq.toString().replace('T', 'Time: ');
+
+              // get room name and create room object
+              let roomName = document.querySelector('#roomName').innerHTML.substring(14);
+
+              // get date selected
+              let dateSelected = document.querySelector('#date').value;
+
+              // create objects that will be stored in the database
+              let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
+              let timeObject = {name: 'time', value: checkedTimeSlots};
+              let dateObject = {name: 'date', value: dateSelected};
               let viewObject = {name: "view", value: 'student'};
-              let userObject = {name: "user", value: user};
+              let roomNameObject = {name: "roomName", value: roomName};
+              let userObject = {name: "user", value: userName};
               let emailObject = {name: 'email', value: email};
               let dateReqObject = {name: 'dateReq', value: dateReq};
-              // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
-              // user = ...
-  
+              
+              // push the objects in the array
+              formData.push(seatSelectedObject);
+              formData.push(timeObject);
+              formData.push(dateObject);
               formData.push(viewObject);
               formData.push(roomNameObject);
               formData.push(userObject);
@@ -246,105 +306,20 @@ $(document).ready(function() {
 
               // Perform any additional client-side actions or submit the form via AJAX
               $.ajax({
-                type: 'POST',
-                url: '/room',
-                data: formData,
-                success: function (response) {
-                  // Handle the success response from the server
-                },
-                error: function (error) {
-                  // Handle the error response from the server
-                }
-              });
-            }
-
-          } else {
-            alert('Please select a date and a time and the seats you want to reserve!');
-          }  
-          
-        }
-
-        // TECHNICIAN
-        else if(accountType == "Technician") {
-          // SEND DATA TO APP.JS
-
-          var formData = $(event.target).serializeArray(); // Serialize the form data
-          // Log the selected seat values
-          var selectedSeats = formData
-            .filter(function (item) {
-              return item.name === 'seatSelected';
-            })
-            .map(function (item) {
-              return item.value;
+              type: 'POST',
+              url: '/room',
+              data: formData,
+              success: function (response) {
+                // Handle the success response from the server
+              },
+              error: function (error) {
+                // Handle the error response from the server
+              }
             });
 
-
-          const checkedCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
-          const checkedId = checkedCheckboxes.map((checkbox) => checkbox.id);
-          var date = document.querySelector("#date").value;
-          var time = document.querySelector("#time").value;
-      
-
-          // this for loop is to uncheck the boxes after selecting them
-          for(let i = 0; i < checkedCheckboxes.length; i++){
-            checkedCheckboxes[i].checked = false;
-          }
-      
-          var anonymous;
-          const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
-          var seatNumbers = [];
-          var name = "Anonymous";
-          var profileLink = "";
-
-          if (date !== "" && time !== "" && checkedCheckboxes != "") {
-            anonymous = confirm('Does the student want to reserve anonymously [ok for YES | cancel for NO]?');
-            if(anonymous == true){
-              // code for storing anonymous instead of the email of student in database
-              user = 'Anonymous';
-              for(let i = 0; i < checkedId.length; i++){
-                let btn = document.querySelector(`#${checkedId[i]}`);
-                let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
-                labelElement.classList.replace("btn-outline-info", "btn-danger");
-                btn.disabled=true;
-                seatNumbers.push(labelElement.textContent);
-              }
-
-              for(s of seatNumbers){
-                let parag = $("<p>");
-                parag.addClass("text-white custom-font text-center");
-                parag.html(`Seat #${s}: ${user}`);
-                reservedSeatsContainer.append(parag[0]);
-              }
-              
-              let viewObject = {name: "view", value: 'technician'};
-              let userObject = {name: "user", value: user};
-              let emailObject = {name: 'email', value: email};
-              // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
-              // user = ...
-
-              formData.push(viewObject);
-              formData.push(roomNameObject);
-              formData.push(userObject);
-              formData.push(emailObject);
-        
-              // Perform any additional client-side actions or submit the form via AJAX
-              $.ajax({
-                type: 'POST',
-                url: '/room',
-                data: formData,
-                success: function (response) {
-                  // Handle the success response from the server
-                },
-                error: function (error) {
-                  // Handle the error response from the server
-                }
-              });
-
             } else {
-              email = prompt(`Enter email of student:`);
-              
-              name = user;
-
+              // get email of user
+              let email = prompt(`Enter email of student:`);
               if(email === ""){
                 alert('Please enter the email of the student!');
               }
@@ -352,7 +327,7 @@ $(document).ready(function() {
                 //do nothing
               }
               else{
-                // get account of user based on email
+                // get account of user based on email via ajax
                 $.ajax({
                   type: 'POST',
                   url: '/getAccount',
@@ -362,16 +337,60 @@ $(document).ready(function() {
                     if (response === null) {
                       alert('Email did not match anything in the database');
                     } else {
-                      user = response.name;
-                      
-                      let viewObject = {name: "view", value: 'technician'};
-                      let userObject = {name: "user", value: user};
-                      // CHANGE USER HERE WHEN LOGIN PAGE IS FINISHED
-                      // user = ...
+                      userName = response.name;
 
+                      // set the seat button to disabled
+                      thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
+                      thisBtn.attr("disabled", "disabled");
+              
+                      // alert the user that the seat was successfully reserved
+                      dateRequested = new Date()
+                      alert(`Reservation Successful`);
+                      
+                      // create a paragraph element and display it
+                      let parag = $("<p>");
+                      parag.addClass("text-white custom-font text-center");
+                      parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
+                      reservedSeatsContainer.append(parag[0]);
+
+                      userName = response.name;
+                      
+                      // get the current date
+                      let date = new Date();
+                      let year = date.getFullYear();
+                      let month = (date.getMonth() + 1).toString().padStart(2, '0');
+                      let day = date.getDate().toString().padStart(2, '0');
+                      let hours = date.getHours().toString().padStart(2, '0');
+                      let minutes = date.getMinutes().toString().padStart(2, '0');
+
+                      // form the date requested
+                      let dateReq = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+                      // get room name and create room object
+                      let roomName = document.querySelector('#roomName').innerHTML.substring(14);
+
+                      // get date selected
+                      let dateSelected = document.querySelector('#date').value;
+
+                      // create objects that will be stored in the database
+                      let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
+                      let timeObject = {name: 'time', value: checkedTimeSlots};
+                      let dateObject = {name: 'date', value: dateSelected};
+                      let viewObject = {name: "view", value: 'student'};
+                      let roomNameObject = {name: "roomName", value: roomName};
+                      let userObject = {name: "user", value: userName};
+                      let emailObject = {name: 'email', value: email};
+                      let dateReqObject = {name: 'dateReq', value: dateReq};
+                      
+                      // push the objects in the array
+                      formData.push(seatSelectedObject);
+                      formData.push(timeObject);
+                      formData.push(dateObject);
                       formData.push(viewObject);
                       formData.push(roomNameObject);
                       formData.push(userObject);
+                      formData.push(emailObject);
+                      formData.push(dateReqObject);
                 
                       // Perform any additional client-side actions or submit the form via AJAX
                       $.ajax({
@@ -385,23 +404,6 @@ $(document).ready(function() {
                           // Handle the error response from the server
                         }
                       });
-
-                      for(let i = 0; i < checkedId.length; i++){
-                        let btn = document.querySelector(`#${checkedId[i]}`);
-                        let labelElement = document.querySelector(`label[for="${checkedId[i]}"]`);
-                        labelElement.classList.replace("btn-outline-info", "btn-danger");
-                        btn.disabled=true;
-                        seatNumbers.push(labelElement.textContent);
-                      }
-                      
-                        // create a paragraph element
-      
-                      for(s of seatNumbers){
-                        let parag = $("<p>");
-                        parag.addClass("text-white custom-font text-center");
-                        parag.html(`Seat #${s}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${user}`);
-                        reservedSeatsContainer.append(parag[0]);
-                      }
                     }
                   },
                   error: function (error) {
@@ -412,51 +414,26 @@ $(document).ready(function() {
               }
             }
 
+          // VISITOR
           } else {
-            alert('Please select a date and a time and the seats you want to reserve!');
-          }  
-        } else {
-          if(view == "visitor"){
             alert('Please sign in to reserve a seat.');
-  
-            var formData = $(event.target).serializeArray(); // Serialize the form data
-            // Log the selected seat values
-            var selectedSeats = formData
-              .filter(function (item) {
-                return item.name === 'seatSelected';
-              })
-              .map(function (item) {
-                return item.value;
-              });
-  
-              let viewObject = {name: "view", value: 'visitor'};
-              formData.push(viewObject);
-              formData.push(roomNameObject);
-        
-            // Perform any additional client-side actions or submit the form via AJAX
-            $.ajax({
-              type: 'POST',
-              url: '/room',
-              data: formData,
-              success: function (response) {
-                // Handle the success response from the server
-              },
-              error: function (error) {
-                // Handle the error response from the server
-              }
-            });
-          } 
+          }
+          window.location.reload();
         }
-        //window.location.reload();
+          
       });
 
 
-        },
-        error: function(error) {
-          // Handle the error response from the server
-          console.log('Error retrieving data:', error);
-        }
-      });
-
+    },
+    error: function(error) {
+      // Handle the error response from the server
+      console.log('Error retrieving data:', error);
+    }
+  });
+  $('.seatBtn').click(function(event) {
+    if(accountType == 'visitor'){
+      alert('Please sign in to reserve a seat.');
+    }
+  })
 })
   

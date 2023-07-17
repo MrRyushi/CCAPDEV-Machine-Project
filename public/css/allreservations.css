@@ -1,0 +1,17 @@
+body {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(42,135,157,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+.custom-font {
+    font-family: Montserrat;
+}
+
+#title {
+    font-size: 120px;
+}
+
+.fixed-width-cell {
+    width: 200px; /* Set the desired width here */
+  }
+  

@@ -36,12 +36,14 @@ $(document).ready(function(){
         signInLink.removeClass("d-none");
         viewProfileLink.addClass("d-none");
         logoutBtn.addClass("d-none");
+        backHref = "home";
         //studentViewLink.removeClass("d-none");
         //visitorViewLink.addClass("d-none");
         //techViewLink.removeClass("d-none");
       }
 
       $(".btn-back").click(function(){
+        console.log("back: " + backHref);
         window.location.href = backHref;
       });
     },
@@ -49,6 +51,10 @@ $(document).ready(function(){
       // Handle the error response from the server
       console.log('Error retrieving data:', error);
     }
+  });
+
+  $(".btn-back").click(function(){
+    window.location.href = 'home';
   });
 
   // views links

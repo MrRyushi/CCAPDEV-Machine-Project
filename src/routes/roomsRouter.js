@@ -83,7 +83,7 @@ roomsRouter.post('/room', async (req, res) => {
     } else {
       roomUsed = room03;
     }
-    console.log(roomUsed + ' = ' + req.body.roomName);
+    console.log(req.body.time);
     const insertResult = await roomUsed.insertOne({
       user: req.body.user,
       email: req.body.email,
