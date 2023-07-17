@@ -182,5 +182,37 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
     }
   });
 
+  profileRouter.post('/update-reservation', async (req, res) => {
+    const room01 = await db.collection('cl01');
+    const room02 = await db.collection('cl02');
+    const room03 = await db.collection('cl03');
+    console.log("Rooms retrieved / created");
+
+    let roomUsed;
+    if(req.body.roomName == 'CL01'){
+      roomUsed = room01;
+    } else if(req.body.roomName == 'CL02'){
+      roomUsed = room02;
+    } else {
+      roomUsed = room03;
+    }
+    
+    const updateResult = await roomUsed.updateOne(
+      {
+        date: req.body.date,
+        time: req.body.prevTime,
+        seatSelected: req.body.prevSeat,
+      },
+      {
+        $set: {
+          time: req.body.newTimeRes,
+          seatSelected: req.body.newSeatNum,
+        },
+      }
+    );
+    console.log("updating one successful", updateResult);
+    
+  
+  })
   
 export default profileRouter;

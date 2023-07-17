@@ -176,18 +176,18 @@ $(document).ready(function() {
             }
 
             // set the seat button to disabled
-            thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
-            thisBtn.attr("disabled", "disabled");
+            //thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
+            //thisBtn.attr("disabled", "disabled");
     
             // alert the user that the seat was successfully reserved
             dateRequested = new Date()
             alert(`Reservation Successful`);
             
             // create a paragraph element and display it
-            let parag = $("<p>");
-            parag.addClass("text-white custom-font text-center");
-            parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
-            reservedSeatsContainer.append(parag[0]);
+            //let parag = $("<p>");
+           // parag.addClass("text-white custom-font text-center");
+            //parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
+           // reservedSeatsContainer.append(parag[0]);
 
             // get the current date
             let date = new Date();
@@ -255,16 +255,16 @@ $(document).ready(function() {
             if(anonymous == true){
               userName = 'Anonymous'
               // set the seat button to disabled
-              thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
-              thisBtn.attr("disabled", "disabled");
+             // thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
+             // thisBtn.attr("disabled", "disabled");
       
               // alert the user that the seat was successfully reserved
               alert(`Reservation Successful`);
               
               // create a paragraph element and display it
-              let parag = $("<p>");
-              parag.addClass("text-white custom-font text-center");
-              parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
+              //let parag = $("<p>");
+             // parag.addClass("text-white custom-font text-center");
+             // parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
               reservedSeatsContainer.append(parag[0]);
                 
               // get the current date
@@ -340,18 +340,18 @@ $(document).ready(function() {
                       userName = response.name;
 
                       // set the seat button to disabled
-                      thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
-                      thisBtn.attr("disabled", "disabled");
+                      //thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
+                     // thisBtn.attr("disabled", "disabled");
               
                       // alert the user that the seat was successfully reserved
                       dateRequested = new Date()
                       alert(`Reservation Successful`);
                       
                       // create a paragraph element and display it
-                      let parag = $("<p>");
-                      parag.addClass("text-white custom-font text-center");
-                      parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
-                      reservedSeatsContainer.append(parag[0]);
+                     // let parag = $("<p>");
+                     // parag.addClass("text-white custom-font text-center");
+                     // parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
+                      //reservedSeatsContainer.append(parag[0]);
 
                       userName = response.name;
                       

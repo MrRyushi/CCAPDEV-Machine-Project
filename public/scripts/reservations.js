@@ -1,7 +1,9 @@
 $(document).ready(function(){
 
     var selectedValues = [];
-    
+    var previousSeat;
+    var previousTime;
+
     // Checkbox change event listener
     $('#reservationContainer').on('change', '.form-check-input', function() {
       var value = $(this).val();
@@ -21,10 +23,24 @@ $(document).ready(function(){
       console.log(selectedValues);
     })
 
+    let room;
+    let seatnum;
+    let datereq;
+    let timereq;
+    let dateres;
+    let timeres;
+
+    let currRoom;
+    let currSeatnum;
+    let currDateReq;
+    let currTimeReq;
+    let currDateRes;
+    let currTimeRes;
+    
     $('#reservationContainer').on('click', '.edit-btn', function() {
         // Clear the selectedValues array before editing another table
         selectedValues = [];
-
+        
 
         // get the buttons
 
@@ -45,21 +61,22 @@ $(document).ready(function(){
         deleteBtn.removeClass("d-none");
 
         // get the value elements
-        //room = table.find(".room-value");
+        room = table.find(".room-value");
         seatnum = table.find(".seatnum-value");
-        //datereq = table.find(".datereq-value");
-        //timereq = table.find(".timereq-value");
-        //dateres = table.find(".dateres-value");
+        datereq = table.find(".datereq-value");
+        timereq = table.find(".timereq-value");
+        dateres = table.find(".dateres-value");
         timeres = table.find(".timeres-value");
 
         // store their current value
-        //currRoom = room.text();
+        currRoom = room.text();
         currSeatnum = seatnum.text();
-        //currDateReq = datereq.text();
-        //currTimeReq = timereq.text();
-        //currDateRes = dateres.text();
+        currDateReq = datereq.text();
+        currTimeReq = timereq.text();
+        currDateRes = dateres.text();
         currTimeRes = timeres.text();
-
+        previousSeat = seatnum.text();
+        previousTime = timeres.text();
         // create forms
         // room
         /*
@@ -174,7 +191,24 @@ $(document).ready(function(){
         });
 
         container.append(timeContainer);
+        let prevTime = timeres.text();
+        let prevTimeArray = prevTime.split(/,/);
         timeres.append(container);
+
+        
+
+        // Create a set to store the values in prevTimeArray
+        let prevTimeSet = new Set(prevTimeArray);
+
+        // Iterate over each checkbox and check it if the value is in prevTimeSet
+        timeContainer.find('.form-check-input').each(function() {
+          let value = $(this).val();
+          if (prevTimeSet.has(value)) {
+            $(this).prop('checked', true);
+          }
+  });
+        
+        
     }) 
 
     $('#reservationContainer').on('click', '.cancel-btn', function() {
@@ -213,62 +247,134 @@ $(document).ready(function(){
       
 
 
-    $('#reservationContainer').on('click', '.save-btn', function() {
-        // Find the closest table element
-        let table = $(this).closest('table');
-      
-        // Find the buttons within the table
-        let editBtn = table.find(".edit-btn");
-        let cancelBtn = table.find(".cancel-btn");
-        let deleteBtn = table.find(".delete-btn");
+    $('#reservationContainer').on('click', '.save-btn', function () {
+      // Store a reference to the table element
+      var table = $(this).closest('table');
+      $.ajax({
+        url: '/getReservations',
+        method: 'POST',
+        success: function(response) {
+          // Handle the data received from the server
+          console.log("response:", response);
+          const cl01Array = response.cl01Array;
+          const cl02Array = response.cl02Array;
+          const cl03Array = response.cl03Array;
+          // Use the arrays as needed
+          console.log("cl01Array:", cl01Array);
+          console.log("cl02Array:", cl02Array);
+          console.log("cl03Array:", cl03Array);
 
-        // Enable all other edit buttons
-        $('.edit-btn').not(editBtn).prop('disabled', false);
-      
-        // Perform the desired operations within the specific table
-        $(this).addClass("d-none");
-        editBtn.removeClass("d-none");
-        cancelBtn.addClass("d-none");
-        deleteBtn.addClass("d-none");
-      
-        // Find the specific form elements within the table and update their content
-        //let currRoom = room_form.val();
-        let currSeatnum = seatnum_form.val();
-        //let currDateReq = datereq_form.val();
-        //let currTimeReq = timereq_form.val();
-        //let currDateRes = dateres_form.val();
-        // Create an empty array to store the selected values
-        // Print the selected values
-        console.log(selectedValues);
-        let currTimeRes = selectedValues;
-      
-        // Find the specific elements within the table and update their content
-        // room = table.find(".room-value");
-        let seatnum = table.find(".seatnum-value");
-        //let datereq = table.find(".datereq-value");
-        //let timereq = table.find(".timereq-value");
-        //let dateres = table.find(".dateres-value");
-        let timeres = table.find(".timeres-value");
-      
-        //room.html(`${currRoom}`);
-        seatnum.html(`${currSeatnum}`);
-        //datereq.html(`${currDateReq}`);
-        //timereq.html(`${currTimeReq}`);
-        //dateres.html(`${currDateRes}`);
-        timeres.html(`${currTimeRes}`);
-      });
+          let roomUsed;
+          if(currRoom == 'CL01'){
+            roomUsed = cl01Array
+          } else if(currRoom == 'CL02'){
+            roomUsed = cl02Array
+          } else if(currRoom == 'CL03'){
+            roomUsed = cl03Array
+          }
 
-      $('#reservationContainer').on('click', '.delete-btn', function() {
-        let div = $(this).closest("div");
-        div.remove();
-    
-        // Find the closest table element
-        let table = $(this).closest('table');
-    
-        // Find the edit button within the table
-        let editBtn = table.find('.edit-btn');
-    
-        // Enable the edit button
-        $('.edit-btn').not(editBtn).prop('disabled', false);
+          let currSeatnum = seatnum_form.val();
+          let currTimeRes = selectedValues;
+          let found = false;
+
+          for(res of roomUsed){
+            if(currDateRes == res.date && currSeatnum == res.seatSelected){
+              let timeData = res.time.split(/,/);
+              for(timeRes of currTimeRes){
+                for(data of timeData){
+                  console.log(timeRes + " : " + timeData);
+                  if(timeRes == data){
+                    found = true;
+                  }
+                }
+              }
+            }
+          }
+
+          console.log("found: " + found);
+
+          
+          if(found == true){
+            alert('seat and given time already occupied');
+          } else {          
+            //let currDateReq = datereq_form.val();
+            //let currTimeReq = timereq_form.val();
+            // Create an empty array to store the selected values
+            // Print the selected values
+          
+            // Find the specific elements within the table and update their content
+            // room = table.find(".room-value");;
+            let seatnum = table.find(".seatnum-value");
+            //let datereq = table.find(".datereq-value");
+            //let timereq = table.find(".timereq-value");
+            //let dateres = table.find(".dateres-value");
+            let timeres = table.find(".timeres-value");
+          
+            //room.html(`${currRoom}`);
+            seatnum.html(`${currSeatnum}`);
+            //datereq.html(`${currDateReq}`);
+            //timereq.html(`${currTimeReq}`);
+            //dateres.html(`${currDateRes}`);
+            timeres.html(`${currTimeRes}`);
+            // CLOSE THE EDIT
+            // Find the closest table element
+          
+            // Find the buttons within the table
+            
+            let editBtn = table.find(".edit-btn");
+            let cancelBtn = table.find(".cancel-btn");
+            let deleteBtn = table.find(".delete-btn");
+            let saveBtn = table.find(".save-btn");
+
+            // Enable all other edit buttons
+            $('.edit-btn').not(editBtn).prop('disabled', false);
+          
+            // Perform the desired operations within the specific table
+            saveBtn.addClass("d-none");
+            editBtn.removeClass("d-none");
+            cancelBtn.addClass("d-none");
+            deleteBtn.addClass("d-none");
+
+
+            let formData = [];
+            formData.push({name: "roomName", value: currRoom});
+            formData.push({name: "date", value: currDateRes});
+            formData.push({name: "newTimeRes", value: currTimeRes})
+            formData.push({name: "newSeatNum", value: currSeatnum});
+            formData.push({name: "prevSeat", value: previousSeat});
+            formData.push({name: "prevTime", value: previousTime});
+            $.ajax({
+              type: 'POST',
+              url: '/update-reservation',
+              data: formData,
+              success: function (response) {
+                // Handle the success response from the server
+              },
+              error: function (error) {
+                // Handle the error response from the server
+              }
+            });
+          
+
+
+          
+            // Find the specific form elements within the table and update their content
+          }
+        }
+      })
     });
+
+    $('#reservationContainer').on('click', '.delete-btn', function() {
+      let div = $(this).closest("div");
+      div.remove();
+  
+      // Find the closest table element
+      let table = $(this).closest('table');
+  
+      // Find the edit button within the table
+      let editBtn = table.find('.edit-btn');
+  
+      // Enable the edit button
+      $('.edit-btn').not(editBtn).prop('disabled', false);
+  });
 })
