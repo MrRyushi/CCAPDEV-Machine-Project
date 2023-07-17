@@ -1,6 +1,31 @@
 $(document).ready(function(){
 
+    var selectedValues = [];
+    
+    // Checkbox change event listener
+    $('#reservationContainer').on('change', '.form-check-input', function() {
+      var value = $(this).val();
+      var index = selectedValues.indexOf(value);
+
+      // Add or remove the value from the selectedValues array
+      if ($(this).prop('checked')) {
+        if (index === -1) {
+          selectedValues.push(value);
+        }
+      } else {
+        if (index !== -1) {
+          selectedValues.splice(index, 1);
+        }
+      }
+      // Print the selected values
+      console.log(selectedValues);
+    })
+
     $('#reservationContainer').on('click', '.edit-btn', function() {
+        // Clear the selectedValues array before editing another table
+        selectedValues = [];
+
+
         // get the buttons
 
         let editBtns = $('.edit-btn');
@@ -20,23 +45,24 @@ $(document).ready(function(){
         deleteBtn.removeClass("d-none");
 
         // get the value elements
-        room = table.find(".room-value");
+        //room = table.find(".room-value");
         seatnum = table.find(".seatnum-value");
-        datereq = table.find(".datereq-value");
-        timereq = table.find(".timereq-value");
-        dateres = table.find(".dateres-value");
+        //datereq = table.find(".datereq-value");
+        //timereq = table.find(".timereq-value");
+        //dateres = table.find(".dateres-value");
         timeres = table.find(".timeres-value");
 
         // store their current value
-        currRoom = room.text();
+        //currRoom = room.text();
         currSeatnum = seatnum.text();
-        currDateReq = datereq.text();
-        currTimeReq = timereq.text();
-        currDateRes = dateres.text();
+        //currDateReq = datereq.text();
+        //currTimeReq = timereq.text();
+        //currDateRes = dateres.text();
         currTimeRes = timeres.text();
 
         // create forms
         // room
+        /*
         room.html("");
         room_form = $("<select>");    
         var option1 = $('<option>').text('CL01').val('CL01');
@@ -47,18 +73,21 @@ $(document).ready(function(){
         room_form.attr("cols", "13");
         room_form.attr("placeholder", `${currRoom}`);
         room_form.attr("value", `${currRoom}`);
-        room.append(room_form);
+        room.append(room_form);*/
 
         // seat num
         seatnum.html("");
         seatnum_form = $("<input>");
         seatnum_form.addClass("room-form form-control");
-        seatnum_form.attr("type", "text");
+        seatnum_form.attr("type", "number");
         seatnum_form.attr("placeholder", `${currSeatnum}`);
         seatnum_form.attr("value", `${currSeatnum}`);
+        seatnum_form.attr("min", "1");
+        seatnum_form.attr("max", "48");
         seatnum.append(seatnum_form);
 
         // date request
+        /*
         datereq.html("");
         datereq_form = $("<input>");
         datereq_form.attr("type", "datetime-local")
@@ -81,10 +110,11 @@ $(document).ready(function(){
         dateres_form.addClass("room-form form-control");
         dateres_form.attr("type", "date");
         dateres_form.val(currDateRes);
-        dateres.append(dateres_form);
+        dateres.append(dateres_form);*/
 
+        // FIX THIS
         // time reserved
-        timeres.html("");
+        /*timeres.html("");
         timeres_form = $("<select>");
         var op1 = $('<option>').text('09:00 to 09:30').val('09:00 to 09:30');
         var op2 = $('<option>').text('09:30 to 10:00').val('09:30 to 10:00');
@@ -105,7 +135,46 @@ $(document).ready(function(){
         timeres_form.append(op1, op2, op3, op4, op5, op6, op7, op8, op9, op10, op11, op12, op13, op14, op15, op16);
         timeres_form.addClass("room-form form-control");
         timeres_form.attr("placeholder", `${currTimeRes}`);
-        timeres.append(timeres_form);
+        timeres.append(timeres_form);*/
+
+        var container = $('<div>')//.addClass('container row');
+        var timeContainer = $('<div>')//.addClass('container time-container col-md-3 me-1 text-white mx-auto');
+        var title = $('<div>')//.addClass('title');
+        var titleText = $('<p>')//.addClass('text-white fs-2 text-center custom-font').text('Select Time');
+        title.append(titleText);
+        timeContainer.append(title);
+
+        var timeSlots = [
+          { value: '09:00 to 09:30', id: '09:00', label: '09:00 to 09:30' },
+          { value: '09:30 to 10:00', id: '09:30', label: '09:30 to 10:00' },
+          { value: '10:00 to 10:30', id: '10:00', label: '10:00 to 10:30' },
+          { value: '10:30 to 11:00', id: '10:30', label: '10:30 to 11:00' },
+          { value: '11:00 to 11:30', id: '11:00', label: '11:00 to 11:30' },
+          { value: '11:30 to 12:00', id: '11:30', label: '11:30 to 12:00' },
+          { value: '12:00 to 12:30', id: '12:00', label: '12:00 to 12:30' },
+          { value: '12:30 to 13:30', id: '12:30', label: '12:30 to 13:00' },
+          { value: '13:00 to 13:30', id: '13:00', label: '13:00 to 13:30' },
+          { value: '13:30 to 14:00', id: '13:30', label: '13:30 to 14:00' },
+          { value: '14:00 to 14:30', id: '14:00', label: '14:00 to 14:30' },
+          { value: '14:30 to 15:00', id: '14:30', label: '14:30 to 15:00' },
+          { value: '15:00 to 15:30', id: '15:00', label: '15:00 to 15:30' },
+          { value: '15:30 to 16:00', id: '15:30', label: '15:30 to 16:00' }
+        ];
+
+        $.each(timeSlots, function(index, slot) {
+          var formCheck = $('<div>').addClass('form-check mx-auto');
+          var input = $('<input>').addClass('form-check-input').attr({
+            type: 'checkbox',
+            value: slot.value,
+            id: slot.id
+          });
+          var label = $('<label>').addClass('form-check-label').attr('for', slot.id).text(slot.label);
+          formCheck.append(input, label);
+          timeContainer.append(formCheck);
+        });
+
+        container.append(timeContainer);
+        timeres.append(container);
     }) 
 
     $('#reservationContainer').on('click', '.cancel-btn', function() {
@@ -127,20 +196,21 @@ $(document).ready(function(){
         deleteBtn.addClass("d-none")
       
         // get the value elements
-        let room = table.find(".room-value");
+        //let room = table.find(".room-value");
         let seatnum = table.find(".seatnum-value");
-        let datereq = table.find(".datereq-value");
-        let timereq = table.find(".timereq-value");
-        let dateres = table.find(".dateres-value");
+        //let datereq = table.find(".datereq-value");
+        //let timereq = table.find(".timereq-value");
+        //let dateres = table.find(".dateres-value");
         let timeres = table.find(".timeres-value");
       
-        room.html(`${currRoom}`);
+        //room.html(`${currRoom}`);
         seatnum.html(`${currSeatnum}`);
-        datereq.html(`${currDateReq}`);
-        timereq.html(`${currTimeReq}`);
-        dateres.html(`${currDateRes}`);
+        //datereq.html(`${currDateReq}`);
+        //timereq.html(`${currTimeReq}`);
+        //dateres.html(`${currDateRes}`);
         timeres.html(`${currTimeRes}`);
       });
+      
 
 
     $('#reservationContainer').on('click', '.save-btn', function() {
@@ -162,26 +232,29 @@ $(document).ready(function(){
         deleteBtn.addClass("d-none");
       
         // Find the specific form elements within the table and update their content
-        let currRoom = room_form.val();
+        //let currRoom = room_form.val();
         let currSeatnum = seatnum_form.val();
-        let currDateReq = datereq_form.val();
-        let currTimeReq = timereq_form.val();
-        let currDateRes = dateres_form.val();
-        let currTimeRes = timeres_form.val();
+        //let currDateReq = datereq_form.val();
+        //let currTimeReq = timereq_form.val();
+        //let currDateRes = dateres_form.val();
+        // Create an empty array to store the selected values
+        // Print the selected values
+        console.log(selectedValues);
+        let currTimeRes = selectedValues;
       
         // Find the specific elements within the table and update their content
-        let room = table.find(".room-value");
+        // room = table.find(".room-value");
         let seatnum = table.find(".seatnum-value");
-        let datereq = table.find(".datereq-value");
-        let timereq = table.find(".timereq-value");
-        let dateres = table.find(".dateres-value");
+        //let datereq = table.find(".datereq-value");
+        //let timereq = table.find(".timereq-value");
+        //let dateres = table.find(".dateres-value");
         let timeres = table.find(".timeres-value");
       
-        room.html(`${currRoom}`);
+        //room.html(`${currRoom}`);
         seatnum.html(`${currSeatnum}`);
-        datereq.html(`${currDateReq}`);
-        timereq.html(`${currTimeReq}`);
-        dateres.html(`${currDateRes}`);
+        //datereq.html(`${currDateReq}`);
+        //timereq.html(`${currTimeReq}`);
+        //dateres.html(`${currDateRes}`);
         timeres.html(`${currTimeRes}`);
       });
 

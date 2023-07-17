@@ -10,3 +10,8 @@ body {
 #title {
     font-size: 120px;
 }
+
+.fixed-width-cell {
+    width: 200px; /* Set the desired width here */
+  }
+  

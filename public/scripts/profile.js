@@ -142,6 +142,12 @@ $(document).ready(function() {
           tableRow6.append(tabledata9);
           tableRow6.append(tabledata10);
 
+          tabledata1.addClass('fixed-width-cell');
+          tabledata3.addClass('fixed-width-cell');
+          tabledata5.addClass('fixed-width-cell');
+          tabledata7.addClass('fixed-width-cell');
+          tabledata9.addClass('fixed-width-cell');
+
           tbody.addClass('table-group-divider');
           tabledata1.addClass('light-bold');
           tabledata3.addClass('light-bold');
@@ -233,6 +239,12 @@ $(document).ready(function() {
           tableRow6.append(tabledata9);
           tableRow6.append(tabledata10);
 
+          tabledata1.addClass('fixed-width-cell');
+          tabledata3.addClass('fixed-width-cell');
+          tabledata5.addClass('fixed-width-cell');
+          tabledata7.addClass('fixed-width-cell');
+          tabledata9.addClass('fixed-width-cell');
+
           tbody.addClass('table-group-divider');
           tabledata1.addClass('light-bold');
           tabledata3.addClass('light-bold');
@@ -323,6 +335,12 @@ $(document).ready(function() {
           tableRow5.append(tabledata8);
           tableRow6.append(tabledata9);
           tableRow6.append(tabledata10);
+
+          tabledata1.addClass('fixed-width-cell');
+          tabledata3.addClass('fixed-width-cell');
+          tabledata5.addClass('fixed-width-cell');
+          tabledata7.addClass('fixed-width-cell');
+          tabledata9.addClass('fixed-width-cell');
 
           tbody.addClass('table-group-divider');
           tabledata1.addClass('light-bold');
