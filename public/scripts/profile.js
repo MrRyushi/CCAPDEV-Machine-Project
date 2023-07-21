@@ -57,14 +57,10 @@
       method: 'POST',
       success: function(response) {
         // Handle the data received from the server
-        console.log("response:", response);
         const cl01Array = response.cl01Array;
         const cl02Array = response.cl02Array;
         const cl03Array = response.cl03Array;
         // Use the arrays as needed
-        console.log("cl01Array:", cl01Array);
-        console.log("cl02Array:", cl02Array);
-        console.log("cl03Array:", cl03Array);
         
         const reservationContainer = $('#reservationContainer');
         let reservationCount = 0;
