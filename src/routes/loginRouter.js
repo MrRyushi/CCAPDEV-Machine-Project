@@ -2,9 +2,11 @@ import { Router } from 'express';
 import { getDb } from '../db/conn.js';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import bcrypt from 'bcrypt';
 
 const loginRouter = Router();
 const db = getDb();
+const SALT_WORK_FACTOR = 10;
 
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 loginRouter.use(bodyParser.json());
@@ -56,30 +58,31 @@ async function checkAccountType(email) {
 // Check Credentials Function
 async function checkCredentials(email, password) {
     const labAccounts = await db.collection("labAccounts");
-    console.log("Users has been created / retrieved");
-
+    console.log("Users have been created / retrieved");
+  
     try {
-        const val = await labAccounts.findOne({ email: email });
-        //console.log("Finding successful");
-
-        if (val == null) {
-            console.log("This email has not yet been registered");
-            return false;
-        } else {
-            console.log(val.password === password);
-            if (val.password === password) {
-                console.log("Password is correct");
-                return true;
-            } else {
-                console.log("Password is incorrect");
-                return false;
-            }
-        }
-    } catch (err) {
-        console.log(err);
+      const user = await labAccounts.findOne({ email: email });
+      //console.log("Finding successful");
+  
+      if (!user) {
+        console.log("This email has not yet been registered");
         return false;
+      }
+  
+      const doesMatch = await bcrypt.compare(password, user.password);
+  
+      if (doesMatch) {
+        console.log("Password is correct");
+        return true;
+      } else {
+        console.log("Password is incorrect");
+        return false;
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
     }
-}
+  }
 
 // Routes
 loginRouter.get('/login', (req, res) => {
@@ -90,10 +93,12 @@ loginRouter.post('/login', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const rememberMe = req.body.rememberMe === 'true';
+
+    //const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
     let accountType;
 
     req.session.email = email;
-    req.session.password = password;
+    // req.session.password = hashedPassword;
     // Log in logic
     const allowedDomain = 'dlsu.edu.ph';
     const domain = email.split('@')[1];

@@ -1,36 +1,27 @@
 import { Router } from 'express';
 import { getDb } from '../db/conn.js';
-import fs from 'fs';
+import bcrypt from 'bcrypt';
 
 const registerRouter = Router();
 const db = getDb();
+const SALT_WORK_FACTOR = 10;
 
 
 // Insert Account Function
-async function insertAccount(fullName, email, password, userType) {
+async function insertAccount(fullName, email, hashedPassword, userType) {
     const labAccounts = await db.collection("labAccounts");
     console.log("Users has been created / retrieved");
   
     try {
       const val = await labAccounts.findOne({ email });
   
-      if (val === null) {
-        // const defaultProfilePicturePath = "public/images/profile.jpg";
-       
-        // const insertResult = await labAccounts.insertOne({
-        //   name: fullName,
-        //   description: "No biography found.",
-        //   email: email,
-        //   password: password,
-        //   accountType: userType,
-        //   profilePicture: defaultProfilePicturePath,
-        // });
-       
+      if (val === null) {      
+
         const insertResult = await labAccounts.insertOne({
           name: fullName,
           description: "No biography found.",
           email: email,
-          password: password,
+          password: hashedPassword,
           accountType: userType,
           profilePicture: "",
         });
@@ -88,6 +79,7 @@ registerRouter.post('/register', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const accountType = req.body['account-type'];
+    const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
 
     // Registration logic
     const allowedDomain = 'dlsu.edu.ph';
@@ -107,7 +99,7 @@ registerRouter.post('/register', async (req, res) => {
         } else {
             console.log("Registration successful");
             res.redirect('/login');
-            insertAccount(fullName, email, password, accountType);  
+            insertAccount(fullName, email, hashedPassword, accountType);  
         }
         }
 

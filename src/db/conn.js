@@ -14,7 +14,6 @@ export function getDb(dbName = process.env.DB_NAME){
     return client.db(dbName);
 }
 
-
 // These are just used for closing the connection properly
 function singleHandler(){
     console.log("Closing MongoDB connection..");
