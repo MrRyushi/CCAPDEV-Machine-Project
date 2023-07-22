@@ -13,5 +13,8 @@ body {
 
 .fixed-width-cell {
     width: 200px; /* Set the desired width here */
-  }
+}
   
+#line {
+    width: 77vw;
+}

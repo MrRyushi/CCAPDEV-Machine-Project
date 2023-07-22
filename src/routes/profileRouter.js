@@ -373,5 +373,32 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
     
   
   })
+
+  profileRouter.post('/delete-reservation', async (req, res) => {
+    let roomUsed;
+    const room01 = await db.collection('cl01');
+    const room02 = await db.collection('cl02');
+    const room03 = await db.collection('cl03');
+
+    
+    if(req.body.room == "CL01"){
+      roomUsed = room01;
+    } else if(req.body.room == "CL02"){
+      roomUsed = room02;
+    } else if(req.body.room == "CL03"){
+      roomUsed = room03;
+    }
+
+    roomUsed.deleteOne({
+      seatSelected: req.body.seatNum,
+      date: req.body.date,
+      time: req.body.time
+    }).then(val => {
+      console.log("deleting successful");
+      console.log(val);
+    }).catch(err => {
+      console.log(err);
+    })
+  })
   
 export default profileRouter;

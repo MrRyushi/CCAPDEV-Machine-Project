@@ -109,4 +109,17 @@ roomsRouter.post('/getAccount', async (req, res) => {
   }
 });
 
+roomsRouter.post('/get-all-students', async (req, res) => {
+  try{
+    const labAccounts = await db.collection('labAccounts').find({accountType: "Student"});
+    labAccounts.toArray().then((arr) => {
+      console.log("finding accounts successful");
+      res.json(arr);
+    })
+  } catch (error) {
+    console.log('Error retrieving account from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+})
+
 export default roomsRouter;

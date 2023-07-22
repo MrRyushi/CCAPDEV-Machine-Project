@@ -64,26 +64,61 @@ $(document).ready(function() {
     }
 
     // then set reserved seats to red and disable them
-    for(reservation of allReservations){
-      array = reservation.time.split(/,/);
-      for(time of array){
-        if(reservation.date == dateSelected && time == timeSelected){
-          // display the reserved seats
-          
-          b = reservation.seatSelected
-
-          let btn = document.querySelector(`#btn-${b}`);
-          btn.disabled = true;
-          btn.classList.replace("btn-outline-info", "btn-danger");
-
-          let parag = $("<p>");
-          parag.addClass("text-white custom-font text-center");
-          parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white">${reservation.user}`);
-
-          reservedSeatsContainer.append(parag[0]);
-        }
+    allReservations.sort((a, b) => {
+      if ( a.seatSelected < b.seatSelected ){
+        return -1;
       }
-    }
+      if ( a.seatSelected > b.seatSelected ){
+        return 1;
+      }
+      return 0;
+    })
+    
+    let allStudents = [];
+    $.ajax({
+      url: '/get-all-students',
+      method: 'POST',
+      success: function(response) {
+          for(reservation of allReservations){
+            array = reservation.time.split(/,/);
+            for(time of array){
+              if(reservation.date == dateSelected && time == timeSelected){
+                // display the reserved seats
+                
+                b = reservation.seatSelected
+
+                let btn = document.querySelector(`#btn-${b}`);
+                btn.disabled = true;
+                btn.classList.replace("btn-outline-info", "btn-danger");
+
+                let objectId;
+            
+                for(student of response){
+                  if(reservation.email == student.email){
+                    objectId = student._id;
+                  }
+                }
+                
+                let parag;
+                if(reservation.user != "Anonymous"){
+                  parag = $("<p>");
+                  parag.addClass("text-white custom-font text-center");
+                  parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white" href="/profile/${objectId}">${reservation.user}`);
+                } else {
+                  parag = $("<p>");
+                  parag.addClass("text-white custom-font text-center");
+                  parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white">${reservation.user}`);
+                }
+                reservedSeatsContainer.append(parag[0]);
+              }
+            }
+          }
+      },
+      error: function(error) {
+        // Handle the error response from the server
+        console.log('Error retrieving data:', error);
+      }
+    })
   }
 
   // this is for when the page is loaded, the reserved seats will appear immediately
@@ -92,6 +127,25 @@ $(document).ready(function() {
   // Add event listeners to the date and time inputs
   document.querySelector('#date').addEventListener("change", updateReservedSeats);
   document.querySelector('#time').addEventListener("change", updateReservedSeats);
+
+  function areTimeSlotsConsecutive(timeSlots) {
+    if (timeSlots.length === 0) {
+      return false;
+    }
+  
+    timeSlots.sort();
+    let i = 1;
+    let a;
+    console.log(timeSlots[i].substring(0,5));
+    for(let j = 0; j < timeSlots.length - 1; j++){
+      a = timeSlots[j].substring(9);
+      if(a != timeSlots[i].substring(0, 5)) {
+        return false;
+      }
+      i += 1;
+    }
+    return true;
+  }
 
   // ajax request to get the account type of the user
   $.ajax({
@@ -150,6 +204,9 @@ $(document).ready(function() {
         if(checkedTimeSlots.length == 0){
           alert('Please select the time slot you want to reserve');
           return
+        } else if (!areTimeSlotsConsecutive(checkedTimeSlots)) {
+          alert('You can only reserve consecutive time slots.');
+          return;
         } else {
           // STUDENT
 
@@ -263,9 +320,9 @@ $(document).ready(function() {
               
               // create a paragraph element and display it
               //let parag = $("<p>");
-             // parag.addClass("text-white custom-font text-center");
-             // parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
-              reservedSeatsContainer.append(parag[0]);
+              //parag.addClass("text-white custom-font text-center");
+              //parag.html(`Seat #${thisBtn.val()}: <a class="link-offset-3 link-offset-2-hover text-white" href="">${userName}`);
+             // reservedSeatsContainer.append(parag[0]);
                 
               // get the current date
               let date = new Date();

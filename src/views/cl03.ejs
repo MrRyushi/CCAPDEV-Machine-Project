@@ -39,12 +39,18 @@
                     <a id="viewRoomLink" class="text-white nav-link active fs-5 custom-font" aria-current="index.html" href="home">View Rooms</a>
                     <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="login">Sign in</a>
                     <a id="viewProfileLink" class="text-white nav-link fs-5 custom-font d-none" href="profile">View Profile</a>
-                    <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login">Log out</a>
+                    
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <a id="signInLink" class="text-white nav-link fs-5 custom-font" href="/login">Sign in</a>
+                    <form action="/logout?_method=DELETE" method="POST">
+                        <a id="logoutBtn" class="text-white nav-link fs-5 custom-font d-none" href="login">Log out</a>
+                    </form>
                 </div>
             </div>
         </div>
     </nav>
-    <div class="mx-auto main-container mx-auto row">
+    <div class="mx-auto main-container mx-auto row mt-5">
         <form action="/room" method="post" class="container reserve-form mx-auto row col-md-9">
             <div class="room-container col">
                 <div class="text-center title-container">

@@ -395,5 +395,25 @@ $(document).ready(function(){
   
       // Enable the edit button
       $('.edit-btn').not(editBtn).prop('disabled', false);
+
+      let formData = [];
+      // create objects to be sent through ajax
+      formData.push({name: "room", value: currRoom});
+      formData.push({name: "seatNum", value: currSeatnum});
+      formData.push({name: "date", value: currDateRes});
+      formData.push({name: "time", value: currTimeRes})
+
+      $.ajax({
+        type: 'POST',
+        url: '/delete-reservation',
+        data: formData,
+        success: function (response) {
+          // Handle the success response from the server
+        },
+        error: function (error) {
+          // Handle the error response from the server
+        }
+      });
+    
   });
 })

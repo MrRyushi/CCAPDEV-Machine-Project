@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  // This function is for the back button in lab rooms
+  
   $.ajax({
     url: '/api/student-view',
     method: 'GET',
