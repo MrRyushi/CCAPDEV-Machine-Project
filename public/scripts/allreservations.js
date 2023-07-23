@@ -91,8 +91,47 @@ $(document).ready(function(){
           tabledata9.text('Time Slot of Reservation:');
           tabledata2.text('CL01');
           tabledata4.text(data.seatSelected.toString());
-          tabledata6.text(data.dateReq);
-          tabledata8.text(data.date);
+          let month;
+          switch(data.dateReq.substring(5, 7)){
+            case '01': month="January"; break;
+            case '02': month="February"; break;
+            case '03': month="March"; break;
+            case '04': month="April"; break;
+            case '05': month="May"; break;
+            case '06': month="June"; break;
+            case '07': month="July"; break;
+            case '08': month="August"; break;
+            case '09': month="September"; break;
+            case '10': month="October"; break;
+            case '11': month="November"; break;
+            case '12': month="December"; break;
+          }
+
+          let dateRequested = month + " " + data.dateReq.substring(8, 10) + ", " + data.dateReq.substring(0, 4) + " Time: " +
+          data.dateReq.substring(11, 16);
+
+          tabledata6.text(dateRequested);
+          
+          month;
+          switch(data.date.substring(5, 7)){
+            case '01': month="January"; break;
+            case '02': month="February"; break;
+            case '03': month="March"; break;
+            case '04': month="April"; break;
+            case '05': month="May"; break;
+            case '06': month="June"; break;
+            case '07': month="July"; break;
+            case '08': month="August"; break;
+            case '09': month="September"; break;
+            case '10': month="October"; break;
+            case '11': month="November"; break;
+            case '12': month="December"; break;
+          }
+
+          let dateReservation = month + " " + data.date.substring(8, 10) + ", " + data.date.substring(0, 4);
+          
+
+          tabledata8.text(dateReservation);
           tabledata10.text(data.time);
 
           let date = new Date();
@@ -203,10 +242,48 @@ $(document).ready(function(){
           tabledata9.text('Time Slot of Reservation:');
           tabledata2.text('CL02');
           tabledata4.text(data.seatSelected.toString());
-          tabledata6.text(data.dateReq);
-          tabledata8.text(data.date);
-          tabledata10.text(data.time);
+          let month;
+          switch(data.dateReq.substring(5, 7)){
+            case '01': month="January"; break;
+            case '02': month="February"; break;
+            case '03': month="March"; break;
+            case '04': month="April"; break;
+            case '05': month="May"; break;
+            case '06': month="June"; break;
+            case '07': month="July"; break;
+            case '08': month="August"; break;
+            case '09': month="September"; break;
+            case '10': month="October"; break;
+            case '11': month="November"; break;
+            case '12': month="December"; break;
+          }
 
+          let dateRequested = month + " " + data.dateReq.substring(8, 10) + ", " + data.dateReq.substring(0, 4) + " Time: " +
+          data.dateReq.substring(11, 16);
+
+          tabledata6.text(dateRequested);
+          
+          month;
+          switch(data.date.substring(5, 7)){
+            case '01': month="January"; break;
+            case '02': month="February"; break;
+            case '03': month="March"; break;
+            case '04': month="April"; break;
+            case '05': month="May"; break;
+            case '06': month="June"; break;
+            case '07': month="July"; break;
+            case '08': month="August"; break;
+            case '09': month="September"; break;
+            case '10': month="October"; break;
+            case '11': month="November"; break;
+            case '12': month="December"; break;
+          }
+
+          let dateReservation = month + " " + data.date.substring(8, 10) + ", " + data.date.substring(0, 4);
+          
+
+          tabledata8.text(dateReservation);
+          tabledata10.text(data.time);
           let date = new Date();
           let currTime = date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
           let currDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
@@ -315,8 +392,47 @@ $(document).ready(function(){
           tabledata9.text('Time Slot of Reservation:');
           tabledata2.text('CL03');
           tabledata4.text(data.seatSelected.toString());
-          tabledata6.text(data.dateReq);
-          tabledata8.text(data.date);
+          let month;
+          switch(data.dateReq.substring(5, 7)){
+            case '01': month="January"; break;
+            case '02': month="February"; break;
+            case '03': month="March"; break;
+            case '04': month="April"; break;
+            case '05': month="May"; break;
+            case '06': month="June"; break;
+            case '07': month="July"; break;
+            case '08': month="August"; break;
+            case '09': month="September"; break;
+            case '10': month="October"; break;
+            case '11': month="November"; break;
+            case '12': month="December"; break;
+          }
+
+          let dateRequested = month + " " + data.dateReq.substring(8, 10) + ", " + data.dateReq.substring(0, 4) + " Time: " +
+          data.dateReq.substring(11, 16);
+
+          tabledata6.text(dateRequested);
+          
+          month;
+          switch(data.date.substring(5, 7)){
+            case '01': month="January"; break;
+            case '02': month="February"; break;
+            case '03': month="March"; break;
+            case '04': month="April"; break;
+            case '05': month="May"; break;
+            case '06': month="June"; break;
+            case '07': month="July"; break;
+            case '08': month="August"; break;
+            case '09': month="September"; break;
+            case '10': month="October"; break;
+            case '11': month="November"; break;
+            case '12': month="December"; break;
+          }
+
+          let dateReservation = month + " " + data.date.substring(8, 10) + ", " + data.date.substring(0, 4);
+          
+
+          tabledata8.text(dateReservation);
           tabledata10.text(data.time);
 
           let date = new Date();
@@ -356,8 +472,6 @@ $(document).ready(function(){
           deleteBtn.attr("disabled", "disabled");
           cancelBtn.addClass("mx-1 mt-1 float-end btn btn-outline-danger cancel-btn d-none");
           saveBtn.addClass("mx-1 mt-1 float-end btn btn-outline-success save-btn d-none");
-
-          
         }
       }
       ,

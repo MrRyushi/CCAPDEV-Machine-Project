@@ -130,6 +130,7 @@ $(document).ready(function() {
 
   function areTimeSlotsConsecutive(timeSlots) {
     if (timeSlots.length === 0) {
+      console.log("only 1 time indicated");
       return false;
     }
   
@@ -139,6 +140,8 @@ $(document).ready(function() {
     console.log(timeSlots[i].substring(0,5));
     for(let j = 0; j < timeSlots.length - 1; j++){
       a = timeSlots[j].substring(9);
+      console.log(timeSlots[j] + " == " + timeSlots[i]);
+      console.log(a + " == " + timeSlots[i].substring(0, 5));
       if(a != timeSlots[i].substring(0, 5)) {
         return false;
       }

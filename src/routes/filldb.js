@@ -2,23 +2,47 @@ import { getDb, connectToMongo } from '../db/conn.js';
 import 'dotenv/config';
 
 const profileSampleData = [
-    {
-        fullName: "Samantha Nicole L. Caasi",
-        description: "I am a sophomore taking up BS CS-ST. I am currently employed at MyCode as a Part-time Coding Instructor and the Marketing Director of iLearnTech UK.",
-        email: "samantha_caasi@dlsu.edu.ph",
-        password: "comeonbarbieletsgoparty",
-        accountType: "Student",
-        profilePicture: ""
-    },
-    {
-        fullName: "Sofia Ernest Y. Balderosa",
-        description: "Currently a student from De La Salle University studying Computer Science major in Software Technology. Also working as a part-time programming instructor. A self taught Full-stack Web Developer using the MERN stack (MongoDB, Express JS, React, and Node.js).",
-        email: "sofia_balderosa@dlsu.edu.ph",
-        password: "myidol123",
-        accountType: "Student",
-        profilePicture: ""
-    }
-  ];
+  {
+      fullName: "Samantha Nicole L. Caasi",
+      description: "I am a sophomore taking up BS CS-ST. I am currently employed at MyCode as a Part-time Coding Instructor and the Marketing Director of iLearnTech UK.",
+      email: "samantha_caasi@dlsu.edu.ph",
+      password: "comeonbarbieletsgoparty",
+      accountType: "Student",
+      profilePicture: ""
+  },
+  {
+      fullName: "Sofia Ernest Y. Balderosa",
+      description: "Currently a student from De La Salle University studying Computer Science major in Software Technology. Also working as a part-time programming instructor. A self taught Full-stack Web Developer using the MERN stack (MongoDB, Express JS, React, and Node.js).",
+      email: "sofia_balderosa@dlsu.edu.ph",
+      password: "myidol123",
+      accountType: "Student",
+      profilePicture: ""
+  },
+  {
+      fullName: "John Patrick T. Marcellana",
+      description: "Futures Trader, 2nd year BS CS-ST student",
+      email: "john_patrick_marcellana@dlsu.edu.ph",
+      password: "Angpogiko2023",
+      accountType: "Student",
+      profilePicture: ""
+  }, 
+  {
+      fullName: "Patrick James T. Marcellana",
+      description: "",
+      email: "patrick_james_marcellana@dlsu.edu.ph",
+      password: "ilovemybrother",
+      accountType: "Student",
+      profilePicture: ""
+  }, 
+  {
+      fullName: "Janela Aimee M. Jimenez",
+      description: "",
+      email: "janela_aimee_jimenez@dlsu.edu.ph",
+      password: "143sam",
+      accountType: "Technician",
+      profilePicture: ""
+  } 
+];
 
 async function populateDatabase() {
     try {
