@@ -97,7 +97,7 @@ const cl01SampleData = [
       user: "Anonymous",
       email: "sofia_balderosa@dlsu.edu.ph",
       date: "2023-07-28",		
-      time: "09:00 to 9:30",
+      time: "09:00 to 09:30",
       seatSelected: "08",
       dateReq: "2023-07-23T15:23"
   },

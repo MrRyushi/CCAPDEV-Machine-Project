@@ -269,50 +269,103 @@ $(document).ready(function(){
       });
       
 
+    function areTimeSlotsConsecutive(timeSlots) {
+      if (timeSlots.length === 0) {
+        console.log("only 1 time indicated");
+        return false;
+      }
+    
+      timeSlots.sort();
+      let i = 1;
+      let a;
+      //console.log(timeSlots[i].substring(0,5));
+      for(let j = 0; j < timeSlots.length - 1; j++){
+        a = timeSlots[j].substring(9);
+        console.log(timeSlots[j] + " == " + timeSlots[i]);
+        console.log(a + " == " + timeSlots[i].substring(0, 5));
+        if(a != timeSlots[i].substring(0, 5)) {
+          return false;
+        }
+        i += 1;
+      }
+      return true;
+    }
 
     $('#reservationContainer').on('click', '.save-btn', function () {
       // Store a reference to the table element
-      var table = $(this).closest('table');
-      $.ajax({
-        url: '/getReservations',
-        method: 'POST',
-        success: function(response) {
-          // Handle the data received from the server
-          const cl01Array = response.cl01Array;
-          const cl02Array = response.cl02Array;
-          const cl03Array = response.cl03Array;
-          // Use the arrays as needed
+    let table = $(this).closest("table");
+    $.ajax({
+      url: '/getAllReservations',
+      method: 'POST',
+      success: function(response) {
+        // Handle the data received from the server
 
-          let roomUsed;
-          if(currRoom == 'CL01'){
-            roomUsed = cl01Array
-          } else if(currRoom == 'CL02'){
-            roomUsed = cl02Array
-          } else if(currRoom == 'CL03'){
-            roomUsed = cl03Array
-          }
-          
-          let currSeatnum = seatnum_form.val();
-          if(currSeatnum > 48 || currSeatnum <= 0){
-            alert(`There is no seat no. ${currSeatnum}`);
-            return;
-          }
-          currTimeRes = selectedValues.join(', ');
-          let found = false;
+        const cl01 = response.cl01Data;
+        const cl02 = response.cl02Data;
+        const cl03 = response.cl03Data;
+        // Use the arrays as needed
+  
+        let roomUsed;
+        if(currRoom == 'CL01'){
+          roomUsed = cl01;
 
+        } else if(currRoom == 'CL02'){
+          roomUsed = cl02;
+        } else if(currRoom == 'CL03'){
+          roomUsed = cl03;
+        }
+        
+        let currrSeatnum = seatnum_form.val();
+        if(currrSeatnum > 48 || currSeatnum <= 0){
+          alert(`There is no seat no. ${currSeatnum}`);
+          return;
+        }
 
-          console.log(currTimeRes);
-          let timeRes = currTimeRes.split(/,/);
-          
-          for(res of roomUsed){
-            if(currDateRes == res.date && currSeatnum == res.seatSelected){
-              let timeData = res.time.split(/,/);
+        if(currrSeatnum < 10 && currrSeatnum > 0 && currrSeatnum.substring(0,1) != 0){
+          currrSeatnum = `0${currrSeatnum}`;
+        }
+
+        currrTimeRes = selectedValues.join(',');
+        let found = false;
+
+        let timeRes = currrTimeRes.split(/,/);
+        
+        let dateResArray = currDateRes.split(' ');
+        let month;
+        switch(dateResArray[0]){
+          case 'January': month='01'; break;
+          case 'February': month='02'; break;
+          case 'March': month='03'; break;
+          case 'April': month='04'; break;
+          case 'May': month='05'; break;
+          case 'June': month='06'; break;
+          case 'July': month='07'; break;
+          case 'August': month='08'; break;
+          case 'September': month='09'; break;
+          case 'October': month='10'; break;
+          case 'November': month='11'; break;
+          case 'December': month='12'; break;
+        }
+
+        let newCurrDateRes = dateResArray[2] + "-" + month + "-" + dateResArray[1].substring(0, 2);
+        console.log(newCurrDateRes);
+        
+        for(res of roomUsed){
+          let timeData = res.time.split(/,/);
+         // console.log(currSeatnum + " " + res.seatSelected);
+          if(currSeatnum == res.seatSelected && newCurrDateRes == res.date && currTimeRes == timeData){
+            console.log("continue");
+            continue;
+          } else {
+            //console.log(`${currDateRes} ${res.date} == ${currSeatnum} ${res.seatSelected}`);
+            if(newCurrDateRes == res.date && currrSeatnum == res.seatSelected){
+              timeData = res.time.split(/,/);
 
               for(time of timeRes){
-                console.log(timeRes);
+                
                 
                 for(data of timeData){
-                  console.log(time + " : " + timeData);
+                 console.log(time + " : " + data);
                   if(time == data){
                     found = true;
                   }
@@ -320,99 +373,92 @@ $(document).ready(function(){
               }
             }
           }
-
-          console.log("found: " + found);
-
-          
-          if(found == true){
-            alert('seat and given time already occupied');
-          } else {          
-            //let currDateReq = datereq_form.val();
-            //let currTimeReq = timereq_form.val();
-            // Create an empty array to store the selected values
-            // Print the selected values
-          
-            // Find the specific elements within the table and update their content
-            // room = table.find(".room-value");;
-            let seatnum = table.find(".seatnum-value");
-            //let datereq = table.find(".datereq-value");
-            //let timereq = table.find(".timereq-value");
-            //let dateres = table.find(".dateres-value");
-            let timeres = table.find(".timeres-value");
-          
-            //room.html(`${currRoom}`);
-            if(currSeatnum < 10 && currSeatnum > 0 && currSeatnum.substring(0,1) != 0){
-              currSeatnum = `0${currSeatnum}`;
-            }
-            seatnum.html(`${currSeatnum}`);
-            //datereq.html(`${currDateReq}`);
-            //timereq.html(`${currTimeReq}`);
-            //dateres.html(`${currDateRes}`);
-            timeres.html(`${currTimeRes}`);
-            // CLOSE THE EDIT
-            // Find the closest table element
-          
-            // Find the buttons within the table
-            
-            let editBtn = table.find(".edit-btn");
-            let cancelBtn = table.find(".cancel-btn");
-            let deleteBtn = table.find(".delete-btn");
-            let saveBtn = table.find(".save-btn");
-
-            // Enable all other edit buttons
-            $('.edit-btn').not(editBtn).prop('disabled', false);
-          
-            // Perform the desired operations within the specific table
-            saveBtn.addClass("d-none");
-            editBtn.removeClass("d-none");
-            cancelBtn.addClass("d-none");
-            deleteBtn.addClass("d-none");
-
-            let dateResArray = currDateRes.split(' ');
-            let month;
-            switch(dateResArray[0]){
-              case 'January': month='01'; break;
-              case 'February': month='02'; break;
-              case 'March': month='03'; break;
-              case 'April': month='04'; break;
-              case 'May': month='05'; break;
-              case 'June': month='06'; break;
-              case 'July': month='07'; break;
-              case 'August': month='08'; break;
-              case 'September': month='09'; break;
-              case 'October': month='10'; break;
-              case 'November': month='11'; break;
-              case 'December': month='12'; break;
-            }
-
-            let newCurrDateRes = dateResArray[2] + "-" + month + "-" + dateResArray[1].substring(0, 2);
-            console.log(newCurrDateRes);
-            let formData = [];
-            formData.push({name: "roomName", value: currRoom});
-            formData.push({name: "date", value: newCurrDateRes});
-            formData.push({name: "newTimeRes", value: currTimeRes})
-            formData.push({name: "newSeatNum", value: currSeatnum});
-            formData.push({name: "prevSeat", value: previousSeat});
-            formData.push({name: "prevTime", value: previousTime});
-            $.ajax({
-              type: 'POST',
-              url: '/update-reservation',
-              data: formData,
-              success: function (response) {
-                // Handle the success response from the server
-              },
-              error: function (error) {
-                // Handle the error response from the server
-              }
-            });
-          
-
-
-          
-            // Find the specific form elements within the table and update their content
-          }
         }
-      })
+
+        console.log("found: " + found);
+
+        /// get the time slots selected
+        var checkedTimeSlots = [];
+        $('.form-check-input:checked').each(function() {
+          var timeSlot = $(this).val();
+          checkedTimeSlots.push(timeSlot);
+        });
+        
+        if(found == true){
+          alert('seat and given time already occupied');
+        }
+        else if(checkedTimeSlots.length == 0){
+          alert('Please select the time slot you want to reserve');
+          return
+        } else if (!areTimeSlotsConsecutive(checkedTimeSlots)) {
+          alert('You can only reserve consecutive time slots.');
+          return;
+        } else {          
+          //let currDateReq = datereq_form.val();
+          //let currTimeReq = timereq_form.val();
+          // Create an empty array to store the selected values
+          // Print the selected values
+        
+          // Find the specific elements within the table and update their content
+          // room = table.find(".room-value");;
+          let seatnum = table.find(".seatnum-value");
+          //let datereq = table.find(".datereq-value");
+          //let timereq = table.find(".timereq-value");
+          //let dateres = table.find(".dateres-value");
+          let timeres = table.find(".timeres-value");
+        
+          //room.html(`${currRoom}`);
+          seatnum.html(`${currrSeatnum}`);
+          //datereq.html(`${currDateReq}`);
+          //timereq.html(`${currTimeReq}`);
+          //dateres.html(`${currDateRes}`);
+          timeres.html(`${currrTimeRes}`);
+          // CLOSE THE EDIT
+          // Find the closest table element
+        
+          // Find the buttons within the table
+          
+          let editBtn = table.find(".edit-btn");
+          let cancelBtn = table.find(".cancel-btn");
+          let deleteBtn = table.find(".delete-btn");
+          let saveBtn = table.find(".save-btn");
+
+          // Enable all other edit buttons
+          $('.edit-btn').not(editBtn).prop('disabled', false);
+        
+          // Perform the desired operations within the specific table
+          saveBtn.addClass("d-none");
+          editBtn.removeClass("d-none");
+          cancelBtn.addClass("d-none");
+          deleteBtn.addClass("d-none");
+
+
+          let formData = [];
+          formData.push({name: "roomName", value: currRoom});
+          formData.push({name: "date", value: newCurrDateRes});
+          formData.push({name: "newTimeRes", value: currrTimeRes})
+          formData.push({name: "newSeatNum", value: currrSeatnum});
+          formData.push({name: "prevSeat", value: previousSeat});
+          formData.push({name: "prevTime", value: previousTime});
+          $.ajax({
+            type: 'POST',
+            url: '/update-reservation',
+            data: formData,
+            success: function (response) {
+              // Handle the success response from the server
+            },
+            error: function (error) {
+              // Handle the error response from the server
+            }
+          });
+        
+
+
+        
+          // Find the specific form elements within the table and update their content
+        }
+      }
+    })
     });
 
     $('#reservationContainer').on('click', '.delete-btn', function() {
