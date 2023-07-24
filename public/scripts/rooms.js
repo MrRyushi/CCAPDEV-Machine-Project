@@ -100,7 +100,7 @@ $(document).ready(function() {
                 }
                 
                 let parag;
-                if(reservation.user != "Anonymous"){
+                if(reservation.user != "Anonymous" && reservation.email != ""){
                   parag = $("<p>");
                   parag.addClass("text-white custom-font text-center");
                   parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white" href="/profile/${objectId}">${reservation.user}`);
@@ -378,26 +378,26 @@ $(document).ready(function() {
             });
 
             } else {
-              // get email of user
-              let email = prompt(`Enter email of student:`);
-              if(email === ""){
-                alert('Please enter the email of the student!');
+              // get name of user
+              let name = prompt(`Enter name of student:`);
+              if(name === ""){
+                alert('Please enter the name of the student!');
               }
-              else if(email == null){
+              else if(name == null){
                 //do nothing
               }
               else{
                 // get account of user based on email via ajax
-                $.ajax({
+                /*$.ajax({
                   type: 'POST',
                   url: '/getAccount',
-                  data: { email: email }, // Send the email data as an object
+                  data: { name: name }, // Send the email data as an object
                   success: function (response) {
                     // Handle the success response from the server
                     if (response === null) {
                       alert('Email did not match anything in the database');
                     } else {
-                      userName = response.name;
+                      userName = response.name;*/
 
                       // set the seat button to disabled
                       //thisBtn.removeClass("btn-outline-info").addClass("btn-danger");
@@ -422,6 +422,7 @@ $(document).ready(function() {
                       let day = date.getDate().toString().padStart(2, '0');
                       let hours = date.getHours().toString().padStart(2, '0');
                       let minutes = date.getMinutes().toString().padStart(2, '0');
+                      let email = "";
 
                       // form the date requested
                       let dateReq = `${year}-${month}-${day}T${hours}:${minutes}`;
@@ -438,7 +439,7 @@ $(document).ready(function() {
                       let dateObject = {name: 'date', value: dateSelected};
                       let viewObject = {name: "view", value: 'student'};
                       let roomNameObject = {name: "roomName", value: roomName};
-                      let userObject = {name: "user", value: userName};
+                      let userObject = {name: "user", value: name};
                       let emailObject = {name: 'email', value: email};
                       let dateReqObject = {name: 'dateReq', value: dateReq};
                       
@@ -465,15 +466,16 @@ $(document).ready(function() {
                         }
                       });
                     }
+                    /*
                   },
                   error: function (error) {
                     // Handle the error response from the server
                     console.log('Error:', error);
-                  }
-                });
+                  }*/
+                
               }
-            }
-
+          
+          
           // VISITOR
           } else {
             alert('Please sign in to reserve a seat.');
