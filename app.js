@@ -22,7 +22,7 @@ const profileSampleData = [
       fullName: "Samantha Nicole L. Caasi",
       description: "I am a sophomore taking up BS CS-ST. I am currently employed at MyCode as a Part-time Coding Instructor and the Marketing Director of iLearnTech UK.",
       email: "samantha_caasi@dlsu.edu.ph",
-      password: "comeonbarbieletsgoparty",
+      password: "123",
       accountType: "Student",
       profilePicture: ""
   },

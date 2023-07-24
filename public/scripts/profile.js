@@ -553,7 +553,6 @@
   });
   
 // Save Profile Picture Button Click Event
-// Save Profile Picture Button Click Event
 $("#savePictureBtn").click(function() {
   let file = $("#uploadPictureInput").prop("files")[0];
 

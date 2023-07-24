@@ -122,8 +122,6 @@ profileRouter.post('/search', async (req, res) => {
     const searchQuery = req.body.query;
     console.log('searchQuery:', searchQuery);
     const email = req.session.email;
-    const name = await findAccountName(email);
-    const description = await findAccountDesc(email);
 
     try {
         const labAccounts = await db.collection('labAccounts');
@@ -158,7 +156,7 @@ profileRouter.post('/profile/update-profile-picture', upload.single('profilePict
     const file = req.file;
 
     if (!file) {
-      throw new Error('No profile picture file provided');
+      throw new Error('No profile picture file provided');s
     }
 
     // Generate a unique filename
@@ -185,21 +183,21 @@ profileRouter.post('/profile/update-profile-picture', upload.single('profilePict
   }
 });
 
-// profileRouter.post('/profile/update-description', async (req, res) => {
-//     try {
-//       const email = req.session.email; // Assuming the user's email is stored in the session
-//       const description = req.body.description; // Retrieve the modified description from the request body
+profileRouter.post('/profile/update-description', async (req, res) => {
+    try {
+      const email = req.session.email; // Assuming the user's email is stored in the session
+      const description = req.body.description; // Retrieve the modified description from the request body
   
-//       // Update the profile description for the user in the database
-//       const labAccounts = await db.collection("labAccounts");
-//       await labAccounts.updateOne({ email }, { $set: { description } });
+      // Update the profile description for the user in the database
+      const labAccounts = await db.collection("labAccounts");
+      await labAccounts.updateOne({ email }, { $set: { description } });
   
-//       res.json({ success: true }); // Return a success response
-//     } catch (error) {
-//       console.log('Error updating profile description:', error);
-//       res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
-//     }
-// });
+      res.json({ success: true }); // Return a success response
+    } catch (error) {
+      console.log('Error updating profile description:', error);
+      res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
+    }
+});
 
 
 profileRouter.post('/profile/update-profile-picture', async (req, res) => {
