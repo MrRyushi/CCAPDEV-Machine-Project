@@ -150,6 +150,12 @@ $(document).ready(function() {
     return true;
   }
 
+  console.log(accountType);
+  if(accountType == 'visitor'){
+    signInLink.removeClass("d-none");
+    viewProfileLink.addClass("d-none");
+    logoutBtn.addClass("d-none");
+  }
   // ajax request to get the account type of the user
   $.ajax({
     url: '/api/student-view',
@@ -160,6 +166,7 @@ $(document).ready(function() {
       userName = response.userName;
       email = response.email;
       
+      console.log("account type: " + accountType);
       // change the nav bar depending on the account type of the student
       if(accountType == "Student"){
         // use dnone to remove certain links and add certain links

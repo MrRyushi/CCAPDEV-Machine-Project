@@ -24,6 +24,7 @@ viewsRouter.get('/api/student-view', async (req, res) => {
 
 viewsRouter.get('/student-view', async (req, res) => {
     try {
+        console.log("sesssion: " + req.session.accountType);
         const accountType = req.session.accountType;
         const email = req.session.email;
         if(email != null){
@@ -63,5 +64,10 @@ viewsRouter.post('/getAllReservations', async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
+
+  viewsRouter.get('/logout', async (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
+  })
 
 export default viewsRouter;
