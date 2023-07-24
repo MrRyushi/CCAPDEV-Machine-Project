@@ -11,27 +11,25 @@ Bootstrap
 JQuery
 
 
-# Getting Started
+# Prerequisites
+1. Install Nodejs from this website
+  https://nodejs.org/en
 
-  # Prerequisites
-  1. Install Nodejs from this website
-    https://nodejs.org/en
-  
-  2. Run the following commands in the terminal to install dependencies
-    npm install
-    npm install express
-    npm install bcrypt
-    npm install body-parser
-    npm install ejs
-    npm install express-flash
-    npm install express-session
-    npm install method-override
-    npm install mongodb
+2. Run the following commands in the terminal to install dependencies
+  npm install
+  npm install express
+  npm install bcrypt
+  npm install body-parser
+  npm install ejs
+  npm install express-flash
+  npm install express-session
+  npm install method-override
+  npm install mongodb
 
-  # Usage
-  To start the program, type in the following in the terminal
-    npm start
+# Usage
+To start the program, type in the following in the terminal
+  npm start
 
-  # Contact
-  Samantha Nicole L. Caasi - samantha_caasi@dlsu.edu.ph
-  John Patrick T. Marcellana - john_patrick_marcellana@dlsu.edu.ph
+# Contact
+Samantha Nicole L. Caasi - samantha_caasi@dlsu.edu.ph
+John Patrick T. Marcellana - john_patrick_marcellana@dlsu.edu.ph
