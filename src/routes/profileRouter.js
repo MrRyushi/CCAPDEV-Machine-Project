@@ -353,7 +353,9 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
     } else {
       roomUsed = room03;
     }
-    
+    console.log(req.body.date);
+    console.log(req.body.prevTime);
+    console.log(req.body.prevSeat);
     const updateResult = await roomUsed.updateOne(
       {
         date: req.body.date,

@@ -172,7 +172,7 @@
             case '12': month="December"; break;
           }
 
-          let dateRequested = month + " " + data.dateReq.substring(8, 10) + ", " + data.dateReq.substring(0, 4) + " Time:";
+          let dateRequested = month + " " + data.dateReq.substring(8, 10) + ", " + data.dateReq.substring(0, 4) + " Time: " +
           data.dateReq.substring(11, 16);
 
           tabledata6.text(dateRequested);
@@ -447,7 +447,7 @@
             case '12': month="December"; break;
           }
 
-          let dateRequested = month + " " + data.dateReq.substring(8, 10) + ", " + data.dateReq.substring(0, 4) + " Time:";
+          let dateRequested = month + " " + data.dateReq.substring(8, 10) + ", " + data.dateReq.substring(0, 4) + " Time: " +
           data.dateReq.substring(11, 16);
 
           tabledata6.text(dateRequested);

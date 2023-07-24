@@ -43,6 +43,8 @@ $(document).ready(function(){
     $('#reservationContainer').on('change', '.form-check-input', function() {
       updateSelectedValues();
     });
+
+    let seatnum_form;
     
     $('#reservationContainer').on('click', '.edit-btn', function() {
       // Clear the selectedValues array before editing another table
@@ -287,6 +289,10 @@ $(document).ready(function(){
           }
           
           let currSeatnum = seatnum_form.val();
+          if(currSeatnum > 48 || currSeatnum < 0){
+            alert(`There is no seat no. ${currSeatnum}`);
+            return;
+          }
           currTimeRes = selectedValues.join(', ');
           let found = false;
 
@@ -330,6 +336,9 @@ $(document).ready(function(){
             let timeres = table.find(".timeres-value");
           
             //room.html(`${currRoom}`);
+            if(currSeatnum < 10 && currSeatnum > 0 && currSeatnum.substring(0,1) != 0){
+              currSeatnum = `0${currSeatnum}`;
+            }
             seatnum.html(`${currSeatnum}`);
             //datereq.html(`${currDateReq}`);
             //timereq.html(`${currTimeReq}`);
@@ -354,10 +363,28 @@ $(document).ready(function(){
             cancelBtn.addClass("d-none");
             deleteBtn.addClass("d-none");
 
+            let dateResArray = currDateRes.split(' ');
+            let month;
+            switch(dateResArray[0]){
+              case 'January': month='01'; break;
+              case 'February': month='02'; break;
+              case 'March': month='03'; break;
+              case 'April': month='04'; break;
+              case 'May': month='05'; break;
+              case 'June': month='06'; break;
+              case 'July': month='07'; break;
+              case 'August': month='08'; break;
+              case 'September': month='09'; break;
+              case 'October': month='10'; break;
+              case 'November': month='11'; break;
+              case 'December': month='12'; break;
+            }
 
+            let newCurrDateRes = dateResArray[2] + "-" + month + "-" + dateResArray[1].substring(0, 2);
+            console.log(newCurrDateRes);
             let formData = [];
             formData.push({name: "roomName", value: currRoom});
-            formData.push({name: "date", value: currDateRes});
+            formData.push({name: "date", value: newCurrDateRes});
             formData.push({name: "newTimeRes", value: currTimeRes})
             formData.push({name: "newSeatNum", value: currSeatnum});
             formData.push({name: "prevSeat", value: previousSeat});
