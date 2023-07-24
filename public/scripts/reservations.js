@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    
     var previousSeat;
     var previousTime;
     let room;
@@ -16,8 +17,11 @@ $(document).ready(function(){
     let currDateRes;
     let currTimeRes;
 
-     // Checkbox change event listener
-     $('#reservationContainer').on('change', '.form-check-input', function() {
+     // Global variable to store selected values
+    var selectedValues = [];
+
+    // Checkbox change event listener
+    $('#reservationContainer').on('change', '.form-check-input', function() {
       var value = $(this).val();
       var index = selectedValues.indexOf(value);
 
@@ -31,7 +35,7 @@ $(document).ready(function(){
           selectedValues.splice(index, 1);
         }
       }
-    })
+    });
 
     function updateSelectedValues() {
       selectedValues = [];
@@ -39,18 +43,14 @@ $(document).ready(function(){
         selectedValues.push($(this).val());
       });
     }
-    
+
     $('#reservationContainer').on('change', '.form-check-input', function() {
       updateSelectedValues();
     });
 
-    let seatnum_form;
-    
     $('#reservationContainer').on('click', '.edit-btn', function() {
       // Clear the selectedValues array before editing another table
-      var selectedValues = [];
-      
-
+      selectedValues = [];
       // get the buttons
 
       let editBtns = $('.edit-btn');
@@ -178,7 +178,7 @@ $(document).ready(function(){
         { value: '11:00 to 11:30', id: '11:00', label: '11:00 to 11:30' },
         { value: '11:30 to 12:00', id: '11:30', label: '11:30 to 12:00' },
         { value: '12:00 to 12:30', id: '12:00', label: '12:00 to 12:30' },
-        { value: '12:30 to 13:30', id: '12:30', label: '12:30 to 13:00' },
+        { value: '12:30 to 13:00', id: '12:30', label: '12:30 to 13:00' },
         { value: '13:00 to 13:30', id: '13:00', label: '13:00 to 13:30' },
         { value: '13:30 to 14:00', id: '13:30', label: '13:30 to 14:00' },
         { value: '14:00 to 14:30', id: '14:00', label: '14:00 to 14:30' },
@@ -198,14 +198,18 @@ $(document).ready(function(){
         formCheck.append(input, label);
         timeContainer.append(formCheck);
       });
-
+      
+      
           // Create a set to store the values in currTimeRes array
       let currTimeSet = new Set(currTimeRes.split(', '));
+
+      console.log(currTimeSet);
 
       // Iterate over each checkbox and check it if the value is in currTimeSet
       timeContainer.find('.form-check-input').each(function() {
         let value = $(this).val();
         if (currTimeSet.has(value)) {
+          console.log("in");
           $(this).prop('checked', true);
         }
       });
@@ -216,10 +220,10 @@ $(document).ready(function(){
       timeres.append(container);
 
       
-
+      
       // Create a set to store the values in prevTimeArray
       let prevTimeSet = new Set(prevTimeArray);
-
+      console.log(prevTimeSet);
       // Iterate over each checkbox and check it if the value is in prevTimeSet
       timeContainer.find('.form-check-input').each(function() {
         let value = $(this).val();
@@ -289,12 +293,13 @@ $(document).ready(function(){
           }
           
           let currSeatnum = seatnum_form.val();
-          if(currSeatnum > 48 || currSeatnum < 0){
+          if(currSeatnum > 48 || currSeatnum <= 0){
             alert(`There is no seat no. ${currSeatnum}`);
             return;
           }
           currTimeRes = selectedValues.join(', ');
           let found = false;
+
 
           console.log(currTimeRes);
           let timeRes = currTimeRes.split(/,/);

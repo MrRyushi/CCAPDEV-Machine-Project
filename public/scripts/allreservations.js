@@ -498,8 +498,8 @@ $(document).ready(function(){
     let currDateRes;
     let currTimeRes;
 
-    // Checkbox change event listener
-    $('#upcomingReservationContainer').on('change', '.form-check-input', function() {
+  // Checkbox change event listener
+  $('#upcomingReservationContainer').on('change', '.form-check-input', function() {
     var value = $(this).val();
     var index = selectedValues.indexOf(value);
 

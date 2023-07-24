@@ -137,7 +137,7 @@ $(document).ready(function() {
     timeSlots.sort();
     let i = 1;
     let a;
-    console.log(timeSlots[i].substring(0,5));
+    //console.log(timeSlots[i].substring(0,5));
     for(let j = 0; j < timeSlots.length - 1; j++){
       a = timeSlots[j].substring(9);
       console.log(timeSlots[j] + " == " + timeSlots[i]);
