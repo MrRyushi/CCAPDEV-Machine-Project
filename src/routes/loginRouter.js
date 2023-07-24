@@ -6,7 +6,6 @@ import bcrypt from 'bcrypt';
 
 const loginRouter = Router();
 const db = getDb();
-const SALT_WORK_FACTOR = 10;
 
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 loginRouter.use(bodyParser.json());
