@@ -5,10 +5,37 @@ import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
 
-
-
 const profileRouter = Router();
 const db = getDb();
+
+// Middleware to check if the user is logged in
+const isAuthenticated = (req, res, next) => {
+  if (req.session.email) {
+    // If the user is logged in, proceed to the next middleware/route handler
+    next();
+  } else {
+    // If the user is not logged in, redirect to the login page
+    res.redirect('/login');
+  }
+};
+
+// Middleware for Student Authentication
+const isStudent = (req, res, next) => {
+  if (req.session.accountType === 'Student') {
+    next();
+  } else {
+    res.status(403).send('Access denied. You are not authorized to access this page.');
+  }
+};
+
+// Middleware for Technician Authentication
+const isTechnician = (req, res, next) => {
+  if (req.session.accountType === 'Technician') {
+    next();
+  } else {
+    res.status(403).send('Access denied. You are not authorized to access this page.');
+  }
+};
 
 // Find Account ID Function
 async function findAccountId(email) {
@@ -100,7 +127,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-profileRouter.get('/profile', async (req, res) => {
+profileRouter.get('/profile', isAuthenticated, isStudent, async (req, res) => {
   try {
     const email = req.session.email;
     const name  = await findAccountName(email);
@@ -256,7 +283,7 @@ profileRouter.post('/profile/delete-user', async (req, res) => {
   }
 });
 
-profileRouter.get('/profile/home', async (req, res) => {
+profileRouter.get('/profile/home', isAuthenticated, isStudent, async (req, res) => {
   try {
     res.redirect('/student-view');
   } catch (error) {
@@ -265,7 +292,7 @@ profileRouter.get('/profile/home', async (req, res) => {
   }
 });
 
-profileRouter.get('/profile/logout', async (req, res) => {
+profileRouter.get('/profile/logout', isAuthenticated, isStudent, async (req, res) => {
   req.session.destroy((err) => {
     if (err) {
         console.log('Error destroying session:', err);
@@ -274,7 +301,7 @@ profileRouter.get('/profile/logout', async (req, res) => {
 });
 });
 
-profileRouter.get('/profile/:objectId', async (req, res) => {
+profileRouter.get('/profile/:objectId', isAuthenticated, isStudent, async (req, res) => {
   try {
     const objectId = req.params.objectId;
     const email = req.session.email;
@@ -302,7 +329,7 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
   }
 });
   
-  profileRouter.post('/getReservations', async (req, res) => {
+  profileRouter.post('/getReservations', isAuthenticated, async (req, res) => {
     try {
       // get reservations
       const cl01Data = await db.collection('cl01').find().toArray();
@@ -370,8 +397,6 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
       }
     );
     console.log("updating one successful", updateResult);
-    
-  
   })
 
   profileRouter.post('/delete-reservation', async (req, res) => {

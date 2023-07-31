@@ -157,7 +157,6 @@ const cl02SampleData = [
   }
 ];
 
-
 const cl03SampleData = [
   {
       user: "Patrick James T. Marcellana",

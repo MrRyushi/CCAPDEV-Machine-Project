@@ -9,6 +9,34 @@ const db = getDb();
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 loginRouter.use(bodyParser.json());
 
+// Middleware to check if the user is logged in
+const isAuthenticated = (req, res, next) => {
+    if (req.session.email) {
+      // If the user is logged in, proceed to the next middleware/route handler
+      next();
+    } else {
+      // If the user is not logged in, redirect to the login page
+      res.redirect('/login');
+    }
+  };
+  
+  // Middleware for Student Authentication
+  const isStudent = (req, res, next) => {
+    if (req.session.accountType === 'Student') {
+      next();
+    } else {
+      res.status(403).send('Access denied. You are not authorized to access this page.');
+    }
+  };
+  
+  // Middleware for Technician Authentication
+  const isTechnician = (req, res, next) => {
+    if (req.session.accountType === 'Technician') {
+      next();
+    } else {
+      res.status(403).send('Access denied. You are not authorized to access this page.');
+    }
+  };
 
 // Check if Email Exists Function
 async function checkIfEmailExists(email) {
@@ -73,6 +101,7 @@ async function checkCredentials(email, password) {
     }
   }
 
+
 // Routes
 loginRouter.get('/login', (req, res) => {
     res.render('login.ejs', { alert: '', email: '' });
@@ -116,8 +145,7 @@ loginRouter.post('/login', async (req, res) => {
                     req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000;
                     console.log("Session cookie set with extended expiration");
                 } else {
-                    // Set a session cookie with the default expiration (3 weeks)
-                    req.session.cookie.expires = new Date(Date.now() + 3 * 7 * 24 * 60 * 60 * 1000);
+                    req.session.cookie.expires = false;
                     console.log("Session cookie set with default expiration");
                 }
 
