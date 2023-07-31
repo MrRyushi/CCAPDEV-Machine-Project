@@ -1,24 +1,11 @@
 import { Router } from 'express';
 import { getDb } from '../db/conn.js';
 import bodyParser from 'body-parser';
-import session from 'express-session';
 import bcrypt from 'bcrypt';
 
 const loginRouter = Router();
 const db = getDb();
 
-loginRouter.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        maxAge: 3 * 7 * 24 * 60 * 60 * 1000, // 3 weeks
-        secure: false, // Change to true if using HTTPS
-        httpOnly: true,
-      },
-    })
-  );
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 loginRouter.use(bodyParser.json());
 
