@@ -66,8 +66,12 @@ viewsRouter.post('/getAllReservations', async (req, res) => {
   });
 
   viewsRouter.get('/logout', async (req, res) => {
-    req.session.destroy();
-    res.redirect('/login');
+    req.session.destroy((err) => {
+      if (err) {
+          console.log('Error destroying session:', err);
+      }
+      res.redirect('/login');
+  });
   })
 
 export default viewsRouter;

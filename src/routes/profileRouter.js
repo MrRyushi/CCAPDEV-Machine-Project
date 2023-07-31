@@ -266,12 +266,12 @@ profileRouter.get('/profile/home', async (req, res) => {
 });
 
 profileRouter.get('/profile/logout', async (req, res) => {
-  try {
+  req.session.destroy((err) => {
+    if (err) {
+        console.log('Error destroying session:', err);
+    }
     res.redirect('/login');
-  } catch (error) {
-    
-    res.status(500).json({ error: 'Internal Server Error' }); // Return an error response
-  }
+});
 });
 
 profileRouter.get('/profile/:objectId', async (req, res) => {

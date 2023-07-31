@@ -1,5 +1,4 @@
 // System-related packages
-import 'dotenv/config';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
@@ -11,6 +10,7 @@ import bcrypt from 'bcrypt';
 import router from "./src/routes/index.js";
 
 import bodyParser from 'body-parser';
+import loginRouter from './src/routes/loginRouter.js';
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -311,7 +311,6 @@ async function populateDatabase() {
   }
 }
 
-
 async function main(){
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
@@ -332,7 +331,7 @@ async function main(){
   app.use(router);
 
   // SERVER LISTEN
-  app.listen(process.env.SERVER_PORT, (e) => {
+  app.listen(process.env.PORT, (e) => {
     if(e){
       console.log(e);
     } else {
