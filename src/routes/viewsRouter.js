@@ -4,6 +4,35 @@ import { getDb } from '../db/conn.js';
 const viewsRouter = Router();
 const db = getDb();
 
+// Middleware to check if the user is logged in
+const isAuthenticated = (req, res, next) => {
+  if (req.session.email) {
+    // If the user is logged in, proceed to the next middleware/route handler
+    next();
+  } else {
+    // If the user is not logged in, redirect to the login page
+    // res.redirect('/login');
+  }
+};
+
+// Middleware for Student Authentication
+const isStudent = (req, res, next) => {
+  if (req.session.accountType === 'Student') {
+    next();
+  } else {
+    res.redirect('student-view'); 
+  }
+};
+
+// Middleware for Technician Authentication
+const isTechnician = (req, res, next) => {
+  if (req.session.accountType === 'Technician') {
+    next();
+  } else {
+    res.redirect('technician-view'); 
+}
+};
+
 viewsRouter.get('/api/student-view', async (req, res) => {
     try {
         const accountType = req.session.accountType;
@@ -22,7 +51,7 @@ viewsRouter.get('/api/student-view', async (req, res) => {
     }
   });
 
-viewsRouter.get('/student-view', async (req, res) => {
+viewsRouter.get('/student-view', isAuthenticated, isStudent, async (req, res) => {
     try {
         console.log("sesssion: " + req.session.accountType);
         const accountType = req.session.accountType;
@@ -41,7 +70,7 @@ viewsRouter.get('/student-view', async (req, res) => {
       }
 });
   
-viewsRouter.get('/technician-view', (req, res) => {
+viewsRouter.get('/technician-view', isAuthenticated, isTechnician, (req, res) => {
     res.render('technician-view.ejs');
 });
 

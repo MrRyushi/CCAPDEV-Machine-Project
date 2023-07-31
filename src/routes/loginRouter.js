@@ -71,17 +71,28 @@ async function checkCredentials(email, password) {
       console.log(err);
       return false;
     }
-  }
+}
 
+// Middleware to check if the user is not logged in
+const isNotAuthenticated = (req, res, next) => {
+    if (req.session.email) {
+      // if logged in, do nothing
+      
+    } else {
+      next();
+    }
+  };
 // Routes
-loginRouter.get('/login', (req, res) => {
+loginRouter.get('/login', isNotAuthenticated, (req, res) => {
     res.render('login.ejs', { alert: '', email: '' });
 })
   
 loginRouter.post('/login', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    const rememberMe = req.body.rememberMe === 'true';
+    const rememberMe = req.body.rememberMe;
+
+    console.log("remeber me", + rememberMe);
 
     let accountType;
 
@@ -111,7 +122,7 @@ loginRouter.post('/login', async (req, res) => {
                 req.session.accountType = await checkAccountType(email);
                 accountType = req.session.accountType;
 
-                if (rememberMe) {
+                if (rememberMe == "on") {
                     // Set a persistent cookie with extended expiration (3 weeks)
                     req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000;
                     console.log("Session cookie set with extended expiration");

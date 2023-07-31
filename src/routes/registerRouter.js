@@ -34,42 +34,51 @@ async function insertAccount(fullName, email, hashedPassword, userType) {
     }
   }
   
-  
-  async function checkIfNameExists(name) {
-    const labAccounts = await db.collection("labAccounts");
-  
-    try {
-      const val = await labAccounts.findOne({ name: name });
-      if (val !== null) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      console.log(err);
+async function checkIfNameExists(name) {
+  const labAccounts = await db.collection("labAccounts");
+
+  try {
+    const val = await labAccounts.findOne({ name: name });
+    if (val !== null) {
+      return true;
+    } else {
       return false;
     }
+  } catch (err) {
+    console.log(err);
+    return false;
   }
+}
   
-  async function checkIfEmailExists(email) {
-    const labAccounts = await db.collection("labAccounts");
-  
-    try {
-      const val = await labAccounts.findOne({ email: email });
-  
-      if (val !== null) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      console.log(err);
+async function checkIfEmailExists(email) {
+  const labAccounts = await db.collection("labAccounts");
+
+  try {
+    const val = await labAccounts.findOne({ email: email });
+
+    if (val !== null) {
+      return true;
+    } else {
       return false;
     }
+  } catch (err) {
+    console.log(err);
+    return false;
   }
-  
+}
+
+// Middleware to check if the user is not logged in
+const isNotAuthenticated = (req, res, next) => {
+  if (req.session.email) {
+    // if logged in, do nothing
+    
+  } else {
+    next();
+  }
+};
+
 // Routes
-registerRouter.get('/register', (req, res) => {
+registerRouter.get('/register', isNotAuthenticated, (req, res) => {
     res.render('register.ejs', { alert: '', name: '', email: '' }) ;
 })
   

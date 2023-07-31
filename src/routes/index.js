@@ -8,15 +8,26 @@ import viewsRouter from './viewsRouter.js';
 
 const router = Router();
 
-router.get('/', (req, res) => {
+// Middleware to check if the user is logged in
+const isAuthenticated = (req, res, next) => {
+    if (req.session.email) {
+      // If the user is logged in, proceed to the next middleware/route handler
+      next();
+    } else {
+      // If the user is not logged in, redirect to the login page
+    res.redirect('/login');
+    }
+  };
+
+router.get('/', isAuthenticated, (req, res) => {
     res.render('home.ejs') 
 })
 
-router.get('/home', (req, res) => {
+router.get('/home', isAuthenticated, (req, res) => {
     res.redirect("/");
 })
 
-router.get("/homepage", (req, res) => {
+router.get("/homepage", isAuthenticated, (req, res) => {
     res.redirect("/");
 });
 

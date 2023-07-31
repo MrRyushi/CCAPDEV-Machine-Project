@@ -5,8 +5,6 @@ import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
 
-
-
 const profileRouter = Router();
 const db = getDb();
 
@@ -85,7 +83,8 @@ async function findAccountDesc(email) {
     }
 }
 
-// Multer configuration
+
+
 // Multer configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -100,7 +99,26 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-profileRouter.get('/profile', async (req, res) => {
+// Middleware to check if the user is logged in
+const isAuthenticated = (req, res, next) => {
+  if (req.session.email) {
+    // If the user is logged in, proceed to the next middleware/route handler
+    next();
+  } else {
+    // If the user is not logged in, redirect to the login page
+    // res.redirect('/login');
+  }
+};
+
+// Middleware to check if the user is a student
+const isStudent = (req, res, next) => {
+  if (req.session.accountType === "Student") {
+    next();
+  } else {
+
+  }
+};
+profileRouter.get('/profile', isAuthenticated, isStudent, async (req, res) => {
   try {
     const email = req.session.email;
     const name  = await findAccountName(email);
@@ -256,7 +274,8 @@ profileRouter.post('/profile/delete-user', async (req, res) => {
   }
 });
 
-profileRouter.get('/profile/home', async (req, res) => {
+
+profileRouter.get('/profile/home', isAuthenticated, isStudent, async (req, res) => {
   try {
     res.redirect('/student-view');
   } catch (error) {
@@ -265,7 +284,7 @@ profileRouter.get('/profile/home', async (req, res) => {
   }
 });
 
-profileRouter.get('/profile/logout', async (req, res) => {
+profileRouter.get('/profile/logout', isAuthenticated, isStudent, async (req, res) => {
   req.session.destroy((err) => {
     if (err) {
         console.log('Error destroying session:', err);
@@ -274,7 +293,7 @@ profileRouter.get('/profile/logout', async (req, res) => {
 });
 });
 
-profileRouter.get('/profile/:objectId', async (req, res) => {
+profileRouter.get('/profile/:objectId', isAuthenticated, isStudent, async (req, res) => {
   try {
     const objectId = req.params.objectId;
     const email = req.session.email;
