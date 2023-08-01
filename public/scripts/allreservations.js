@@ -14,6 +14,55 @@ $(document).ready(function(){
         const cl03Array = response.cl03Data;
         // Use the arrays as needed
 
+        cl01Array.sort((a, b) => {
+          if ( a.date < b.date ){
+            return -1;
+          } else if ( a.date > b.date ){
+            return 1;
+          } else {
+            if(a.time < b.time){
+              return -1;
+            } else if(a.time > b.time) {
+              return 1;
+            }
+            return 0;
+          }
+        })
+
+        for(res of cl01Array){
+          console.log(res.date);
+        }
+        
+
+        cl02Array.sort((a, b) => {
+          if ( a.date < b.date ){
+            return -1;
+          } else if ( a.date > b.date ){
+            return 1;
+          } else {
+            if(a.time < b.time){
+              return -1;
+            } else if(a.time > b.time) {
+              return 1;
+            }
+            return 0;
+          }
+        })
+
+        cl03Array.sort((a, b) => {
+          if ( a.date < b.date ){
+            return -1;
+          } else if ( a.date > b.date ){
+            return 1;
+          } else {
+            if(a.time < b.time){
+              return -1;
+            } else if(a.time > b.time) {
+              return 1;
+            }
+            return 0;
+          }
+        })
       
         // create elements 
         let upcomingReservationContainer = $('#upcomingReservationContainer');
@@ -255,7 +304,7 @@ $(document).ready(function(){
           tabledata5.text('Date and Time of Request:');
           tabledata7.text('Date of Reservation:');
           tabledata9.text('Time Slot of Reservation:');
-          tabledata2.text('CL01');
+          tabledata2.text('CL02');
           tabledata11.text('Name of User');
           tabledata4.text(data.seatSelected.toString());
           let month;
@@ -417,7 +466,7 @@ $(document).ready(function(){
           tabledata5.text('Date and Time of Request:');
           tabledata7.text('Date of Reservation:');
           tabledata9.text('Time Slot of Reservation:');
-          tabledata2.text('CL01');
+          tabledata2.text('CL03');
           tabledata11.text('Name of User');
           tabledata4.text(data.seatSelected.toString());
           let month;
@@ -1011,11 +1060,30 @@ $(document).ready(function(){
     // Enable the edit button
     $('.edit-btn').not(editBtn).prop('disabled', false);
     
+    let dateResArray = currDateRes.split(' ');
+    let month;
+    switch(dateResArray[0]){
+      case 'January': month='01'; break;
+      case 'February': month='02'; break;
+      case 'March': month='03'; break;
+      case 'April': month='04'; break;
+      case 'May': month='05'; break;
+      case 'June': month='06'; break;
+      case 'July': month='07'; break;
+      case 'August': month='08'; break;
+      case 'September': month='09'; break;
+      case 'October': month='10'; break;
+      case 'November': month='11'; break;
+      case 'December': month='12'; break;
+    }
+
+    let newCurrDateRes = dateResArray[2] + "-" + month + "-" + dateResArray[1].substring(0, 2);
+
     let formData = [];
     // create objects to be sent through ajax
     formData.push({name: "room", value: currRoom});
     formData.push({name: "seatNum", value: currSeatnum});
-    formData.push({name: "date", value: currDateRes});
+    formData.push({name: "date", value: newCurrDateRes});
     formData.push({name: "time", value: currTimeRes})
 
     $.ajax({
@@ -1029,6 +1097,7 @@ $(document).ready(function(){
         // Handle the error response from the server
       }
     });
+    window.location.reload();
   
 });
 
@@ -1517,11 +1586,30 @@ $('#pastReservationContainer').on('click', '.delete-btn', function() {
   // Enable the edit button
   $('.edit-btn').not(editBtn).prop('disabled', false);
   
+  let dateResArray = currDateRes.split(' ');
+    let month;
+    switch(dateResArray[0]){
+      case 'January': month='01'; break;
+      case 'February': month='02'; break;
+      case 'March': month='03'; break;
+      case 'April': month='04'; break;
+      case 'May': month='05'; break;
+      case 'June': month='06'; break;
+      case 'July': month='07'; break;
+      case 'August': month='08'; break;
+      case 'September': month='09'; break;
+      case 'October': month='10'; break;
+      case 'November': month='11'; break;
+      case 'December': month='12'; break;
+    }
+
+    let newCurrDateRes = dateResArray[2] + "-" + month + "-" + dateResArray[1].substring(0, 2);
+
   let formData = [];
   // create objects to be sent through ajax
   formData.push({name: "room", value: currRoom});
   formData.push({name: "seatNum", value: currSeatnum});
-  formData.push({name: "date", value: currDateRes});
+  formData.push({name: "date", value: newCurrDateRes});
   formData.push({name: "time", value: currTimeRes})
 
   $.ajax({
@@ -1535,6 +1623,7 @@ $('#pastReservationContainer').on('click', '.delete-btn', function() {
       // Handle the error response from the server
     }
   });
+  window.location.reload();
 
 });
 })

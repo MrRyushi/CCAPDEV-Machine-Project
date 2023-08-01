@@ -512,6 +512,7 @@ $(document).ready(function(){
           // Handle the error response from the server
         }
       });
+      window.location.reload();
     
   });
 })

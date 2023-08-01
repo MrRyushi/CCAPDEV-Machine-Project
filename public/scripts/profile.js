@@ -62,6 +62,51 @@
         const cl03Array = response.cl03Array;
         // Use the arrays as needed
         
+        cl01Array.sort((a, b) => {
+          if ( a.date < b.date ){
+            return -1;
+          } else if ( a.date > b.date ){
+            return 1;
+          } else {
+            if(a.time < b.time){
+              return -1;
+            } else if(a.time > b.time) {
+              return 1;
+            }
+            return 0;
+          }
+        })
+
+        cl02Array.sort((a, b) => {
+          if ( a.date < b.date ){
+            return -1;
+          } else if ( a.date > b.date ){
+            return 1;
+          } else {
+            if(a.time < b.time){
+              return -1;
+            } else if(a.time > b.time) {
+              return 1;
+            }
+            return 0;
+          }
+        })
+
+        cl03Array.sort((a, b) => {
+          if ( a.date < b.date ){
+            return -1;
+          } else if ( a.date > b.date ){
+            return 1;
+          } else {
+            if(a.time < b.time){
+              return -1;
+            } else if(a.time > b.time) {
+              return 1;
+            }
+            return 0;
+          }
+        })
+
         const reservationContainer = $('#reservationContainer');
         let reservationCount = 0;
         for(let data of cl01Array){

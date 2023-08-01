@@ -389,6 +389,7 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
       roomUsed = room03;
     }
 
+    console.log(req.body);
     roomUsed.deleteOne({
       seatSelected: req.body.seatNum,
       date: req.body.date,
