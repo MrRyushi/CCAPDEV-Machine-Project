@@ -223,7 +223,6 @@ $(document).ready(function() {
           // create formData of objects
           var formData = []
           if (accountType == "Student") {
-            console.log(thisBtn);
 
             // variables when reserving
             var anonymous; // boolean for anonymous or not
@@ -248,7 +247,6 @@ $(document).ready(function() {
     
             // alert the user that the seat was successfully reserved
             dateRequested = new Date()
-            alert(`Reservation Successful`);
             
             // create a paragraph element and display it
             //let parag = $("<p>");
@@ -274,38 +272,66 @@ $(document).ready(function() {
             let dateSelected = document.querySelector('#date').value;
                       
             console.log(checkedTimeSlots);
-            // create objects that will be stored in the database
-            let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
-            let timeObject = {name: 'time', value: checkedTimeSlots};
-            let dateObject = {name: 'date', value: dateSelected};
-            let viewObject = {name: "view", value: 'student'};
-            let roomNameObject = {name: "roomName", value: roomName};
-            let userObject = {name: "user", value: userName};
-            let emailObject = {name: 'email', value: email};
-            let dateReqObject = {name: 'dateReq', value: dateReq};
-            
-            // push the objects in the array
-            formData.push(seatSelectedObject);
-            formData.push(timeObject);
-            formData.push(dateObject);
-            formData.push(viewObject);
-            formData.push(roomNameObject);
-            formData.push(userObject);
-            formData.push(emailObject);
-            formData.push(dateReqObject);
-
-            // send data to roomsRouter.js
-            $.ajax({
-              type: 'POST',
-              url: '/room',
-              data: formData,
-              success: function (response) {
-                // Handle the success response from the server
-              },
-              error: function (error) {
-                // Handle the error response from the server
+            let found = false;
+            for(reservation of allReservations){
+              let timeData = reservation.time.split(/,/);
+             
+              //console.log(`${currDateRes} ${res.date} == ${currSeatnum} ${res.seatSelected}`);
+              if(dateSelected == reservation.date && thisBtn.val() == reservation.seatSelected){
+                timeData = reservation.time.split(/,/);
+  
+                for(time of checkedTimeSlots){
+                  
+                  
+                  for(data of timeData){
+                    console.log(time + " : " + data);
+                    if(time == data){
+                      found = true;
+                    }
+                  }
+                }
               }
-            });
+          
+            }
+
+            if(found){
+              alert('One of the time slot is already occupied');
+            } else {
+              alert(`Reservation Successful`);
+                // create objects that will be stored in the database
+              let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
+              let timeObject = {name: 'time', value: checkedTimeSlots};
+              let dateObject = {name: 'date', value: dateSelected};
+              let viewObject = {name: "view", value: 'student'};
+              let roomNameObject = {name: "roomName", value: roomName};
+              let userObject = {name: "user", value: userName};
+              let emailObject = {name: 'email', value: email};
+              let dateReqObject = {name: 'dateReq', value: dateReq};
+              
+              // push the objects in the array
+              formData.push(seatSelectedObject);
+              formData.push(timeObject);
+              formData.push(dateObject);
+              formData.push(viewObject);
+              formData.push(roomNameObject);
+              formData.push(userObject);
+              formData.push(emailObject);
+              formData.push(dateReqObject);
+
+              // send data to roomsRouter.js
+              $.ajax({
+                type: 'POST',
+                url: '/room',
+                data: formData,
+                success: function (response) {
+                  // Handle the success response from the server
+                },
+                error: function (error) {
+                  // Handle the error response from the server
+                }
+              });
+            }
+            
           }
 
           // TECHNICIAN
@@ -326,7 +352,6 @@ $(document).ready(function() {
              // thisBtn.attr("disabled", "disabled");
       
               // alert the user that the seat was successfully reserved
-              alert(`Reservation Successful`);
               
               // create a paragraph element and display it
               //let parag = $("<p>");
@@ -351,6 +376,33 @@ $(document).ready(function() {
               // get date selected
               let dateSelected = document.querySelector('#date').value;
 
+              let found = false;
+            for(reservation of allReservations){
+              let timeData = reservation.time.split(/,/);
+             
+              //console.log(`${currDateRes} ${res.date} == ${currSeatnum} ${res.seatSelected}`);
+              if(dateSelected == reservation.date && thisBtn.val() == reservation.seatSelected){
+                timeData = reservation.time.split(/,/);
+  
+                for(time of checkedTimeSlots){
+                  
+                  
+                  for(data of timeData){
+                    console.log(time + " : " + data);
+                    if(time == data){
+                      found = true;
+                    }
+                  }
+                }
+              }
+          
+            }
+
+            if(found){
+              alert('One of the time slot is already occupied');
+            } else {
+              alert(`Reservation Successful`);
+
               // create objects that will be stored in the database
               let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
               let timeObject = {name: 'time', value: checkedTimeSlots};
@@ -373,16 +425,17 @@ $(document).ready(function() {
 
               // Perform any additional client-side actions or submit the form via AJAX
               $.ajax({
-              type: 'POST',
-              url: '/room',
-              data: formData,
-              success: function (response) {
-                // Handle the success response from the server
-              },
-              error: function (error) {
-                // Handle the error response from the server
-              }
-            });
+                type: 'POST',
+                url: '/room',
+                data: formData,
+                success: function (response) {
+                  // Handle the success response from the server
+                },
+                error: function (error) {
+                  // Handle the error response from the server
+                }
+              });
+            }
 
             } else {
               // get name of user
