@@ -474,11 +474,31 @@ $(document).ready(function(){
       // Enable the edit button
       $('.edit-btn').not(editBtn).prop('disabled', false);
 
+
+      let dateResArray = currDateRes.split(' ');
+      let month;
+      switch(dateResArray[0]){
+        case 'January': month='01'; break;
+        case 'February': month='02'; break;
+        case 'March': month='03'; break;
+        case 'April': month='04'; break;
+        case 'May': month='05'; break;
+        case 'June': month='06'; break;
+        case 'July': month='07'; break;
+        case 'August': month='08'; break;
+        case 'September': month='09'; break;
+        case 'October': month='10'; break;
+        case 'November': month='11'; break;
+        case 'December': month='12'; break;
+      }
+
+      let newCurrDateRes = dateResArray[2] + "-" + month + "-" + dateResArray[1].substring(0, 2);
+
       let formData = [];
       // create objects to be sent through ajax
       formData.push({name: "room", value: currRoom});
       formData.push({name: "seatNum", value: currSeatnum});
-      formData.push({name: "date", value: currDateRes});
+      formData.push({name: "date", value: newCurrDateRes});
       formData.push({name: "time", value: currTimeRes})
 
       $.ajax({
