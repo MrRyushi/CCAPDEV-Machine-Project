@@ -248,6 +248,20 @@ profileRouter.post('/profile/delete-user', async (req, res) => {
     const labAccounts = await db.collection('labAccounts');
     await labAccounts.deleteOne({ email });
 
+    // Delete the user's reservations from the reservations collections
+    const room01 = await db.collection('cl01');
+    const room02 = await db.collection('cl02');
+    const room03 = await db.collection('cl03');
+
+    // Delete reservations from room01 collection
+    await room01.deleteMany({ email });
+
+    // Delete reservations from room02 collection
+    await room02.deleteMany({ email });
+
+    // Delete reservations from room03 collection
+    await room03.deleteMany({ email });
+
     req.session.destroy(); // Destroy the session after deleting the account
     res.redirect('/profile/logout'); // Redirect to the login page
   } catch (error) {
@@ -255,6 +269,7 @@ profileRouter.post('/profile/delete-user', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 profileRouter.get('/profile/home', async (req, res) => {
   try {
@@ -379,26 +394,33 @@ profileRouter.get('/profile/:objectId', async (req, res) => {
     const room01 = await db.collection('cl01');
     const room02 = await db.collection('cl02');
     const room03 = await db.collection('cl03');
-
-    
-    if(req.body.room == "CL01"){
+  
+    if (req.body.room == "CL01") {
       roomUsed = room01;
-    } else if(req.body.room == "CL02"){
+    } else if (req.body.room == "CL02") {
       roomUsed = room02;
-    } else if(req.body.room == "CL03"){
+    } else if (req.body.room == "CL03") {
       roomUsed = room03;
     }
-
+  
+    console.log("Request Body:", req.body);
+  
     roomUsed.deleteOne({
       seatSelected: req.body.seatNum,
       date: req.body.date,
       time: req.body.time
     }).then(val => {
-      console.log("deleting successful");
-      console.log(val);
+      console.log("Deleting Result:", val);
+      if (val.deletedCount === 1) {
+        console.log("Deleting successful");
+      } else {
+        console.log("No matching reservation found.");
+      }
+      res.json({ success: true });
     }).catch(err => {
-      console.log(err);
-    })
-  })
+      console.log("Error deleting reservation:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+  });
   
 export default profileRouter;
