@@ -2,52 +2,68 @@
     $(".btn-back-profile").click(function(){
       window.location.href = "/profile";
     });
+
     const searchResults = $('#searchResults');
   
-    $("#search-bar").on('input', function() {
-      const searchQuery = $(this).val().trim();
-      console.log('input event triggered');
-    
-      if (searchQuery === '') {
-        searchResults.addClass("d-none");
+      // Function to perform the search
+  function performSearch(searchQuery) {
+    if (searchQuery === '') {
+      searchResults.addClass("d-none");
+      searchResults.empty(); // Clear previous search results
+      return; // Exit early if search query is empty
+    }
+
+    $.ajax({
+      url: '/search',
+      method: 'POST',
+      data: { query: searchQuery },
+      dataType: 'json',
+      success: function(response) {
+        console.log('Search results:', response);
         searchResults.empty(); // Clear previous search results
-        return; // Exit early if search query is empty
-      }
-    
-      $.ajax({
-        url: '/search',
-        method: 'POST',
-        data: { query: searchQuery },
-        dataType: 'json',
-        success: function(response) {
-          console.log('Search results:', response);
-          searchResults.empty(); // Clear previous search results
-    
-          if (response.length < 1) {
-            searchResults.removeClass("d-none");
-            searchResults.html('<p>No results found.</p>');
-            return;
-          }
-    
-          response.forEach((item) => {
-            const profileLink = $('<a></a>')
-              .text(item.name)
-              .attr('href', '/profile/' + item._id); // Set the link URL to the profile-visit page with the ObjectId as a parameter
-    
-            const profileResult = $('<div></div>')
-              .append(profileLink)
-              .append('<hr>');
-    
-            searchResults.append(profileResult);
-          });
-    
-          searchResults.removeClass("d-none"); // Show the search results
-        },
-        error: function(error) {
-          console.error('Failed to retrieve search results:', error);
+
+        if (response.length < 1) {
+          searchResults.removeClass("d-none");
+          searchResults.html('<p>No results found.</p>');
+          return;
         }
-      });
+
+        response.forEach((item) => {
+          const profileLink = $('<a></a>')
+            .text(item.name)
+            .attr('href', '/profile/' + item._id); // Set the link URL to the profile-visit page with the ObjectId as a parameter
+
+          const profileResult = $('<div></div>')
+            .append(profileLink)
+            .append('<hr>');
+
+          searchResults.append(profileResult);
+        });
+
+        searchResults.removeClass("d-none"); // Show the search results
+      },
+      error: function(error) {
+        console.error('Failed to retrieve search results:', error);
+      }
     });
+  }
+
+  // Handle input event on the search bar
+  $("#search-bar").on('input', function() {
+    const searchQuery = $(this).val().trim();
+    console.log('input event triggered');
+    performSearch(searchQuery);
+  });
+
+  // Handle keypress event on the search bar
+  $("#search-bar").on('keypress', function(event) {
+    const searchQuery = $(this).val().trim();
+    if (event.which === 13) { // Check if the key pressed is Enter (key code 13)
+      event.preventDefault(); // Prevent the default behavior (form submission or redirect)
+      console.log('Enter key pressed');
+      performSearch(searchQuery); // Perform the search
+    }
+  });
   
     // Hide the search results initially
     searchResults.addClass("d-none");
@@ -563,9 +579,8 @@
     // Get the current description text
     let currentDescription = $(".description p").text().trim();
 
-    // Set the current description as the placeholder for the textarea
-    $("#profileDescription").attr("placeholder", currentDescription);
-    $("#profileDescription").val("");
+    // Set the current description as the value for the textarea
+    $("#profileDescription").val(currentDescription);
     
     // Toggle visibility of the elements
     $(".description").addClass("d-none");
