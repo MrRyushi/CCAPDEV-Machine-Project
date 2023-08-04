@@ -1,5 +1,7 @@
+// import router from express
 import { Router } from 'express';
 
+// import the other routers from other file
 import registerRouter from './registerRouter.js';
 import loginRouter from './loginRouter.js';
 import roomsRouter from './roomsRouter.js';

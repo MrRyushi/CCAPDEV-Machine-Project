@@ -1,47 +1,45 @@
 $(document).ready(function(){
   
+  // get account type data via ajax
   $.ajax({
     url: '/api/student-view',
     method: 'GET',
     success: function(response) {
-      // Handle the data received from the server
-      let accountType = response.accountType; // Access the accountType value
+      // access the accountType value
+      let accountType = response.accountType; 
 
+      // query selectors for the navbar elements
       const signInLink = $("#signInLink");
       const viewProfileLink = $("#viewProfileLink");
       const logoutBtn = $("#logoutBtn");
       const viewRoomsLink = $('#viewRoomLink');
       let backHref = "home";
 
+      // if the account logged in is a student
       if(accountType == "Student"){
         signInLink.addClass("d-none");
         viewProfileLink.removeClass("d-none");
         logoutBtn.removeClass("d-none");
-        //studentViewLink.addClass("d-none");
-        //visitorViewLink.removeClass("d-none");
-        //techViewLink.removeClass("d-none");
         backHref = "student-view"
         viewRoomsLink.attr("href", "student-view");
 
+      // if the account logged in is a technician
       } else if(accountType == "Technician") {
         signInLink.addClass("d-none");
         viewProfileLink.addClass("d-none");
         logoutBtn.removeClass("d-none");
-        //studentViewLink.removeClass("d-none");
-        //techViewLink.addClass("d-none");
-        //visitorViewLink.removeClass("d-none");
         backHref = "technician-view"
         viewRoomsLink.attr("href", "technician-view");
+
+        // // if the not yet logged in / visitor
       } else {
         signInLink.removeClass("d-none");
         viewProfileLink.addClass("d-none");
         logoutBtn.addClass("d-none");
         backHref = "home";
-        //studentViewLink.removeClass("d-none");
-        //visitorViewLink.addClass("d-none");
-        //techViewLink.removeClass("d-none");
       }
 
+      // back button event listener
       $(".btn-back").click(function(){
         console.log("back: " + backHref);
         window.location.href = backHref;
@@ -53,42 +51,8 @@ $(document).ready(function(){
     }
   });
 
+  // this event listener is for when the user is a visitor
   $(".btn-back").click(function(){
     window.location.href = 'home';
   });
-
-  // views links
-  /*
-  const techViewLink = $("#technicianViewLink");
-  const studentViewLink = $("#studentViewLink");
-  const visitorViewLink = $("#visitorViewLink");*/
-
-  /*studentViewLink.on("click", function(){
-    signInLink.addClass("d-none");
-    viewProfileLink.removeClass("d-none");
-    logoutBtn.removeClass("d-none");
-    studentViewLink.addClass("d-none");
-    visitorViewLink.removeClass("d-none");
-    techViewLink.removeClass("d-none");
-    sessionStorage.setItem("view", "student");
-  })
-  techViewLink.on("click", function(){
-    signInLink.addClass("d-none");
-    viewProfileLink.addClass("d-none");
-    logoutBtn.removeClass("d-none");
-    studentViewLink.removeClass("d-none");
-    techViewLink.addClass("d-none");
-    visitorViewLink.removeClass("d-none");
-    sessionStorage.setItem("view", "tech");
-  })
-
-  visitorViewLink.on("click", function(){
-    signInLink.removeClass("d-none");
-    viewProfileLink.addClass("d-none");
-    logoutBtn.addClass("d-none");
-    studentViewLink.removeClass("d-none");
-    visitorViewLink.addClass("d-none");
-    techViewLink.removeClass("d-none");
-    sessionStorage.setItem("view", "visitor");
-  })*/
 })

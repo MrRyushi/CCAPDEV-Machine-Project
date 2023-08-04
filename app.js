@@ -9,14 +9,16 @@ import { connectToMongo, getDb } from './src/db/conn.js';
 import bcrypt from 'bcrypt';
 // Routes modules
 import router from "./src/routes/index.js";
-
 import bodyParser from 'body-parser';
+
+// instantiate express
 const app = express();
+const SALT_WORK_FACTOR = 10;
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const SALT_WORK_FACTOR = 10;
-
+// profile sample data
 const profileSampleData = [
   {
       fullName: "Samantha Nicole L. Caasi",
@@ -68,6 +70,7 @@ const profileSampleData = [
   }
 ];
 
+// cl01 sample data
 const cl01SampleData = [
   {
       user: "Anonymous",
@@ -111,6 +114,7 @@ const cl01SampleData = [
   }
 ];
 
+// cl02 sample data
 const cl02SampleData = [
   {
       user: "Anonymous",
@@ -154,7 +158,7 @@ const cl02SampleData = [
   }
 ];
 
-
+// cl03 sample data
 const cl03SampleData = [
   {
       user: "Patrick James T. Marcellana",
@@ -208,6 +212,7 @@ async function checkExistingData(collection, data) {
   return existingData !== null;
 }
 
+// helper function to populate the database if there is no data yet
 async function populateDatabase() {
   try {
     const db = getDb();
@@ -311,7 +316,7 @@ async function populateDatabase() {
   }
 }
 
-
+// main function
 async function main(){
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
@@ -350,5 +355,5 @@ async function main(){
   populateDatabase();
 }
 
-
+// call main
 main();
