@@ -10,7 +10,6 @@ $(document).ready(function() {
   // declare initial variables
   let accountType = 'visitor';
   let userName;
-  let email
 
   // get the reservations list based on the room
   let roomName = document.querySelector('#roomName').innerHTML.substring(14);
@@ -49,7 +48,8 @@ $(document).ready(function() {
   function updateReservedSeats (){
     // get value of date and time selected from dropdown
     let dateSelected = document.querySelector('#date').value;
-    let timeSelected = document.querySelector('#time').value;
+    let startTimeSelected = document.querySelector('#start-time').value;
+    let endTimeSelected =  document.querySelector('#end-time').value;
 
     // reset the container and remove all its elements
     const reservedSeatsContainer = document.querySelector(".resSeatsContainer");
@@ -61,10 +61,12 @@ $(document).ready(function() {
         let btn = document.querySelector(`#btn-0${i}`);
         btn.disabled = false;
         btn.classList.replace("btn-danger", "btn-outline-info"); 
+        btn.classList.replace("btn-warning", "btn-outline-info"); 
       } else {
         let btn = document.querySelector(`#btn-${i}`);
         btn.disabled = false;
         btn.classList.replace("btn-danger", "btn-outline-info");
+        btn.classList.replace("btn-warning", "btn-outline-info"); 
       }
     }
 
@@ -88,39 +90,51 @@ $(document).ready(function() {
           for(reservation of allReservations){
             // split the reservation time as multiple time slots is allowed
             array = reservation.time.split(/,/);
+            let b = reservation.seatSelected;
+            let valid = false;
             for(time of array){
+            
               // if the time and date of a reservation matches the selected time and date
-              if(reservation.date == dateSelected && time == timeSelected){
-                let b = reservation.seatSelected
+              if(reservation.date == dateSelected && time >= startTimeSelected && time <= endTimeSelected){
+                valid = true;
 
                 // get the seatBtn based on the reservation
                 let btn = document.querySelector(`#btn-${b}`);
                 // disable the button and change its color
-                btn.disabled = true;
-                btn.classList.replace("btn-outline-info", "btn-danger");
-
-                // this is for the objectId to link to the profile of the student
-                let objectId;
-                for(student of response){
-                  if(reservation.email == student.email){
-                    objectId = student._id;
-                  }
-                }
+                array.sort();
                 
-                // add a paragraph in the container with the details of the reservation
-                let parag;
-                if(reservation.user != "Anonymous" && reservation.email != ""){
-                  parag = $("<p>");
-                  parag.addClass("text-white custom-font text-center");
-                  parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white" href="/profile/${objectId}">${reservation.user}`);
+                if(array[0].substring(0,5) == "09:00" && array[array.length-1].substring(9) == "16:00"){
+                  btn.disabled = true;
+                  btn.classList.replace("btn-outline-info", "btn-danger");
                 } else {
-                  parag = $("<p>");
-                  parag.addClass("text-white custom-font text-center");
-                  parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white">${reservation.user}`);
-                }
-                reservedSeatsContainer.append(parag[0]);
+                  btn.classList.replace("btn-outline-info", "btn-warning");
+                }            
               }
             }
+
+            if(valid){
+              // this is for the objectId to link to the profile of the student
+              let objectId;
+              for(student of response){
+                if(reservation.email == student.email){
+                  objectId = student._id;
+                }
+              }
+
+              // add a paragraph in the container with the details of the reservation
+              let parag;
+              if(reservation.user != "Anonymous" && reservation.email != ""){
+                parag = $("<p>");
+                parag.addClass("text-white custom-font text-center");
+                parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white" href="/profile/${objectId}">${reservation.user}</a><br>Time: ${array[0].substring(0,5)} to ${array[array.length-1].substring(9)}`);
+              } else {
+                parag = $("<p>");
+                parag.addClass("text-white custom-font text-center");
+                parag.html(`Seat #${b}: <a class="link-offset-3 link-offset-2-hover text-white">${reservation.user}</a><br>Time: ${array[0].substring(0,5)} to ${array[array.length-1].substring(9)}`);
+              }
+              reservedSeatsContainer.append(parag[0]);
+            }
+            
           }
       },
       error: function(error) {
@@ -135,7 +149,8 @@ $(document).ready(function() {
 
   // Add event listeners to the date and time inputs
   document.querySelector('#date').addEventListener("change", updateReservedSeats);
-  document.querySelector('#time').addEventListener("change", updateReservedSeats);
+  document.querySelector('#start-time').addEventListener("change", updateReservedSeats);
+  document.querySelector('#end-time').addEventListener("change", updateReservedSeats);
 
   // helper function to determine if the selected time slots are consecutive
   function areTimeSlotsConsecutive(timeSlots) {
@@ -169,6 +184,7 @@ $(document).ready(function() {
 
   // container for list of reserved seats
   const resSeatsP = $(".resSeatsContainer p");
+  var email;
 
   // ajax request to get the account type, username, and email of the user
   $.ajax({
@@ -309,6 +325,7 @@ $(document).ready(function() {
                   // Handle the error response from the server
                 }
               });
+              window.location.reload();
             }
             
           }
@@ -389,76 +406,118 @@ $(document).ready(function() {
                   error: function (error) {
                   }
                 });
+                window.location.reload();
               }
 
             } else {
               // get name of user
-              let name = prompt(`Enter name of student:`);
-              if(name === ""){
+              email = prompt(`Enter the email of student:`);
+              if(email === ""){
                 alert('Please enter the name of the student!');
               }
-              else if(name == null){
+              else if(email == null){
                 //do nothing
-              }
-              else{
+              } else{
                 dateRequested = new Date()
-                alert(`Reservation Successful`);
-                userName = response.name;
-                
-                // get the current date
-                let date = new Date();
-                let year = date.getFullYear();
-                let month = (date.getMonth() + 1).toString().padStart(2, '0');
-                let day = date.getDate().toString().padStart(2, '0');
-                let hours = date.getHours().toString().padStart(2, '0');
-                let minutes = date.getMinutes().toString().padStart(2, '0');
-                let email = "";
-                // form the date requested
-                let dateReq = `${year}-${month}-${day}T${hours}:${minutes}`;
 
-                // get room name and create room object
-                let roomName = document.querySelector('#roomName').innerHTML.substring(14);
-                // get date selected
-                let dateSelected = document.querySelector('#date').value;
+                let myObj = {
+                  email: email
+                }
 
-                // create objects that will be stored in the database
-                let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
-                let timeObject = {name: 'time', value: checkedTimeSlots};
-                let dateObject = {name: 'date', value: dateSelected};
-                let viewObject = {name: "view", value: 'student'};
-                let roomNameObject = {name: "roomName", value: roomName};
-                let userObject = {name: "user", value: name};
-                let emailObject = {name: 'email', value: email};
-                let dateReqObject = {name: 'dateReq', value: dateReq};
-                
-                // push the objects in the array
-                formData.push(seatSelectedObject);
-                formData.push(timeObject);
-                formData.push(dateObject);
-                formData.push(viewObject);
-                formData.push(roomNameObject);
-                formData.push(userObject);
-                formData.push(emailObject);
-                formData.push(dateReqObject);
-          
-                // send data to roomsRouter.js
                 $.ajax({
                   type: 'POST',
-                  url: '/room',
-                  data: formData,
-                  success: function (response) {
-                  },
-                  error: function (error) {
+                  url: '/getAccount',
+                  data: myObj,
+                  success: function(response) {
+                  
+                    if(response == null){
+                      alert('That account does not exist in the database');
+                    } else {
+                      // get the current date
+                      
+                      userName = response.name;
+                      let date = new Date();
+                      let year = date.getFullYear();
+                      let month = (date.getMonth() + 1).toString().padStart(2, '0');
+                      let day = date.getDate().toString().padStart(2, '0');
+                      let hours = date.getHours().toString().padStart(2, '0');
+                      let minutes = date.getMinutes().toString().padStart(2, '0');
+                      // form the date requested
+                      let dateReq = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+                      // get room name and create room object
+                      let roomName = document.querySelector('#roomName').innerHTML.substring(14);
+                      // get date selected
+                      let dateSelected = document.querySelector('#date').value;
+
+                      let found = false;
+                      for(reservation of allReservations){
+                        let timeData = reservation.time.split(/,/);
+                        if(dateSelected == reservation.date && thisBtn.val() == reservation.seatSelected){
+                          timeData = reservation.time.split(/,/);
+            
+                          for(time of checkedTimeSlots){
+                            
+                            
+                            for(data of timeData){
+                              console.log(time + " : " + data);
+                              if(time == data){
+                                found = true;
+                              }
+                            }
+                          }
+                        }
+                      }
+
+                      if(found){
+                        alert('One of the time slot is already occupied');
+                      } else {
+                        alert(`Reservation Successful`);
+
+                        // create objects that will be stored in the database
+                        let seatSelectedObject = {name: 'seatSelected', value: thisBtn.val()};
+                        let timeObject = {name: 'time', value: checkedTimeSlots};
+                        let dateObject = {name: 'date', value: dateSelected};
+                        let viewObject = {name: "view", value: 'student'};
+                        let roomNameObject = {name: "roomName", value: roomName};
+                        let userObject = {name: "user", value: userName};
+                        let emailObject = {name: 'email', value: email};
+                        let dateReqObject = {name: 'dateReq', value: dateReq};
+                        
+                        // push the objects in the array
+                        formData.push(seatSelectedObject);
+                        formData.push(timeObject);
+                        formData.push(dateObject);
+                        formData.push(viewObject);
+                        formData.push(roomNameObject);
+                        formData.push(userObject);
+                        formData.push(emailObject);
+                        formData.push(dateReqObject);
+                  
+                        // send data to roomsRouter.js
+                        $.ajax({
+                          type: 'POST',
+                          url: '/room',
+                          data: formData,
+                          success: function (response) {
+                          },
+                          error: function (error) {
+                          }
+                        });
+                        window.location.reload();
+                      }
+                    }
                   }
-                });
+                })
               }    
             }
+            
           
           // VISITOR
           } else {
             alert('Please sign in to reserve a seat.');
+            window.location.reload();
           }
-          window.location.reload();
         }   
       });
 
