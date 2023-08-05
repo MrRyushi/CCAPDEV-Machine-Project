@@ -49,7 +49,7 @@
         </div>
     </nav>
     <div class="mx-auto main-container mx-auto row mt-5">
-        <form action="/room" method="post" class="container reserve-form mx-auto row col-md-9">
+        <form id="reserveForm" action="/room" method="post" class="container reserve-form mx-auto row col-md-9">
             <div class="room-container col">
                 <div class="text-center title-container">
                     <h1 id="roomName" class="text-white fw-bold custom-font">CyberLab Room CL01</h1>
@@ -61,40 +61,40 @@
                     </div>
                     <div class="mx-auto col-xxl-4 col-xs-12 mx-2 my-1">
                         <select class="form-select" id="start-time" name="start-time">
-                            <option disabled selected>Start Time</option>
-                            <option value="09:00">09:00</option>
-                            <option value="09:30">09:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
+                            <option disabled>Start Time</option>
+                            <option value="09:00" selected>From: 09:00</option>
+                            <option value="09:30">From: 09:30</option>
+                            <option value="10:00">From: 10:00</option>
+                            <option value="10:30">From: 10:30</option>
+                            <option value="11:00">From: 11:00</option>
+                            <option value="11:30">From: 11:30</option>
+                            <option value="12:00">From: 12:00</option>
+                            <option value="12:30">From: 12:30</option>
+                            <option value="13:00">From: 13:00</option>
+                            <option value="13:30">From: 13:30</option>
+                            <option value="14:00">From: 14:00</option>
+                            <option value="14:30">From: 14:30</option>
+                            <option value="15:00">From: 15:00</option>
+                            <option value="15:30">From: 15:30</option>
                           </select>
                     </div>
                     <div class="mx-auto col-xxl-4 col-xs-12 mx-2 my-1">
                         <select class="form-select" id="end-time" name="end-time">
-                            <option disabled selected>End Time</option>
-                            <option value="09:00 to 09:30">09:30</option>
-                            <option value="09:30 to 10:00">10:00</option>
-                            <option value="10:00 to 10:30">10:30</option>
-                            <option value="10:30 to 11:00">11:00</option>
-                            <option value="11:00 to 11:30">11:30</option>
-                            <option value="11:30 to 12:00">12:00</option>
-                            <option value="12:00 to 12:30">12:30</option>
-                            <option value="12:30 to 13:00">13:00</option>
-                            <option value="13:00 to 13:30">13:30</option>
-                            <option value="13:30 to 14:00">14:00</option>
-                            <option value="14:00 to 14:30">14:30</option>
-                            <option value="14:30 to 15:00">15:00</option>
-                            <option value="15:00 to 15:30">15:30</option>
-                            <option value="15:30 to 16:00">16:00</option>
+                            <option disabled>End Time</option>
+                            <option value="09:30">To: 09:30</option>
+                            <option value="10:00">To: 10:00</option>
+                            <option value="10:30">To: 10:30</option>
+                            <option value="11:00">To: 11:00</option>
+                            <option value="11:30">To: 11:30</option>
+                            <option value="12:00">To: 12:00</option>
+                            <option value="12:30">To: 12:30</option>
+                            <option value="13:00">To: 13:00</option>
+                            <option value="13:30">To: 13:30</option>
+                            <option value="14:00">To: 14:00</option>
+                            <option value="14:30">To: 14:30</option>
+                            <option value="15:00">To: 15:00</option>
+                            <option value="15:30">To: 15:30</option>
+                            <option value="16:00" selected>To: 16:00</option>
                           </select>
                     </div>
                     
@@ -102,93 +102,95 @@
     
                 <div class="container row">
                     <div class="container time-container col-md-3 me-1 text-white mx-auto">
-                        <div class="title">
-                            <p class="text-white fs-2 text-center custom-font">Select Time</p>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="09:00 to 09:30" id="09:00">
-                            <label class="form-check-label" for="09:00">
-                                09:00 to 09:30
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="09:30 to 10:00" id="09:30">
-                            <label class="form-check-label" for="09:30">
-                                09:30 to 10:00
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="10:00 to 10:30" id="10:00">
-                            <label class="form-check-label" for="10:00">
-                                10:00 to 10:30
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="10:30 to 11:00" id="10:30">
-                            <label class="form-check-label" for="10:30">
-                                10:30 to 11:00
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="11:00 to 11:30" id="11:00">
-                            <label class="form-check-label" for="11:00">
-                                11:00 to 11:30
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="11:30 to 12:00" id=" 11:30">
-                            <label class="form-check-label" for=" 11:30">
-                                11:30 to 12:00
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="12:00 to 12:30" id="12:00">
-                            <label class="form-check-label" for="12:00">
-                                12:00 to 12:30
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="12:30 to 13:00" id="12:30">
-                            <label class="form-check-label" for="12:30">
-                                12:30 to 13:00
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="13:00 to 13:30" id="13:00">
-                            <label class="form-check-label" for="13:00">
-                                13:00 to 13:30
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="13:30 to 14:00" id="13:30">
-                            <label class="form-check-label" for="13:30">
-                                13:30 to 14:00
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="14:00 to 14:30" id="14:00">
-                            <label class="form-check-label" for="14:00">
-                                14:00 to 14:30
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="14:30 to 15:00" id="14:30">
-                            <label class="form-check-label" for="14:30">
-                                14:30 to 15:00
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="15:00 to 15:30" id="15:00">
-                            <label class="form-check-label" for="15:00">
-                                15:00 to 15:30
-                            </label>
-                        </div>
-                        <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="15:30 to 16:00" id="15:30">
-                            <label class="form-check-label" for="15:30">
-                                15:30 to 16:00
-                            </label>
-                        </div>
+                        <form id="timeForm">
+                            <div class="title">
+                                <p class="text-white fs-2 text-center custom-font">Select Time</p>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="09:00 to 09:30" id="09:00">
+                                <label class="form-check-label" for="09:00">
+                                    09:00 to 09:30
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="09:30 to 10:00" id="09:30">
+                                <label class="form-check-label" for="09:30">
+                                    09:30 to 10:00
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="10:00 to 10:30" id="10:00">
+                                <label class="form-check-label" for="10:00">
+                                    10:00 to 10:30
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="10:30 to 11:00" id="10:30">
+                                <label class="form-check-label" for="10:30">
+                                    10:30 to 11:00
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="11:00 to 11:30" id="11:00">
+                                <label class="form-check-label" for="11:00">
+                                    11:00 to 11:30
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="11:30 to 12:00" id=" 11:30">
+                                <label class="form-check-label" for=" 11:30">
+                                    11:30 to 12:00
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="12:00 to 12:30" id="12:00">
+                                <label class="form-check-label" for="12:00">
+                                    12:00 to 12:30
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="12:30 to 13:00" id="12:30">
+                                <label class="form-check-label" for="12:30">
+                                    12:30 to 13:00
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="13:00 to 13:30" id="13:00">
+                                <label class="form-check-label" for="13:00">
+                                    13:00 to 13:30
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="13:30 to 14:00" id="13:30">
+                                <label class="form-check-label" for="13:30">
+                                    13:30 to 14:00
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="14:00 to 14:30" id="14:00">
+                                <label class="form-check-label" for="14:00">
+                                    14:00 to 14:30
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="14:30 to 15:00" id="14:30">
+                                <label class="form-check-label" for="14:30">
+                                    14:30 to 15:00
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="15:00 to 15:30" id="15:00">
+                                <label class="form-check-label" for="15:00">
+                                    15:00 to 15:30
+                                </label>
+                            </div>
+                            <div class="form-check mx-auto">
+                                <input class="form-check-input" type="checkbox" value="15:30 to 16:00" id="15:30">
+                                <label class="form-check-label" for="15:30">
+                                    15:30 to 16:00
+                                </label>
+                            </div>
+                        </form>
                     </div>
 
                     <div class="col-md-9 container text-center seat-container">

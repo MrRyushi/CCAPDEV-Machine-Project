@@ -75,7 +75,7 @@ const cl01SampleData = [
   {
       user: "Anonymous",
       email: "samantha_caasi@dlsu.edu.ph",
-      date: "2023-07-24",			
+      date: "2023-08-24",			
       time: "09:30 to 10:00,10:00 to 10:30",
       seatSelected: "08",
       dateReq: "2023-07-23T15:23"
@@ -83,7 +83,7 @@ const cl01SampleData = [
   {
       user: "John Patrick T. Marcellana",
       email: "john_patrick_marcellana@dlsu.edu.ph",
-      date: "2023-07-22",	
+      date: "2023-08-22",	
       time: "12:30 to 13:00",
       seatSelected: "01",
       dateReq: "2023-07-21T09:47"
@@ -143,7 +143,7 @@ const cl02SampleData = [
   {
       user: "Samantha Nicole L. Caasi",
       email: "samantha_caasi@dlsu.edu.ph",
-      date: "2023-02-24",
+      date: "2023-08-24",
       time: "12:00 to 12:30,12:30 to 13:00",
       seatSelected: "35",
       dateReq: "2023-02-23T00:00"
@@ -195,7 +195,7 @@ const cl03SampleData = [
   {
       user: "John Patrick T. Marcellana",
       email: "john_patrick_marcellana@dlsu.edu.ph",
-      date: "2023-06-16",			
+      date: "2023-08-27",			
       time: "09:30 to 10:00,10:00 to 10:30",
       seatSelected: "07",
       dateReq: "2023-06-10T17:20"

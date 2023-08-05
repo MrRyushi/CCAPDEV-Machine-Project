@@ -50,7 +50,7 @@
         </div>
     </nav>
     <div class="mx-auto main-container mx-auto row mt-5">
-        <form action="/room" method="post" class="container reserve-form mx-auto row col-md-9">
+        <form id="reserveForm" action="/room" method="post" class="container reserve-form mx-auto row col-md-9">
             <div class="room-container col">
                 <div class="text-center title-container">
                     <h1 id="roomName" class="text-white fw-bold custom-font">CyberLab Room CL03</h1>
@@ -62,40 +62,40 @@
                     </div>
                     <div class="mx-auto col-xxl-4 col-xs-12 mx-2 my-1">
                         <select class="form-select" id="start-time" name="start-time">
-                            <option disabled selected>Start Time</option>
-                            <option value="09:00">09:00</option>
-                            <option value="09:30">09:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
+                            <option disabled>Start Time</option>
+                            <option value="09:00" selected>From: 09:00</option>
+                            <option value="09:30">From: 09:30</option>
+                            <option value="10:00">From: 10:00</option>
+                            <option value="10:30">From: 10:30</option>
+                            <option value="11:00">From: 11:00</option>
+                            <option value="11:30">From: 11:30</option>
+                            <option value="12:00">From: 12:00</option>
+                            <option value="12:30">From: 12:30</option>
+                            <option value="13:00">From: 13:00</option>
+                            <option value="13:30">From: 13:30</option>
+                            <option value="14:00">From: 14:00</option>
+                            <option value="14:30">From: 14:30</option>
+                            <option value="15:00">From: 15:00</option>
+                            <option value="15:30">From: 15:30</option>
                           </select>
                     </div>
                     <div class="mx-auto col-xxl-4 col-xs-12 mx-2 my-1">
                         <select class="form-select" id="end-time" name="end-time">
-                            <option disabled selected>End Time</option>
-                            <option value="09:00 to 09:30">09:30</option>
-                            <option value="09:30 to 10:00">10:00</option>
-                            <option value="10:00 to 10:30">10:30</option>
-                            <option value="10:30 to 11:00">11:00</option>
-                            <option value="11:00 to 11:30">11:30</option>
-                            <option value="11:30 to 12:00">12:00</option>
-                            <option value="12:00 to 12:30">12:30</option>
-                            <option value="12:30 to 13:00">13:00</option>
-                            <option value="13:00 to 13:30">13:30</option>
-                            <option value="13:30 to 14:00">14:00</option>
-                            <option value="14:00 to 14:30">14:30</option>
-                            <option value="14:30 to 15:00">15:00</option>
-                            <option value="15:00 to 15:30">15:30</option>
-                            <option value="15:30 to 16:00">16:00</option>
+                            <option disabled>End Time</option>
+                            <option value="09:30">To: 09:30</option>
+                            <option value="10:00">To: 10:00</option>
+                            <option value="10:30">To: 10:30</option>
+                            <option value="11:00">To: 11:00</option>
+                            <option value="11:30">To: 11:30</option>
+                            <option value="12:00">To: 12:00</option>
+                            <option value="12:30">To: 12:30</option>
+                            <option value="13:00">To: 13:00</option>
+                            <option value="13:30">To: 13:30</option>
+                            <option value="14:00">To: 14:00</option>
+                            <option value="14:30">To: 14:30</option>
+                            <option value="15:00">To: 15:00</option>
+                            <option value="15:30">To: 15:30</option>
+                            <option value="16:00" selected>To: 16:00</option>
                           </select>
                     </div>
                     
