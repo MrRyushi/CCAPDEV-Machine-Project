@@ -338,7 +338,7 @@ async function main(){
       saveUninitialized: true,
       cookie: {
         maxAge: 3 * 7 * 24 * 60 * 60 * 1000, // 3 weeks
-        secure: true, // Change to true if using HTTPS
+        secure: false, // Change to true if using HTTPS
         httpOnly: true,
       },
       store: store,
