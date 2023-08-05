@@ -8,16 +8,6 @@ import viewsRouter from './viewsRouter.js';
 
 const router = Router();
 
-
-  const isAuthenticated = (req, res, next) => {
-    if (req.session.email) {
-      // If the user is logged in, proceed to the next middleware/route handler
-      next();
-    } else {
-
-    }
-  };
-
   router.get('/', (req, res) => {
     // Check if the user is authenticated
     if (req.session.email) {

@@ -131,7 +131,7 @@ loginRouter.post('/login', async (req, res) => {
                     console.log("Session cookie set with extended expiration");
                 } else {
                     // Set a session cookie with the default expiration (3 weeks)
-                    req.session.cookie.expires = new Date(Date.now() + 3 * 7 * 24 * 60 * 60 * 1000);
+                    req.session.cookie.expires = false;
                     console.log("Session cookie set with default expiration");
                 }
 
