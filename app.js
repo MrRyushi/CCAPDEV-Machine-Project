@@ -1,16 +1,16 @@
 // System-related packages
-import 'dotenv/config';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import path from 'path'; 
 // Database modules
 import { connectToMongo, getDb } from './src/db/conn.js';
+import MongoDBStore from 'connect-mongodb-session';
 import bcrypt from 'bcrypt';
 // Routes modules
 import router from "./src/routes/index.js";
 import bodyParser from 'body-parser';
-
+import session from 'express-session';
 // instantiate express
 const app = express();
 const SALT_WORK_FACTOR = 10;
@@ -316,10 +316,37 @@ async function populateDatabase() {
   }
 }
 
-// main function
+const MongoDBStoreSession = MongoDBStore(session);
+
+// Initialize a new MongoDBStore instance with your MongoDB connection URI
+const store = new MongoDBStoreSession({
+    uri: process.env.MONGODB_URI, 
+    collection: 'sessions',
+  });
+  
+  // If there's an error connecting to the database, log the error
+  store.on('error', (error) => {
+    console.log('MongoDB Session Store Error:', error);
+  });
+
+
 async function main(){
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
+
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        maxAge: 3 * 7 * 24 * 60 * 60 * 1000, // 3 weeks
+        secure: false, // Change to true if using HTTPS
+        httpOnly: true,
+      },
+      store: store,
+    })
+  );
 
   //Set ejs as the experss app's default view engine
   app.set('view engine', 'ejs');
@@ -337,11 +364,11 @@ async function main(){
   app.use(router);
 
   // SERVER LISTEN
-  app.listen(process.env.SERVER_PORT, (e) => {
+  app.listen(process.env.PORT, (e) => {
     if(e){
       console.log(e);
     } else {
-      console.log(`Server is now listening on ${process.env.SERVER_PORT}`);
+      console.log(`Server is now listening on ${process.env.PORT}`);
       connectToMongo(async (err) => {
         if(err){
             console.log("error occurred");

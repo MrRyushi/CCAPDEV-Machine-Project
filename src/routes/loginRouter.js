@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { getDb } from '../db/conn.js';
 import bodyParser from 'body-parser';
-import session from 'express-session';
 import bcrypt from 'bcrypt';
 
 const loginRouter = Router();
@@ -9,16 +8,7 @@ const db = getDb();
 
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 loginRouter.use(bodyParser.json());
-loginRouter.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 3 * 7 * 24 * 60 * 60 * 1000, // 3 weeks
-      secure: false, // Change to true if using HTTPS
-      httpOnly: true,
-    },
-  }));
+
 
 // Check if Email Exists Function
 async function checkIfEmailExists(email) {
@@ -81,24 +71,36 @@ async function checkCredentials(email, password) {
       console.log(err);
       return false;
     }
+}
+
+
+// Middleware to check if the user is logged out
+const isLoggedOut = (req, res, next) => {
+    if (!req.session.email) {
+      // If the user is not logged in, proceed to the next middleware/route handler
+      next();
+    } else {
+      // If the user is logged in, redirect to the home page (or any other page)
+      res.redirect('/');
+    }
   }
 
 // Routes
-loginRouter.get('/login', (req, res) => {
+loginRouter.get('/login', isLoggedOut, (req, res) => {
     res.render('login.ejs', { alert: '', email: '' });
 })
   
 loginRouter.post('/login', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    const rememberMe = req.body.rememberMe === 'true';
+    const rememberMe = req.body.rememberMe;
 
-    //const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
+    console.log("remeber me", + rememberMe);
+
     let accountType;
 
     req.session.email = email;
-    // req.session.password = hashedPassword;
-    // Log in logic
+
     const allowedDomain = 'dlsu.edu.ph';
     const domain = email.split('@')[1];
 
@@ -108,37 +110,37 @@ loginRouter.post('/login', async (req, res) => {
         console.log("Invalid email domain");
         res.render('login.ejs', { alert: 'Please use DLSU email only', email: '' });
         return;
-    }
-
-    else {
+    } else {
         if (isEmailExisting) {
             try {
                 const doesMatch = await checkCredentials(email, password);
-            
+
                 if (!doesMatch) {
                     console.log("Login unsuccessful");
                     res.render('login.ejs', { alert: 'Incorrect password. Please try again.', email: email });
                     return;
                 }
-            
+
                 console.log('Login successful');
                 req.session.accountType = await checkAccountType(email);
-                req.session.email = email;
-                console.log("account type: " + req.session.accountType);
                 accountType = req.session.accountType;
-            
+
+                if (rememberMe == "on") {
+                    // Set a persistent cookie with extended expiration (3 weeks)
+                    req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000;
+                    console.log("Session cookie set with extended expiration");
+                } else {
+                    // Set a session cookie with the default expiration (3 weeks)
+                    req.session.cookie.expires = false;
+                    console.log("Session cookie set with default expiration");
+                }
+
                 if (accountType === 'Student') {
                     res.redirect('/student-view');
                 } else if (accountType === 'Technician') {
                     res.redirect('/technician-view');
                 } else {
-                    //redirect to a default view
                     res.redirect('/home');
-                }
-            
-                if (rememberMe) {
-                    // Set a persistent cookie with extended expiration
-                    req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000; // 3 weeks
                 }
             } catch (err) {
                 console.log(err);
@@ -146,9 +148,8 @@ loginRouter.post('/login', async (req, res) => {
             }
         } else {
             res.render('login.ejs', { alert: "Account doesn't exist. Please register first.", email: email });
-        return;
+            return;
         }
-
     }
 });
 
