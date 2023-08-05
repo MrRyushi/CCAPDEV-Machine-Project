@@ -10,7 +10,7 @@ const isAuthenticated = (req, res, next) => {
     next();
   } else {
     // If the user is not logged in, redirect to the login page
-    // res.redirect('/login');
+    res.redirect('/login');
   }
 };
 
@@ -55,7 +55,7 @@ viewsRouter.get('/api/student-view', async (req, res) => {
 
 viewsRouter.get('/student-view', isAuthenticated, isStudent, async (req, res) => {
     try {
-        console.log("sesssion: " + req.session.accountType);
+        console.log("session: " + req.session.accountType);
         const accountType = req.session.accountType;
         const email = req.session.email;
         if(email != null){
