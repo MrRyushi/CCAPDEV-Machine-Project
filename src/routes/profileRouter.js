@@ -112,7 +112,35 @@ async function findAccountDesc(email) {
     }
 }
 
-// Multer configuration
+// Middleware to check if the user is logged in
+const isAuthenticated = (req, res, next) => {
+  if (req.session.email) {
+    // If the user is logged in, proceed to the next middleware/route handler
+    next();
+  } else {
+    // If the user is not logged in, redirect to the login page
+    res.redirect('/login');
+  }
+};
+
+// Middleware for Student Authentication
+const isStudent = (req, res, next) => {
+  if (req.session.accountType === 'Student') {
+    next();
+  } else {
+    res.status(403).send('Access denied. You are not authorized to access this page.');
+  }
+};
+
+// Middleware for Technician Authentication
+const isTechnician = (req, res, next) => {
+  if (req.session.accountType === 'Technician') {
+    next();
+  } else {
+    res.status(403).send('Access denied. You are not authorized to access this page.');
+  }
+};
+
 // Multer configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -126,6 +154,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
 
 profileRouter.get('/profile', isAuthenticated, isStudent, async (req, res) => {
   try {
@@ -282,6 +311,7 @@ profileRouter.post('/profile/delete-user', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 profileRouter.get('/profile/home', isAuthenticated, isStudent, async (req, res) => {
   try {
