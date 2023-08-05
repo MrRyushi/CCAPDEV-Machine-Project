@@ -73,17 +73,20 @@ async function checkCredentials(email, password) {
     }
 }
 
-// Middleware to check if the user is not logged in
-const isNotAuthenticated = (req, res, next) => {
-    if (req.session.email) {
-      // if logged in, do nothing
-      
-    } else {
+
+// Middleware to check if the user is logged out
+const isLoggedOut = (req, res, next) => {
+    if (!req.session.email) {
+      // If the user is not logged in, proceed to the next middleware/route handler
       next();
+    } else {
+      // If the user is logged in, redirect to the home page (or any other page)
+      res.redirect('/');
     }
-  };
+  }
+
 // Routes
-loginRouter.get('/login', isNotAuthenticated, (req, res) => {
+loginRouter.get('/login', isLoggedOut, (req, res) => {
     res.render('login.ejs', { alert: '', email: '' });
 })
   
