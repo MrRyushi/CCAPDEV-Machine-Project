@@ -101,6 +101,8 @@ viewsRouter.post('/getAllReservations', async (req, res) => {
           console.log('Error destroying session:', err);
       }
       res.redirect('/login');
+
+
   });
   })
 
