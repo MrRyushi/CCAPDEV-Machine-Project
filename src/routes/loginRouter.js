@@ -95,7 +95,7 @@ loginRouter.post('/login', async (req, res) => {
     const password = req.body.password;
     const rememberMe = req.body.rememberMe;
 
-    console.log("remeber me", + rememberMe);
+    console.log("remeber me", rememberMe);
 
     let accountType;
 
@@ -125,7 +125,7 @@ loginRouter.post('/login', async (req, res) => {
                 req.session.accountType = await checkAccountType(email);
                 accountType = req.session.accountType;
 
-                if (rememberMe == "on") {
+                if (rememberMe === "on") {
                     // Set a persistent cookie with extended expiration (3 weeks)
                     req.session.cookie.maxAge = 3 * 7 * 24 * 60 * 60 * 1000;
                     console.log("Session cookie set with extended expiration");

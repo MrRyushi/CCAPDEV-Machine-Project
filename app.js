@@ -1,4 +1,5 @@
 // System-related packages
+import 'dotenv/config';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
@@ -364,11 +365,11 @@ async function main(){
   app.use(router);
 
   // SERVER LISTEN
-  app.listen(process.env.PORT, (e) => {
+  app.listen(process.env.SERVER_PORT, (e) => {
     if(e){
       console.log(e);
     } else {
-      console.log(`Server is now listening on ${process.env.PORT}`);
+      console.log(`Server is now listening on ${process.env.SERVER_PORT}`);
       connectToMongo(async (err) => {
         if(err){
             console.log("error occurred");
