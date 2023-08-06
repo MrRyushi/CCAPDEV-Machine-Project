@@ -44,6 +44,7 @@ viewsRouter.get('/api/student-view', async (req, res) => {
             labAccounts.findOne({email: email}).then(async val => {
                 let userName = val.name;
                 let email = val.email;
+                console.log(accountType);
                 res.json({ accountType, userName, email });
             });
         }
@@ -106,12 +107,7 @@ viewsRouter.post('/getAllReservations', async (req, res) => {
   })
 
   viewsRouter.get('/about', async (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-          console.log('Error destroying session:', err);
-      }
       res.render('about.ejs')
-  });
   })
 
 export default viewsRouter;
