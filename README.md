@@ -6,10 +6,21 @@ lab technicians where the user can reserve a seat and a given time slot/s on the
 The visitor must log in as a student to reserve their own seats and the lab technician can reserve seats for walk-in students.
 
 # Built With
-NodeJS
-Bootstrap
-JQuery
+NodeJS <br>
+Bootstrap <br>
+JQuery <br>
 
+# Npm Packages Used
+bcrypt <br>
+body-parser <br>
+connect-mongodb-session <br>
+ejs <br>
+express <br>
+express-flash <br>
+express-session <br>
+method-override <br>
+mongodb <br>
+multer <br>
 
 # Prerequisites
 1. Install Nodejs from this website <br>
@@ -21,10 +32,12 @@ JQuery
   npm install bcrypt <br>
   npm install body-parser <br>
   npm install ejs <br>
+  npm install connect-mongodb-session <br>
   npm install express-flash <br>
   npm install express-session <br>
   npm install method-override <br>
   npm install mongodb <br>
+  npm install multer <br>
 
 # Usage
 To start the program, type in the following in the terminal <br>
