@@ -26,7 +26,7 @@ multer <br>
 1. Install Nodejs from this website <br>
   https://nodejs.org/en
 
-2. Run the following commands in the terminal to install dependencies
+2. Run the following commands in the terminal to install dependencies <br>
   npm install <br>
   npm install express <br>
   npm install bcrypt <br>
