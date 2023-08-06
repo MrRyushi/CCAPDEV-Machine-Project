@@ -1,0 +1,24 @@
+body {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(42,135,157,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+.custom-font {
+    font-family: Montserrat;
+}
+
+.navbar-nav a:hover {
+    color: cyan !important;
+}
+
+.view-link:hover{
+    color: cyan !important;
+}
+
+div.wc-message p {
+    font-size: 50px;
+}
+
+.npm-used {
+    font-size: 45px;
+}

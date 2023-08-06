@@ -105,4 +105,13 @@ viewsRouter.post('/getAllReservations', async (req, res) => {
   });
   })
 
+  viewsRouter.get('/about', async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+          console.log('Error destroying session:', err);
+      }
+      res.render('about.ejs')
+  });
+  })
+
 export default viewsRouter;
